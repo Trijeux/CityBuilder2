@@ -21,8 +21,6 @@ protected:
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
 private:
-	sf::Texture texture_;
-
 	std::optional<sf::Sprite> sprite_;
 
 	bool is_walkable_;

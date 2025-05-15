@@ -1,4 +1,4 @@
-﻿#include "../../include/graphics/resource_sprit.h"
+﻿#include "graphics/resource_sprit.h"
 
 namespace ResourceManager
 {

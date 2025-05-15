@@ -1,4 +1,4 @@
-﻿#ifndef CORE_EMPTY_H
-#define CORE_EMPTY_H
+﻿#ifndef GAME_EMPTY_H
+#define GAME_EMPTY_H
 
-#endif //CORE_EMPTY_H
+#endif //GAME_EMPTY_H
