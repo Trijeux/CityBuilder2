@@ -1,8 +1,9 @@
-﻿//
-// Created by antho on 15.05.2025.
-//
+﻿#ifndef CORE_GAME_H
+#define CORE_GAME_H
 
-#ifndef GAME_H
-#define GAME_H
+namespace BasicsTest
+{
+	void Run();
+}
 
-#endif //GAME_H
+#endif //CORE_GAME_H

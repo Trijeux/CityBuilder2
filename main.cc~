@@ -1,7 +1,0 @@
-﻿#include "basics_test.h"
-
-int main()
-{
-	BasicsTest::Run();
-	return 0;
-}
