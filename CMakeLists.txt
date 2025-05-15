@@ -13,8 +13,11 @@ endif(ENABLE_PROFILING)
 
 add_subdirectory(core/)
 
-file(COPY ${CMAKE_SOURCE_DIR}/ressources DESTINATION ${CMAKE_BINARY_DIR})
+file(REMOVE_RECURSE "${CMAKE_BINARY_DIR}/resources")
+file(COPY ${CMAKE_SOURCE_DIR}/resources DESTINATION ${CMAKE_BINARY_DIR})
 
 add_executable(CityBuilder2 main.cc)
+
+target_include_directories(CityBuilder2 PRIVATE ${CMAKE_SOURCE_DIR}/external/FastNoiseLite)
 
 target_link_libraries(CityBuilder2 PRIVATE core SFML::Graphics SFML::Window SFML::Audio SFML::System)

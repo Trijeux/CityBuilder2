@@ -1,0 +1,35 @@
+﻿#ifndef CORE_TILE_H
+#define CORE_TILE_H
+
+#include <SFML/Graphics/RenderWindow.hpp>
+#include <SFML/Graphics/Sprite.hpp>
+#include <SFML/Graphics/Texture.hpp>
+
+class Tile final : public sf::Drawable
+{
+public:
+	enum class TileType
+	{
+		kGround,
+		kForest,
+		kStone
+	};
+
+	Tile(TileType type, float x, float y, bool is_walkable);
+
+protected:
+	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
+
+private:
+	sf::Texture texture_;
+
+	std::optional<sf::Sprite> sprite_;
+
+	bool is_walkable_;
+
+	TileType type_;
+
+	sf::Texture& GetFromType() const;
+};
+
+#endif //CORE_TILE_H
