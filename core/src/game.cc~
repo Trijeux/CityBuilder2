@@ -1,4 +1,5 @@
-﻿#include <SFML/Graphics.hpp>
+﻿#include <iostream>
+#include <SFML/Graphics.hpp>
 #include <SFML/Audio/Music.hpp>
 #include <SFML/Audio/Sound.hpp>
 #include <SFML/Audio/SoundBuffer.hpp>
@@ -9,12 +10,12 @@ namespace Game
 	namespace
 	{
 		sf::RenderWindow          window_;
-		sf::Texture               texture_("ressources/20250416_194554.jpg");
+		sf::Texture               texture_("ressources/image_test.jpg");
 		std::optional<sf::Sprite> sprite_;
-		sf::Music                 music_("ressources/Undertale.ogg");
-		sf::SoundBuffer           buffer_("ressources/COINS.ogg");
+		sf::Music                 music_("ressources/music_test.ogg");
+		sf::SoundBuffer           buffer_("ressources/song_test.ogg");
 		std::optional<sf::Sound>  sound_;
-		sf::Font                  font_("ressources/Minecraft.ttf");
+		sf::Font                  font_("ressources/font_test.ttf");
 		std::optional<sf::Text>   text_;
 	}
 
@@ -53,6 +54,9 @@ namespace Game
 					sound_->play();
 				}
 			}
+
+
+			std::cout << "test" << std::endl;
 
 			while(const std::optional event = window_.pollEvent())
 			{

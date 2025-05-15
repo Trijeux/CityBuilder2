@@ -1,4 +1,5 @@
-﻿#include <SFML/Graphics.hpp>
+﻿#include <iostream>
+#include <SFML/Graphics.hpp>
 #include <SFML/Audio/Music.hpp>
 #include <SFML/Audio/Sound.hpp>
 #include <SFML/Audio/SoundBuffer.hpp>
