@@ -40,6 +40,9 @@
 # *.iml
 # *.ipr
 
+*.cc~
+*.h~
+
 # CMake
 cmake-build-*/
 
