@@ -1,5 +1,5 @@
-﻿#ifndef RESOURCE_SPRIT_H
-#define RESOURCE_SPRIT_H
+﻿#ifndef API_GRAPHICS_RESOURCE_SPRIT_H
+#define API_GRAPHICS_RESOURCE_SPRIT_H
 
 #include <array>
 #include <SFML/Graphics/Texture.hpp>
@@ -27,4 +27,4 @@ private:
 	void LoadAllTextures();
 };
 
-#endif //RESOURCE_SPRIT_H
+#endif //API_GRAPHICS_RESOURCE_SPRIT_H

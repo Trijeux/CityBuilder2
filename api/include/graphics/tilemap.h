@@ -1,5 +1,5 @@
-﻿#ifndef CORE_TILEMAP_H
-#define CORE_TILEMAP_H
+﻿#ifndef API_GRAPHICS_TILEMAP_H
+#define API_GRAPHICS_TILEMAP_H
 
 #include <SFML/Graphics/RenderWindow.hpp>
 
@@ -27,4 +27,4 @@ protected:
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 };
 
-#endif //CORE_TILEMAP_H
+#endif //API_GRAPHICS_TILEMAP_H

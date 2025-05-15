@@ -1,5 +1,5 @@
-﻿#ifndef CORE_TILE_H
-#define CORE_TILE_H
+﻿#ifndef API_GRAPHICS_TILE_H
+#define API_GRAPHICS_TILE_H
 
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Graphics/Sprite.hpp>
@@ -32,4 +32,4 @@ private:
 	sf::Texture& GetFromType() const;
 };
 
-#endif //CORE_TILE_H
+#endif //API_GRAPHICS_TILE_H

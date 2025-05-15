@@ -1,7 +1,7 @@
 ﻿#include <SFML/Graphics.hpp>
 
-#include "resource_manager.h"
-#include "tilemap.h"
+#include "../../api/include/graphics/resource_manager.h"
+#include "../../api/include/graphics/tilemap.h"
 
 namespace Game
 {

@@ -1,7 +1,7 @@
 ﻿#include <SFML/Graphics/RenderTarget.hpp>
 
-#include "tile.h"
-#include "resource_manager.h"
+#include "../../include/graphics/tile.h"
+#include "../../include/graphics/resource_manager.h"
 
 sf::Texture& Tile::GetFromType() const
 {

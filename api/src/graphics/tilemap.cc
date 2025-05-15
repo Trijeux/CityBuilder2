@@ -2,8 +2,8 @@
 #include <random>
 #include <SFML/Graphics/RenderTarget.hpp>
 
-#include "tilemap.h"
-#include "resource_manager.h"
+#include "../../include/graphics/tilemap.h"
+#include "../../include/graphics/resource_manager.h"
 
 TileMap::TileMap()
 {

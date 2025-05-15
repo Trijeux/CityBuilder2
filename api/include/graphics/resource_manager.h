@@ -1,5 +1,5 @@
-﻿#ifndef CORE_RESOURCE_MANAGER_H
-#define CORE_RESOURCE_MANAGER_H
+﻿#ifndef API_GRAPHICS_RESOURCE_MANAGER_H
+#define API_GRAPHICS_RESOURCE_MANAGER_H
 
 #include "resource_sprit.h"
 
@@ -10,4 +10,4 @@ namespace ResourceManager
 	sf::Texture& Sprit(ResourceSprit::Texture resource_id);
 }
 
-#endif //CORE_RESOURCE_MANAGER_H
+#endif //API_GRAPHICS_RESOURCE_MANAGER_H

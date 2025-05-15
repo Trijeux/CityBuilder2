@@ -1,6 +1,6 @@
 #include <iostream>
 
-#include "resource_sprit.h"
+#include "../../include/graphics/resource_sprit.h"
 
 void ResourceSprit::Setup()
 {
