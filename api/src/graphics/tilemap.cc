@@ -3,6 +3,9 @@
 #include <SFML/Graphics/RenderTarget.hpp>
 
 #include "graphics/tilemap.h"
+
+#include <iostream>
+
 #include "graphics/resource_manager.h"
 
 TileMap::TileMap()
@@ -13,8 +16,6 @@ TileMap::TileMap()
 void TileMap::Setup(const sf::Vector2u playground_size_u)
 {
 	playground_size_u_ = playground_size_u;
-	playground_tile_offset_u_.x = size_sprit_.x;
-	playground_tile_offset_u_.y = size_sprit_.y;
 }
 
 void TileMap::InitMap()
@@ -46,18 +47,18 @@ void TileMap::InitMap()
 				if (noise_value > 0.5f)
 				{
 					tiles_.emplace_back(Tile::TileType::kStone,
-						x * SpritSize().x, y * SpritSize().y, false);
+						x * SizeSprit().x, y * SizeSprit().y, false);
 				}
 				else
 				{
 					tiles_.emplace_back(Tile::TileType::kForest,
-						x * SpritSize().x, y * SpritSize().y, false);
+						x * SizeSprit().x, y * SizeSprit().y, false);
 				}
 			}
 			else
 			{
 				tiles_.emplace_back(Tile::TileType::kGround,
-					x * SpritSize().x, y * SpritSize().y, true);
+					x * SizeSprit().x, y * SizeSprit().y, true);
 			}
 		}
 	}

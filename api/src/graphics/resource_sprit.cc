@@ -20,8 +20,6 @@ void ResourceSprit::LoadAllTextures()
 {
 	blank_texture_ = sf::Texture();
 
-	blank_texture_ = sf::Texture();
-
 	if(!textures_.at(static_cast<int>(Texture::kGround)).loadFromFile("resources/sprit/ground.png"))
 	{
 		std::cout << "Error loading ground texture" << std::endl;

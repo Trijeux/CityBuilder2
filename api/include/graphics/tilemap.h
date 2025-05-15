@@ -10,9 +10,6 @@ class TileMap final : public sf::Drawable
 private:
 
 	sf::Vector2u playground_size_u_;
-	sf::Vector2u playground_tile_offset_u_;
-
-	[[nodiscard]] sf::Vector2u SpritSize() const { return size_sprit_; }
 
 	std::vector<Tile> tiles_;
 	sf::Vector2u size_sprit_;

@@ -7,20 +7,20 @@ namespace Game
 {
 	namespace
 	{
-		sf::RenderWindow          window_;
-		TileMap                   tilemap_;
+		sf::RenderWindow          window;
+		TileMap                   tilemap;
 	}
 
 	void CreateTilemap()
 	{
-		tilemap_.Setup(sf::Vector2u(window_.getSize().x / tilemap_.SizeSprit().x, window_.getSize().y / tilemap_.SizeSprit().y));
+		tilemap.Setup(sf::Vector2u(window.getSize().x / tilemap.SizeSprit().x, window.getSize().y / tilemap.SizeSprit().y));
 
-		tilemap_.InitMap();
+		tilemap.InitMap();
 	}
 
 	static void Setup()
 	{
-		window_.create(sf::VideoMode({1600, 800}), "Game");
+		window.create(sf::VideoMode({1600, 800}), "Game");
 		ResourceManager::Setup();
 		CreateTilemap();
 	}
@@ -28,16 +28,16 @@ namespace Game
 	void Run()
 	{
 		Setup();
-		while(window_.isOpen())
+		while(window.isOpen())
 		{
-			while(const std::optional event = window_.pollEvent())
+			while(const std::optional event = window.pollEvent())
 			{
-				if(event->is<sf::Event::Closed>()) window_.close();
+				if(event->is<sf::Event::Closed>()) window.close();
 			}
 
-			window_.clear();
-			window_.draw(tilemap_);
-			window_.display();
+			window.clear();
+			window.draw(tilemap);
+			window.display();
 		}
 	}
 }
