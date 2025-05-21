@@ -10,12 +10,12 @@ namespace core::maths
 	{
 		float x = 0, y = 0;
 
-		constexpr Vec2f operator+(Vec2f other) const
+		constexpr Vec2f operator+(const Vec2f other) const
 		{
 			return { x + other.x, y + other.y };
 		}
 
-		constexpr Vec2f operator-(Vec2f other) const
+		constexpr Vec2f operator-(const Vec2f other) const
 		{
 			return { x - other.x, y - other.y };
 		}
@@ -24,21 +24,21 @@ namespace core::maths
 		{
 			return { -x, -y };
 		}
-		static constexpr float Dot(Vec2f v1, Vec2f v2)
+		static constexpr float Dot(const Vec2f v1,const Vec2f v2)
 		{
 			return v1.x * v2.x + v1.y * v2.y;
 		}
 
-		constexpr Vec2f operator*(float t) const
+		constexpr Vec2f operator*(const float t) const
 		{
 			return { x * t,y * t };
 		}
 
-		friend constexpr Vec2f operator*(float t, const Vec2f& vec) {
+		friend constexpr Vec2f operator*(const float t, const Vec2f& vec) {
 			return { t * vec.x, t * vec.y };
 		}
 
-		constexpr Vec2f operator/(float t) const
+		constexpr Vec2f operator/(const float t) const
 		{
 			return { x / t,y / t };
 		}
@@ -53,7 +53,7 @@ namespace core::maths
 		{
 			return { y, -x };
 		}
-		static constexpr float Lerp(Vec2f v1, float t)
+		static constexpr float Lerp(const Vec2f v1, const float t)
 		{
 			return v1.x * (1 - t) + v1.y * t;
 		}
@@ -68,7 +68,7 @@ namespace core::maths
 			return std::sqrt(MagnitudeSqu());
 		}
 
-		Vec2f Normalize() const
+		[[nodiscard]] Vec2f Normalize() const
 		{
 			const float man = Magnitude();
 			if (man == 0.0f)

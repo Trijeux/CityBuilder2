@@ -9,7 +9,7 @@ namespace core::maths
     class BasicVector {
     public:
         // Constructor
-        BasicVector() : size_(0), capacity_(StackSize), data_(stackData_) {}
+        BasicVector() : data_(stackData_), size_(0), capacity_(StackSize) {}
 
         // Destructor
         ~BasicVector() {
@@ -52,7 +52,7 @@ namespace core::maths
 
 
         // Reserve method
-        void reserve(std::size_t new_capacity) {
+        void reserve(const std::size_t new_capacity) {
             if (new_capacity <= capacity_) return;
 
             T* new_data = new T[new_capacity];
@@ -101,12 +101,12 @@ namespace core::maths
         }
 
         // Size method
-        std::size_t size() const {
+        [[nodiscard]] std::size_t size() const {
             return size_;
         }
 
         // Capacity method
-        std::size_t capacity() const {
+        [[nodiscard]] std::size_t capacity() const {
             return capacity_;
         }
 

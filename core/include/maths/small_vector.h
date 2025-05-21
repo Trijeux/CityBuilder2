@@ -78,12 +78,12 @@ namespace core::maths
 		}
 
 		// Size method
-		std::size_t size() const {
+		[[nodiscard]] std::size_t size() const {
 			return size_;
 		}
 
 		// Capacity method
-		std::size_t capacity() const {
+		[[nodiscard]] std::size_t capacity() const {
 			return capacity_;
 		}
 

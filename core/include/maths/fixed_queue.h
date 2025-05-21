@@ -15,7 +15,7 @@ namespace core::maths
 	public:
 		FixedQueue() : front_(0), rear_(N - 1), size_(0) {}
 
-		std::size_t Capacity() const
+		[[nodiscard]] std::size_t Capacity() const
 		{
 			return data_.size();
 		}
