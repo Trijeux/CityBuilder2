@@ -58,5 +58,4 @@ namespace core::maths
 
 } // namespace core
 
-
 #endif  //CORE_MATHS_VEC2I_H_

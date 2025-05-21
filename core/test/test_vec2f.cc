@@ -51,52 +51,47 @@ TEST_P(Vec2fOperationFixture, Multi)
 TEST_P(Vec2fOperationFixture, Div)
 {
 	auto [v1, v2] = GetParam();
-	if(v2.x != 0 || v2.y != 0)
+
+	if(v2.x != 0)
 	{
 		const auto result1 = v1 / v2.x;
-		const auto result2 = v1 / v2.y;
 		const auto result3 = v2 / v2.x;
-		const auto result4 = v2 / v2.y;
-
-
 		EXPECT_FLOAT_EQ(result1.x, v1.x / v2.x);
 		EXPECT_FLOAT_EQ(result1.y, v1.y / v2.x);
-
-		EXPECT_FLOAT_EQ(result2.x, v1.x / v2.y);
-		EXPECT_FLOAT_EQ(result2.y, v1.y / v2.y);
-
 		EXPECT_FLOAT_EQ(result3.x, v2.x / v2.x);
 		EXPECT_FLOAT_EQ(result3.y, v2.y / v2.x);
 
+	}
+
+	if(v2.y != 0)
+	{
+		const auto result2 = v1 / v2.y;
+		const auto result4 = v2 / v2.y;
+		EXPECT_FLOAT_EQ(result2.x, v1.x / v2.y);
+		EXPECT_FLOAT_EQ(result2.y, v1.y / v2.y);
 		EXPECT_FLOAT_EQ(result4.x, v2.x / v2.y);
 		EXPECT_FLOAT_EQ(result4.y, v2.y / v2.y);
+
 	}
-	else
-	{
-		//std::cout << "Impossible" << std::endl;
-	}
-	if(v1.x != 0 || v1.y != 0)
+
+	if(v1.x != 0)
 	{
 		const auto result1 = v2 / v1.x;
-		const auto result2 = v2 / v1.y;
 		const auto result3 = v1 / v1.x;
-		const auto result4 = v1 / v1.y;
-
-		EXPECT_FLOAT_EQ(result1.x, v2.x / v1.x);
-		EXPECT_FLOAT_EQ(result1.y, v2.y / v1.x);
-
-		EXPECT_FLOAT_EQ(result2.x, v2.x / v1.y);
-		EXPECT_FLOAT_EQ(result2.y, v2.y / v1.y);
-
 		EXPECT_FLOAT_EQ(result3.x, v1.x / v1.x);
 		EXPECT_FLOAT_EQ(result3.y, v1.y / v1.x);
+		EXPECT_FLOAT_EQ(result1.x, v2.x / v1.x);
+		EXPECT_FLOAT_EQ(result1.y, v2.y / v1.x);
+	}
 
+	if(v1.y != 0)
+	{
+		const auto result2 = v2 / v1.y;
+		const auto result4 = v1 / v1.y;
 		EXPECT_FLOAT_EQ(result4.x, v1.x / v1.y);
 		EXPECT_FLOAT_EQ(result4.y, v1.y / v1.y);
-	}
-	else
-	{
-		//std::cout << "Impossible" << std::endl;
+		EXPECT_FLOAT_EQ(result2.x, v2.x / v1.y);
+		EXPECT_FLOAT_EQ(result2.y, v2.y / v1.y);
 	}
 }
 
@@ -169,12 +164,38 @@ TEST_P(Vec2fOperationFixture, Normalize)
 	}
 }
 
+TEST_P(Vec2fOperationFixture, Rotate)
+{
+	auto [v1, v2] = GetParam();
+
+	const core::maths::Vec2f expected_v1 = {
+		v1.x * std::cos(0.5f) - v1.y * std::sin(0.5f),
+		v1.x * std::sin(0.5f) + v1.y * std::cos(0.5f)
+	};
+
+	const core::maths::Vec2f expected_v2 = {
+		v2.x * std::cos(0.5f) - v2.y * std::sin(0.5f),
+		v2.x * std::sin(0.5f) + v2.y * std::cos(0.5f)
+	};
+
+	v1.Rotate(0.5f);
+	v2.Rotate(0.5f);
+
+	EXPECT_FLOAT_EQ(v1.x, expected_v1.x);
+	EXPECT_FLOAT_EQ(v1.y, expected_v1.y);
+
+	EXPECT_FLOAT_EQ(v2.x, expected_v2.x);
+	EXPECT_FLOAT_EQ(v2.y, expected_v2.y);
+}
+
 INSTANTIATE_TEST_SUITE_P(AllNumbers,
                          Vec2fOperationFixture,
                          testing::Values(
 	                         std::pair{ core::maths::Vec2f{1.5f,3.2f}, core::maths::Vec2f{2.3f,-4.1f} },
 	                         std::pair{ core::maths::Vec2f{-10.2f, 15.2f}, core::maths::Vec2f{-25.2f, -35.3f} },
 	                         std::pair{ core::maths::Vec2f{0.0f, 0.0f}, core::maths::Vec2f{0.0f, 0.0f} },
+	                         std::pair{ core::maths::Vec2f{0.0f, 1.0f}, core::maths::Vec2f{0.0f, 1.0f} },
+	                         std::pair{ core::maths::Vec2f{1.0f, 0.0f}, core::maths::Vec2f{1.0f, 0.0f} },
 	                         std::pair{ core::maths::Vec2f{}, core::maths::Vec2f{} },
 	                         std::pair{ core::maths::Vec2f{1.2f, 2.1f}, core::maths::Vec2f{} },
 	                         std::pair{ core::maths::Vec2f{}, core::maths::Vec2f{1.2f, 2.1f} }
