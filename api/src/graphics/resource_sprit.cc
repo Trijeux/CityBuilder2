@@ -2,6 +2,10 @@
 
 #include <iostream>
 
+#if TRACY_ENABLE
+#include <tracy/Tracy.hpp>
+#endif
+
 void api::graphics::ResourceSprit::Setup()
 {
 	LoadAllTextures();
@@ -18,6 +22,9 @@ sf::Texture& api::graphics::ResourceSprit::GetTexture(Texture resource_id)
 
 void api::graphics::ResourceSprit::LoadAllTextures()
 {
+	#if TRACY_ENABLE
+	ZoneScopedN("Load Texture");
+	#endif
 	blank_texture_ = sf::Texture();
 
 	if(!textures_.at(static_cast<int>(Texture::kGround)).loadFromFile("resources/sprit/ground.png"))

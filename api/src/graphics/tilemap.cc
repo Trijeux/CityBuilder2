@@ -18,6 +18,7 @@ api::graphics::TileMap::TileMap()
 void api::graphics::TileMap::Setup(const sf::Vector2u playground_size_u)
 {
 	playground_size_u_ = playground_size_u;
+	tiles_.reserve(playground_size_u_.x * playground_size_u_.y);
 }
 
 void api::graphics::TileMap::InitMap()
@@ -40,7 +41,6 @@ void api::graphics::TileMap::InitMap()
 
 	const float scale_x = mean;
 	const float scale_y = mean2;
-
 
 	for(int x = 0; x < playground_size_u_.x; x++)
 	{
