@@ -1,10 +1,12 @@
 ﻿file(GLOB_RECURSE SRC_FILES src/*.cc)
 file(GLOB_RECURSE HEADER_FILES include/*.h)
 
-add_library(game ${SRC_FILES} ${HEADER_FILES})
-target_include_directories(game PUBLIC include/)
+find_package(SFML COMPONENTS Graphics Window Audio System CONFIG REQUIRED)
 
-target_link_libraries(game PRIVATE api core SFML::Graphics SFML::Window SFML::Audio SFML::System)
+add_library(game ${SRC_FILES} ${HEADER_FILES})
+
+target_include_directories(game PUBLIC include/)
+target_link_libraries(game PUBLIC api SFML::Graphics SFML::Window SFML::Audio SFML::System)
 
 if(ENABLE_PROFILING)
     target_link_libraries(game PRIVATE Tracy::TracyClient)

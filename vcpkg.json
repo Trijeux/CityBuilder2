@@ -1,0 +1,12 @@
+﻿{
+  "name": "citybuilder2",
+  "version-string":"1.0",
+  "dependencies": [
+    "sfml"
+  ],
+  "features": {
+    "testing": {"description": "Testing", "dependencies": ["gtest"]},
+    "profiling": {"description": "Profiling", "dependencies": ["tracy"]}
+  },
+  "builtin-baseline": "2c7705e70dcfb70e5f726459c3e399bd780bc1fc"
+}

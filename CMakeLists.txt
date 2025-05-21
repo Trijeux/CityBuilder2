@@ -1,12 +1,26 @@
-﻿cmake_minimum_required(VERSION 3.31)
+cmake_minimum_required(VERSION 3.31)
+
+option(ENABLE_PROFILING "Enable Tracy Profiling" OFF)
+option(ENABLE_TESTS "Enable Tests" OFF)
+
+if (ENABLE_TESTS)
+    list(APPEND VCPKG_MANIFEST_FEATURES "testing")
+endif (ENABLE_TESTS)
+
+if(ENABLE_PROFILING)
+    list(APPEND VCPKG_MANIFEST_FEATURES "profiling")
+endif(ENABLE_PROFILING)
+
 project(CityBuilder2)
 
 set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-option(ENABLE_PROFILING "Enable Tracy Profiling" OFF)
+if (ENABLE_TESTS)
+    enable_testing()
+    find_package(GTest CONFIG REQUIRED)
+endif (ENABLE_TESTS)
 
-find_package(SFML COMPONENTS Graphics Window Audio System CONFIG REQUIRED)
-find_package(GTest CONFIG REQUIRED)
 if(ENABLE_PROFILING)
     find_package(Tracy CONFIG REQUIRED)
 endif(ENABLE_PROFILING)
@@ -20,6 +34,4 @@ file(COPY ${CMAKE_SOURCE_DIR}/resources DESTINATION ${CMAKE_BINARY_DIR})
 
 add_executable(CityBuilder2 main.cc)
 
-target_include_directories(CityBuilder2 PRIVATE ${CMAKE_SOURCE_DIR}/external/FastNoiseLite)
-
-target_link_libraries(CityBuilder2 PRIVATE core api game SFML::Graphics SFML::Window SFML::Audio SFML::System)
+target_link_libraries(CityBuilder2 PRIVATE core api game)
