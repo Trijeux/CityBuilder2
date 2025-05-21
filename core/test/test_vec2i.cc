@@ -74,7 +74,7 @@ TEST_P(Vec2iOperationFixture, Div)
 	}
 	else
 	{
-		std::cout << "Impossible" << std::endl;
+		//std::cout << "Impossible" << std::endl;
 	}
 	if (v1.x != 0 || v1.y != 0)
 	{
@@ -97,7 +97,7 @@ TEST_P(Vec2iOperationFixture, Div)
 	}
 	else
 	{
-		std::cout << "Impossible" << std::endl;
+		//std::cout << "Impossible" << std::endl;
 	}
 }
 
