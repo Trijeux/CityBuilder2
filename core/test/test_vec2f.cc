@@ -1,8 +1,9 @@
-#include <maths/vec2f.h>
+#include "maths/vec2f.h"
+
 #include <gtest/gtest.h>
 
 struct Vec2fOperationFixture :
-	public ::testing::TestWithParam<std::pair<core::Vec2f, core::Vec2f>>
+	public ::testing::TestWithParam<std::pair<core::maths::Vec2f, core::maths::Vec2f>>
 {
 
 };
@@ -33,7 +34,7 @@ TEST_P(Vec2fOperationFixture, Sub)
 TEST_P(Vec2fOperationFixture, Dot)
 {
 	auto [v1, v2] = GetParam();
-	const auto result = core::Vec2f::Dot(v1, v2);
+	const auto result = core::maths::Vec2f::Dot(v1, v2);
 	EXPECT_FLOAT_EQ(result, v1.x * v2.x + v1.y * v2.y);
 }
 
@@ -106,22 +107,22 @@ TEST_P(Vec2fOperationFixture, Perpendicular)
 	auto [v1, v2] = GetParam();
 	const auto p1 = v1.Perpendicular();
 	const auto p2 = v2.Perpendicular();
-	EXPECT_FLOAT_EQ(core::Vec2f::Dot(v1, p1), 0);
-	EXPECT_FLOAT_EQ(core::Vec2f::Dot(v2, p2), 0);
+	EXPECT_FLOAT_EQ(core::maths::Vec2f::Dot(v1, p1), 0);
+	EXPECT_FLOAT_EQ(core::maths::Vec2f::Dot(v2, p2), 0);
 
 	const auto r1 = v1.Perpendicular2();
 	const auto r2 = v2.Perpendicular2();
-	EXPECT_FLOAT_EQ(core::Vec2f::Dot(v1, r1), 0);
-	EXPECT_FLOAT_EQ(core::Vec2f::Dot(v2, r2), 0);
+	EXPECT_FLOAT_EQ(core::maths::Vec2f::Dot(v1, r1), 0);
+	EXPECT_FLOAT_EQ(core::maths::Vec2f::Dot(v2, r2), 0);
 }
 
 TEST_P(Vec2fOperationFixture, Lerp)
 {
 	auto [v1, v2] = GetParam();
-	const auto result1 = core::Vec2f::Lerp(v1, v2.x);
-	const auto result2 = core::Vec2f::Lerp(v1, v2.y);
-	const auto result3 = core::Vec2f::Lerp(v2, v1.x);
-	const auto result4 = core::Vec2f::Lerp(v2, v1.y);
+	const auto result1 = core::maths::Vec2f::Lerp(v1, v2.x);
+	const auto result2 = core::maths::Vec2f::Lerp(v1, v2.y);
+	const auto result3 = core::maths::Vec2f::Lerp(v2, v1.x);
+	const auto result4 = core::maths::Vec2f::Lerp(v2, v1.y);
 	EXPECT_FLOAT_EQ(result1, v1.x * (1 - v2.x) + v1.y * v2.x);
 	EXPECT_FLOAT_EQ(result2, v1.x * (1 - v2.y) + v1.y * v2.y);
 	EXPECT_FLOAT_EQ(result3, v2.x * (1 - v1.x) + v2.y * v1.x);
@@ -173,11 +174,11 @@ TEST_P(Vec2fOperationFixture, Normalize)
 INSTANTIATE_TEST_SUITE_P(AllNumbers,
 	Vec2fOperationFixture,
 	testing::Values(
-		std::pair{ core::Vec2f{1.5f,3.2f}, core::Vec2f{2.3f,-4.1f} },
-		std::pair{ core::Vec2f{-10.2f, 15.2f}, core::Vec2f{-25.2f, -35.3f} },
-		std::pair{ core::Vec2f{0.0f, 0.0f}, core::Vec2f{0.0f, 0.0f} },
-		std::pair{ core::Vec2f{}, core::Vec2f{} },
-		std::pair{ core::Vec2f{1.2f, 2.1f}, core::Vec2f{} },
-		std::pair{ core::Vec2f{}, core::Vec2f{1.2f, 2.1f} }
+		std::pair{ core::maths::Vec2f{1.5f,3.2f}, core::maths::Vec2f{2.3f,-4.1f} },
+		std::pair{ core::maths::Vec2f{-10.2f, 15.2f}, core::maths::Vec2f{-25.2f, -35.3f} },
+		std::pair{ core::maths::Vec2f{0.0f, 0.0f}, core::maths::Vec2f{0.0f, 0.0f} },
+		std::pair{ core::maths::Vec2f{}, core::maths::Vec2f{} },
+		std::pair{ core::maths::Vec2f{1.2f, 2.1f}, core::maths::Vec2f{} },
+		std::pair{ core::maths::Vec2f{}, core::maths::Vec2f{1.2f, 2.1f} }
 	)
 );

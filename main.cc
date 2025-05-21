@@ -1,7 +1,7 @@
-﻿#include "game.h"
+﻿#include "main_game.h"
 
 int main()
 {
-	Game::Run();
+	game::MainGame::Run();
 	return 0;
 }

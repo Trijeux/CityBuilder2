@@ -1,8 +1,10 @@
-#ifndef CORE_MATHS_FIXEDQUEUE_H_
-#define CORE_MATHS_FIXEDQUEUE_H_
-#include <array>
+#ifndef CORE_MATHS_FIXED_QUEUE_H_
+#define CORE_MATHS_FIXED_QUEUE_H_
 
-namespace core
+#include <array>
+#include <stdexcept>
+
+namespace core::maths
 {
 
 	template<typename T, std::size_t N>
@@ -72,5 +74,5 @@ namespace core
 
 } // namespace core
 
-#endif  //CORE_MATHS_FIXEDQUEUE.H_
+#endif  //CORE_MATHS_FIXED_QUEUE_H_.H_
 

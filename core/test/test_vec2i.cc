@@ -1,9 +1,10 @@
-#include <maths/vec2i.h>
+#include "maths/vec2i.h"
+
 #include <gtest/gtest.h>
 
 
 struct Vec2iOperationFixture :
-	public ::testing::TestWithParam<std::pair<core::Vec2i, core::Vec2i>>
+	public ::testing::TestWithParam<std::pair<core::maths::Vec2i, core::maths::Vec2i>>
 {
 
 };
@@ -34,7 +35,7 @@ TEST_P(Vec2iOperationFixture, Sub)
 TEST_P(Vec2iOperationFixture, Dot)
 {
 	auto [v1, v2] = GetParam();
-	const auto result = core::Vec2i::Dot(v1, v2);
+	const auto result = core::maths::Vec2i::Dot(v1, v2);
 	EXPECT_EQ(result, v1.x * v2.x + v1.y * v2.y);
 }
 
@@ -105,30 +106,30 @@ TEST_P(Vec2iOperationFixture, Perpendicular)
 	auto [v1, v2] = GetParam();
 	const auto p1 = v1.Perpendicular();
 	const auto p2 = v2.Perpendicular();
-	EXPECT_EQ(core::Vec2i::Dot(v1, p1), 0);
-	EXPECT_EQ(core::Vec2i::Dot(v2, p2), 0);
+	EXPECT_EQ(core::maths::Vec2i::Dot(v1, p1), 0);
+	EXPECT_EQ(core::maths::Vec2i::Dot(v2, p2), 0);
 
 	const auto r1 = v1.Perpendicular2();
 	const auto r2 = v2.Perpendicular2();
-	EXPECT_EQ(core::Vec2i::Dot(v1, r1), 0);
-	EXPECT_EQ(core::Vec2i::Dot(v2, r2), 0);
+	EXPECT_EQ(core::maths::Vec2i::Dot(v1, r1), 0);
+	EXPECT_EQ(core::maths::Vec2i::Dot(v2, r2), 0);
 }
 
 TEST_P(Vec2iOperationFixture, Lerp)
 {
 	auto [v1, t] = GetParam();
-	const auto result = core::Vec2i::Lerp(v1, t.x);
+	const auto result = core::maths::Vec2i::Lerp(v1, t.x);
 	EXPECT_FLOAT_EQ(result, v1.x * (1 - t.x) + v1.y * t.x);
 }
 
 INSTANTIATE_TEST_SUITE_P(AllNumbers,
 	Vec2iOperationFixture,
 	testing::Values(
-		std::pair{ core::Vec2i{1,3}, core::Vec2i{2,-4} },
-		std::pair{ core::Vec2i{-10, 15}, core::Vec2i{-25, -35} },
-		std::pair{ core::Vec2i{0, 0}, core::Vec2i{0, 0} },
-		std::pair{ core::Vec2i{}, core::Vec2i{} },
-		std::pair{ core::Vec2i{1, 2}, core::Vec2i{} },
-		std::pair{ core::Vec2i{}, core::Vec2i{1, 2} }
+		std::pair{ core::maths::Vec2i{1,3}, core::maths::Vec2i{2,-4} },
+		std::pair{ core::maths::Vec2i{-10, 15}, core::maths::Vec2i{-25, -35} },
+		std::pair{ core::maths::Vec2i{0, 0}, core::maths::Vec2i{0, 0} },
+		std::pair{ core::maths::Vec2i{}, core::maths::Vec2i{} },
+		std::pair{ core::maths::Vec2i{1, 2}, core::maths::Vec2i{} },
+		std::pair{ core::maths::Vec2i{}, core::maths::Vec2i{1, 2} }
 	)
 );

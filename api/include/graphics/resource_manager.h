@@ -4,7 +4,7 @@
 #include "resource_sprit.h"
 
 
-namespace ResourceManager
+namespace api::graphics::ResourceManager
 {
 	void Setup();
 	sf::Texture& Sprit(ResourceSprit::Texture resource_id);

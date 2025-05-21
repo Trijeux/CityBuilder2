@@ -1,10 +1,9 @@
-#ifndef CORE_MATHS_BASICVECTOR_H_
-#define CORE_MATHS_BASICVECTOR_H_
+#ifndef CORE_MATHS_BASIC_VECTOR_H_
+#define CORE_MATHS_BASIC_VECTOR_H_
 
 #include <iostream>
-#include <iterator>
 
-namespace core
+namespace core::maths
 {
     template<typename T, std::size_t StackSize>
     class BasicVector {
@@ -120,4 +119,4 @@ namespace core
 
 }
 
-#endif  //CORE_MATHS_BASICVECTOR.H_
+#endif  //CORE_MATHS_BASIC_VECTOR_H_

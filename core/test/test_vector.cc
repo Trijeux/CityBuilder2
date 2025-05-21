@@ -1,10 +1,11 @@
-#include <gtest/gtest.h>
 #include "maths/Vector.h"
+
+#include <gtest/gtest.h>
 
 
 TEST(Vector, Constructor)
 {
-	core::Vector<int> vec;
+	core::maths::Vector<int> vec;
 	EXPECT_EQ(vec.size(), 0);
 	EXPECT_EQ(vec.capacity(), 0);
 	EXPECT_TRUE(vec.IsEmpty());
@@ -12,7 +13,7 @@ TEST(Vector, Constructor)
 
 TEST(Vector, push_back)
 {
-	core::Vector<int> vec;
+	core::maths::Vector<int> vec;
 	vec.push_back(1);
 	EXPECT_EQ(vec.size(), 1);
 	EXPECT_EQ(vec.capacity(), 1);
@@ -21,7 +22,7 @@ TEST(Vector, push_back)
 
 TEST(Vector, pop_back)
 {
-	core::Vector<int> vec;
+	core::maths::Vector<int> vec;
 	vec.push_back(1);
 	EXPECT_EQ(vec.size(), 1);
 	EXPECT_EQ(vec.capacity(), 1);
@@ -32,7 +33,7 @@ TEST(Vector, pop_back)
 
 TEST(Vector, Operator)
 {
-	core::Vector<int> vec;
+	core::maths::Vector<int> vec;
 	vec.push_back(1);
 	vec.push_back(2);
 	vec.push_back(3);
@@ -44,7 +45,7 @@ TEST(Vector, Operator)
 
 TEST(Vector, Reserve)
 {
-	core::Vector<int> vec;
+	core::maths::Vector<int> vec;
 	vec.reserve(50);
 	EXPECT_EQ(vec.size(), 0);
 	EXPECT_EQ(vec.capacity(), 50);
@@ -53,7 +54,7 @@ TEST(Vector, Reserve)
 
 TEST(Vector, Resize)
 {
-	core::Vector<int> vec;
+	core::maths::Vector<int> vec;
 	vec.reserve(50);
 	EXPECT_EQ(vec.size(), 0);
 	EXPECT_EQ(vec.capacity(), 50);
@@ -65,7 +66,7 @@ TEST(Vector, Resize)
 
 TEST(Vector, Clear)
 {
-	core::Vector<int> vec;
+	core::maths::Vector<int> vec;
 	vec.reserve(50);
 	vec.resize(25);
 	EXPECT_EQ(vec.size(), 25);

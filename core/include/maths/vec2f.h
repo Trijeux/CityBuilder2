@@ -1,16 +1,11 @@
 #ifndef CORE_MATHS_VEC2F_H_
 #define CORE_MATHS_VEC2F_H_
+
 #include <complex>
 #include <iostream>
 
-namespace core
+namespace core::maths
 {
-	/**
-	 * \brief Vec2f is a mathematical object represented
-	 */
-
-	 //Add constructor template
-
 	struct Vec2f
 	{
 		float x = 0, y = 0;
@@ -85,17 +80,10 @@ namespace core
 
 	}; // struct Vec2i
 
-	//Other Solve
-	//Operator overload for multiplication
-	/*constexpr Vec2f operator*(float scalar, const Vec2f& vec)
-	{
-		return { scalar * vec.x, scalar * vec.y };
-	}*/
-
 } // namespace core
 
 
 
 
 
-#endif  //CORE_MATHS_VEC2F.H_
+#endif  //CORE_MATHS_VEC2F_H_

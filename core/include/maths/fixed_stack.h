@@ -1,9 +1,10 @@
-#ifndef CORE_MATHS_FIXEDSTACK_H_
-#define CORE_MATHS_FIXEDSTACK_H_
+#ifndef CORE_MATHS_FIXED_STACK_H_
+#define CORE_MATHS_FIXED_STACK_H_
 
 #include <array>
+#include <stdexcept>
 
-namespace core
+namespace core::maths
 {
 
 template<typename T, std::size_t N>
@@ -67,4 +68,4 @@ public:
 
 } // namespace core
 
-#endif  //CORE_MATHS_FIXEDSTACK.H_
+#endif  //CORE_MATHS_FIXED_STACK_H_

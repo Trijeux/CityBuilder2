@@ -1,17 +1,18 @@
-#include <gtest/gtest.h>
 #include "maths/basic_vector.h"
+
+#include <gtest/gtest.h>
 
 
 TEST(BasicVector, Constructor)
 {
-	core::BasicVector<int, 10> vec;
+	core::maths::BasicVector<int, 10> vec;
 	EXPECT_EQ(vec.size(), 0);
 	EXPECT_EQ(vec.capacity(), 10);
 }
 
 TEST(BasicVector, push_back)
 {
-	core::BasicVector<int, 10> vec;
+	core::maths::BasicVector<int, 10> vec;
 	vec.push_back(1);
 	EXPECT_EQ(vec.size(), 1);
 	EXPECT_EQ(vec.capacity(), 10);
@@ -19,7 +20,7 @@ TEST(BasicVector, push_back)
 
 TEST(BasicVector, pop_back)
 {
-	core::BasicVector<int, 10> vec;
+	core::maths::BasicVector<int, 10> vec;
 	vec.push_back(1);
 	EXPECT_EQ(vec.size(), 1);
 	EXPECT_EQ(vec.capacity(), 10);
@@ -30,7 +31,7 @@ TEST(BasicVector, pop_back)
 
 TEST(BasicVector, Operator)
 {
-	core::BasicVector<int, 10> vec;
+	core::maths::BasicVector<int, 10> vec;
 	vec.push_back(1);
 	vec.push_back(2);
 	vec.push_back(3);
@@ -42,7 +43,7 @@ TEST(BasicVector, Operator)
 
 TEST(BasicVector, Reserve)
 {
-	core::BasicVector<int, 10> vec;
+	core::maths::BasicVector<int, 10> vec;
 	EXPECT_EQ(vec.size(), 0);
 	EXPECT_EQ(vec.capacity(), 10);
 	vec.reserve(50);
@@ -52,7 +53,7 @@ TEST(BasicVector, Reserve)
 
 TEST(BasicVector, Begin)
 {
-	core::BasicVector<int, 10> vec;
+	core::maths::BasicVector<int, 10> vec;
 	vec.push_back(1);
 	vec.push_back(2);
 	vec.push_back(3);
@@ -64,7 +65,7 @@ TEST(BasicVector, Begin)
 
 TEST(BasicVector, End)
 {
-	core::BasicVector<int, 10> vec;
+	core::maths::BasicVector<int, 10> vec;
 	vec.push_back(1);
 	vec.push_back(2);
 	vec.push_back(3);

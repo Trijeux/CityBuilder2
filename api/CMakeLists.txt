@@ -1,4 +1,4 @@
-﻿file(GLOB_RECURSE SRC_FILES src/*.cc)
+file(GLOB_RECURSE SRC_FILES src/*.cc)
 file(GLOB_RECURSE HEADER_FILES include/*.h)
 
 find_package(SFML COMPONENTS Graphics Window Audio System CONFIG REQUIRED)

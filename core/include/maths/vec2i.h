@@ -2,14 +2,8 @@
 #define CORE_MATHS_VEC2I_H_
 #include <complex>
 
-namespace core
+namespace core::maths
 {
-	/**
-	 * \brief Vec2i is a mathematical object represented
-	 */
-
-	 //Add constructor template
-
 	struct Vec2i
 	{
 		int x = 0, y = 0;
@@ -62,17 +56,7 @@ namespace core
 
 	}; // struct Vec2i
 
-	//Other Solve
-	//Operator overload for multiplication
-	/*constexpr Vec2i operator*(int scalar, const Vec2i& vec)
-	{
-		return { scalar * vec.x, scalar * vec.y };
-	}*/
-
 } // namespace core
 
 
-
-
-
-#endif  //CORE_MATHS_VEC2I.H_
+#endif  //CORE_MATHS_VEC2I_H_

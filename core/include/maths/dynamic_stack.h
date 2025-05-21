@@ -1,9 +1,10 @@
-#ifndef CORE_MATHS_DYNAMICSTACK_H_
-#define CORE_MATHS_DYNAMICSTACK_H_
+#ifndef CORE_MATHS_DYNAMIC_STACK_H_
+#define CORE_MATHS_DYNAMIC_STACK_H_
 
+#include <stdexcept>
 #include <vector>
 
-namespace core
+namespace core::maths
 {
 
 template<typename T>
@@ -61,4 +62,4 @@ public:
 
 } // namespace core
 
-#endif  //CORE_MATHS_DYNAMICSTACK.H_
+#endif  //CORE_MATHS_DYNAMIC_STACK_H_

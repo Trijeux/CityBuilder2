@@ -1,10 +1,10 @@
-#ifndef CORE_MATHS_SMALLVECTOR_H_
-#define CORE_MATHS_SMALLVECTOR_H_
+#ifndef CORE_MATHS_SMALL_VECTOR_H_
+#define CORE_MATHS_SMALL_VECTOR_H_
 
 #include <iostream>
 #include <stdexcept>
 
-namespace core
+namespace core::maths
 {
 	template<typename T, std::size_t Capacity>
 	class SmallVector {
@@ -94,4 +94,4 @@ namespace core
 	};
 }
 
-#endif  //CORE_MATHS_SMALLVECTOR_H_
+#endif  //CORE_MATHS_SMALL_VECTOR_H_

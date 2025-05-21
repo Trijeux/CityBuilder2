@@ -1,10 +1,11 @@
-#include <gtest/gtest.h>
 #include "maths/dynamic_stack.h"
+
+#include <gtest/gtest.h>
 
 
 TEST(DynamicStack, Constructor)
 {
-	core::DynamicStack<int> DS;
+	core::maths::DynamicStack<int> DS;
 	EXPECT_TRUE(DS.IsEmpty());
 	EXPECT_EQ(DS.Capacity(), 0);
 	EXPECT_EQ(DS.Size(), 0);
@@ -12,7 +13,7 @@ TEST(DynamicStack, Constructor)
 
 TEST(DynamicStack, Push)
 {
-	core::DynamicStack<int> DS;
+	core::maths::DynamicStack<int> DS;
 	DS.push(1);
 	EXPECT_EQ(DS.Capacity(), 1);
 	EXPECT_EQ(DS.Size(), 1);
@@ -20,7 +21,7 @@ TEST(DynamicStack, Push)
 
 TEST(DynamicStack, Pop)
 {
-	core::DynamicStack<int> DS;
+	core::maths::DynamicStack<int> DS;
 	DS.push(1);
 	EXPECT_EQ(DS.Capacity(), 1);
 	EXPECT_EQ(DS.Size(), 1);
@@ -31,7 +32,7 @@ TEST(DynamicStack, Pop)
 
 TEST(DynamicStack, Top)
 {
-	core::DynamicStack<int> DS;
+	core::maths::DynamicStack<int> DS;
 	DS.push(1);
 	DS.push(2);
 	DS.push(3);

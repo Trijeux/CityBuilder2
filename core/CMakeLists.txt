@@ -15,4 +15,6 @@ if (ENABLE_TESTS)
     target_compile_definitions(core PRIVATE TRACY_ENABLE=1)
   endif (ENABLE_PROFILING)
 
+    add_test(Core core_test)
+
 endif (ENABLE_TESTS)

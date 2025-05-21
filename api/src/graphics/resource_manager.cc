@@ -1,10 +1,10 @@
 ﻿#include "graphics/resource_sprit.h"
 
-namespace ResourceManager
+namespace api::graphics::ResourceManager
 {
 	namespace
 	{
-		ResourceSprit resource_sprit_;
+		api::graphics::ResourceSprit resource_sprit_;
 	}
 
 	void Setup()
@@ -12,7 +12,7 @@ namespace ResourceManager
 		resource_sprit_.Setup();
 	}
 
-	sf::Texture& Sprit(const ResourceSprit::Texture resource_id)
+	sf::Texture& Sprit(const api::graphics::ResourceSprit::Texture resource_id)
 	{
 		return resource_sprit_.GetTexture(resource_id);
 	}

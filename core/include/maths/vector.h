@@ -1,11 +1,11 @@
 #ifndef CORE_MATHS_VECTOR_H_
 #define CORE_MATHS_VECTOR_H_
 
-#include <vector>
-#include <stdexcept>
 #include <memory>
+#include <stdexcept>
+#include <vector>
 
-namespace core
+namespace core::maths
 {
     template<typename T, class Allocator = std::allocator<T>, std::size_t GrowthDividend = 3, std::size_t GrowthDivisor = 2>
     class Vector {
@@ -33,7 +33,6 @@ namespace core
             }
             data_.pop_back();
 
-            // Si la taille devient zéro, réinitialiser la capacité à zéro
             if (data_.empty()) {
                 data_.shrink_to_fit();
             }
@@ -69,7 +68,7 @@ namespace core
 
         void clear() {
             data_.clear();
-            data_.shrink_to_fit(); // Réinitialiser la capacité à zéro lorsque la taille devient zéro
+            data_.shrink_to_fit();
         }
     };
 }

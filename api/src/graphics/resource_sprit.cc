@@ -1,13 +1,13 @@
-#include <iostream>
-
 #include "graphics/resource_sprit.h"
 
-void ResourceSprit::Setup()
+#include <iostream>
+
+void api::graphics::ResourceSprit::Setup()
 {
 	LoadAllTextures();
 }
 
-sf::Texture& ResourceSprit::GetTexture(Texture resource_id)
+sf::Texture& api::graphics::ResourceSprit::GetTexture(Texture resource_id)
 {
 	if(static_cast<int>(resource_id) < textures_.size())
 	{
@@ -16,7 +16,7 @@ sf::Texture& ResourceSprit::GetTexture(Texture resource_id)
 	return blank_texture_;
 }
 
-void ResourceSprit::LoadAllTextures()
+void api::graphics::ResourceSprit::LoadAllTextures()
 {
 	blank_texture_ = sf::Texture();
 

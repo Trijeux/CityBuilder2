@@ -1,9 +1,10 @@
-﻿#include <SFML/Graphics/RenderTarget.hpp>
+﻿#include "graphics/tile.h"
 
-#include "graphics/tile.h"
+#include <SFML/Graphics/RenderTarget.hpp>
+
 #include "graphics/resource_manager.h"
 
-sf::Texture& Tile::GetFromType() const
+sf::Texture& api::graphics::Tile::GetFromType() const
 {
 	switch (type_)
 	{
@@ -18,7 +19,7 @@ sf::Texture& Tile::GetFromType() const
 	}
 }
 
-Tile::Tile(const TileType type, const float x, const float y, const bool is_walkable)
+api::graphics::Tile::Tile(const TileType type, const float x, const float y, const bool is_walkable)
 {
 	type_ = type;
 
@@ -28,7 +29,7 @@ Tile::Tile(const TileType type, const float x, const float y, const bool is_walk
 	is_walkable_ = is_walkable;
 }
 
-void Tile::draw(sf::RenderTarget& target, sf::RenderStates states) const
+void api::graphics::Tile::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
 	target.draw(*sprite_, states);
 }

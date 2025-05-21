@@ -3,12 +3,12 @@
 #include "graphics/resource_manager.h"
 #include "graphics/tilemap.h"
 
-namespace Game
+namespace game::MainGame
 {
 	namespace
 	{
 		sf::RenderWindow          window;
-		TileMap                   tilemap;
+		api::graphics::TileMap                   tilemap;
 	}
 
 	void CreateTilemap()
@@ -21,7 +21,7 @@ namespace Game
 	static void Setup()
 	{
 		window.create(sf::VideoMode({1600, 800}), "Game");
-		ResourceManager::Setup();
+		api::graphics::ResourceManager::Setup();
 		CreateTilemap();
 	}
 
