@@ -5,11 +5,11 @@ option(ENABLE_TESTS "Enable Tests" OFF)
 
 if (ENABLE_TESTS)
     list(APPEND VCPKG_MANIFEST_FEATURES "testing")
-endif (ENABLE_TESTS)
+endif ()
 
-if(ENABLE_PROFILING)
+if (ENABLE_PROFILING)
     list(APPEND VCPKG_MANIFEST_FEATURES "profiling")
-endif(ENABLE_PROFILING)
+endif ()
 
 project(CityBuilder2)
 
@@ -19,19 +19,25 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 if (ENABLE_TESTS)
     enable_testing()
     find_package(GTest CONFIG REQUIRED)
-endif (ENABLE_TESTS)
+endif ()
 
-if(ENABLE_PROFILING)
+if (ENABLE_PROFILING)
     find_package(Tracy CONFIG REQUIRED)
-endif(ENABLE_PROFILING)
+endif ()
 
 add_subdirectory(core/)
 add_subdirectory(api/)
 add_subdirectory(game/)
 
-file(REMOVE_RECURSE "${CMAKE_BINARY_DIR}/resources")
-file(COPY ${CMAKE_SOURCE_DIR}/resources DESTINATION ${CMAKE_BINARY_DIR})
+
+add_custom_target(copy_resources ALL
+        COMMAND ${CMAKE_COMMAND} -E remove_directory ${CMAKE_BINARY_DIR}/resources
+        COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_SOURCE_DIR}/resources ${CMAKE_BINARY_DIR}/resources
+        COMMENT "🔄 Copying all resources to build directory"
+)
+
 
 add_executable(CityBuilder2 main.cc)
+add_dependencies(CityBuilder2 copy_resources)
 
 target_link_libraries(CityBuilder2 PRIVATE core api game)

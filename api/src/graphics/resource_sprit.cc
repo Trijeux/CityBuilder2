@@ -30,15 +30,15 @@ void api::graphics::ResourceSprit::LoadAllTextures()
 	#endif
 	blank_texture_ = sf::Texture();
 
-	if(!textures_.at(static_cast<int>(Texture::kGround)).loadFromFile("resources/sprit/ground.png"))
+	if(!textures_.at(static_cast<int>(Texture::kGround)).loadFromFile("resources/sprite/ground.png"))
 	{
 		std::cout << "Error loading ground texture" << std::endl;
 	}
-	if(!textures_.at(static_cast<int>(Texture::kStone)).loadFromFile("resources/sprit/stone.png"))
+	if(!textures_.at(static_cast<int>(Texture::kStone)).loadFromFile("resources/sprite/stone.png"))
 	{
 		std::cout << "Error loading stone texture" << std::endl;
 	}
-	if(!textures_.at(static_cast<int>(Texture::kForest)).loadFromFile("resources/sprit/forest.png"))
+	if(!textures_.at(static_cast<int>(Texture::kForest)).loadFromFile("resources/sprite/forest.png"))
 	{
 		std::cout << "Error loading forest texture" << std::endl;
 	}

@@ -15,7 +15,7 @@ api::graphics::TileMap::TileMap()
 	#if TRACY_ENABLE
 	ZoneScopedN("Creat Tilemap");
 	#endif
-	size_sprit_ = sf::Vector2u(sf::Texture("resources/sprit/ground.png").getSize());
+	size_sprit_ = sf::Vector2u(sf::Texture("resources/sprite/ground.png").getSize());
 }
 
 void api::graphics::TileMap::Setup(const sf::Vector2u playground_size_u)
