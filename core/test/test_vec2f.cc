@@ -52,48 +52,41 @@ TEST_P(Vec2fOperationFixture, Div)
 {
 	auto [v1, v2] = GetParam();
 
-	if(v2.x != 0)
+	auto testDivByComponent = [&](float divisor, const auto& vecA, const auto& vecB)
 	{
-		const auto result1 = v1 / v2.x;
-		const auto result3 = v2 / v2.x;
-		EXPECT_FLOAT_EQ(result1.x, v1.x / v2.x);
-		EXPECT_FLOAT_EQ(result1.y, v1.y / v2.x);
-		EXPECT_FLOAT_EQ(result3.x, v2.x / v2.x);
-		EXPECT_FLOAT_EQ(result3.y, v2.y / v2.x);
+		const auto resA = vecA / divisor;
+		const auto resB = vecB / divisor;
 
-	}
+		auto checkInfOrNan = [](const float origVal, const float resVal)
+		{
+			if(origVal != 0.0f)
+				EXPECT_TRUE(std::isinf(resVal));
+			else
+				EXPECT_TRUE(std::isnan(resVal));
+		};
 
-	if(v2.y != 0)
-	{
-		const auto result2 = v1 / v2.y;
-		const auto result4 = v2 / v2.y;
-		EXPECT_FLOAT_EQ(result2.x, v1.x / v2.y);
-		EXPECT_FLOAT_EQ(result2.y, v1.y / v2.y);
-		EXPECT_FLOAT_EQ(result4.x, v2.x / v2.y);
-		EXPECT_FLOAT_EQ(result4.y, v2.y / v2.y);
+		if(divisor != 0.0f)
+		{
+			EXPECT_FLOAT_EQ(resA.x, vecA.x / divisor);
+			EXPECT_FLOAT_EQ(resA.y, vecA.y / divisor);
+			EXPECT_FLOAT_EQ(resB.x, vecB.x / divisor);
+			EXPECT_FLOAT_EQ(resB.y, vecB.y / divisor);
+		}
+		else
+		{
+			checkInfOrNan(vecA.x, resA.x);
+			checkInfOrNan(vecA.y, resA.y);
+			checkInfOrNan(vecB.x, resB.x);
+			checkInfOrNan(vecB.y, resB.y);
+		}
+	};
 
-	}
-
-	if(v1.x != 0)
-	{
-		const auto result1 = v2 / v1.x;
-		const auto result3 = v1 / v1.x;
-		EXPECT_FLOAT_EQ(result3.x, v1.x / v1.x);
-		EXPECT_FLOAT_EQ(result3.y, v1.y / v1.x);
-		EXPECT_FLOAT_EQ(result1.x, v2.x / v1.x);
-		EXPECT_FLOAT_EQ(result1.y, v2.y / v1.x);
-	}
-
-	if(v1.y != 0)
-	{
-		const auto result2 = v2 / v1.y;
-		const auto result4 = v1 / v1.y;
-		EXPECT_FLOAT_EQ(result4.x, v1.x / v1.y);
-		EXPECT_FLOAT_EQ(result4.y, v1.y / v1.y);
-		EXPECT_FLOAT_EQ(result2.x, v2.x / v1.y);
-		EXPECT_FLOAT_EQ(result2.y, v2.y / v1.y);
-	}
+	testDivByComponent(v2.x, v1, v2);
+	testDivByComponent(v2.y, v1, v2);
+	testDivByComponent(v1.x, v2, v1);
+	testDivByComponent(v1.y, v2, v1);
 }
+
 
 TEST_P(Vec2fOperationFixture, Perpendicular)
 {

@@ -8,15 +8,21 @@
 #endif
 
 #include "FastNoiseLite.h"
-#include "graphics/resource_manager.h"
+#include "general/resource_manager.h"
 
 api::graphics::TileMap::TileMap()
 {
+	#if TRACY_ENABLE
+	ZoneScopedN("Creat Tilemap");
+	#endif
 	size_sprit_ = sf::Vector2u(sf::Texture("resources/sprit/ground.png").getSize());
 }
 
 void api::graphics::TileMap::Setup(const sf::Vector2u playground_size_u)
 {
+	#if TRACY_ENABLE
+	ZoneScopedN("Setup Tilemap");
+	#endif
 	playground_size_u_ = playground_size_u;
 	tiles_.reserve(playground_size_u_.x * playground_size_u_.y);
 }
@@ -78,6 +84,9 @@ void api::graphics::TileMap::InitMap()
 
 void api::graphics::TileMap::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
+	#if TRACY_ENABLE
+	ZoneScopedN("Draw Tilemap");
+	#endif
 	for(const auto& tile : tiles_)
 	{
 		target.draw(tile, states);

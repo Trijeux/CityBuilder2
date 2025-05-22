@@ -2,25 +2,32 @@
 
 #include <SFML/Graphics/RenderTarget.hpp>
 
-#include "graphics/resource_manager.h"
+#if TRACY_ENABLE
+	#include <tracy/Tracy.hpp>
+#endif
+
+#include "general/resource_manager.h"
 
 sf::Texture& api::graphics::Tile::GetFromType() const
 {
-	switch (type_)
+	switch(type_)
 	{
 	case TileType::kForest:
-		return ResourceManager::Sprit(ResourceSprit::Texture::kForest);
+		return general::ResourceManager::Sprit(ResourceSprit::Texture::kForest);
 	case TileType::kGround:
-		return ResourceManager::Sprit(ResourceSprit::Texture::kGround);
+		return general::ResourceManager::Sprit(ResourceSprit::Texture::kGround);
 	case TileType::kStone:
-		return ResourceManager::Sprit(ResourceSprit::Texture::kStone);
+		return general::ResourceManager::Sprit(ResourceSprit::Texture::kStone);
 	default:
-		return ResourceManager::Sprit(ResourceSprit::Texture::kMax);
+		return general::ResourceManager::Sprit(ResourceSprit::Texture::kMax);
 	}
 }
 
 api::graphics::Tile::Tile(const TileType type, const float x, const float y, const bool is_walkable)
 {
+	#if TRACY_ENABLE
+	ZoneScopedN("Creat Tile");
+	#endif
 	type_ = type;
 
 	sprite_ = sf::Sprite(GetFromType());
@@ -31,7 +38,8 @@ api::graphics::Tile::Tile(const TileType type, const float x, const float y, con
 
 void api::graphics::Tile::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
+	#if TRACY_ENABLE
+	ZoneScopedN("Draw Tile");
+	#endif
 	target.draw(*sprite_, states);
 }
-
-

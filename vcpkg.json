@@ -8,5 +8,5 @@
     "testing": {"description": "Testing", "dependencies": ["gtest"]},
     "profiling": {"description": "Profiling", "dependencies": ["tracy"]}
   },
-  "builtin-baseline": "2c7705e70dcfb70e5f726459c3e399bd780bc1fc"
+  "builtin-baseline": "88fd310a32df69062a20d11c362cd6659c1ab7ad"
 }

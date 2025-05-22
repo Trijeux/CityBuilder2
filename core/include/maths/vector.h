@@ -7,70 +7,99 @@
 
 namespace core::maths
 {
-    template<typename T, class Allocator = std::allocator<T>, std::size_t GrowthDividend = 3, std::size_t GrowthDivisor = 2>
-    class Vector {
-    private:
-        std::vector<T, Allocator> data_;
+	template <typename T, class Allocator = std::allocator<T>, std::size_t GrowthDividend = 3, std::size_t GrowthDivisor = 2>
+	class Vector
+	{
+	private:
+		std::vector<T, Allocator> data_;
 
-        void grow_if_needed() {
-            if (data_.size() == data_.capacity()) {
-                std::size_t new_capacity = (data_.capacity() * GrowthDividend) / GrowthDivisor;
-                data_.reserve(new_capacity);
-            }
-        }
+		void grow_if_needed()
+		{
+			if(data_.size() == data_.capacity())
+			{
+				std::size_t new_capacity = (data_.capacity() * GrowthDividend) / GrowthDivisor;
+				data_.reserve(new_capacity);
+			}
+		}
 
-    public:
-        Vector() = default;
+	public:
+		Vector() = default;
 
-        void push_back(const T& value) {
-            grow_if_needed();
-            data_.push_back(value);
-        }
+		template<typename... Args>
+		void emplace_back(Args&&... args)
+		{
+			grow_if_needed();
+			data_.emplace_back(std::forward<Args>(args)...);
+		}
 
-        void pop_back() {
-            if (data_.empty()) {
-                throw std::out_of_range("Vector is empty");
-            }
-            data_.pop_back();
+		void push_back(const T& value)
+		{
+			grow_if_needed();
+			data_.push_back(value);
+		}
 
-            if (data_.empty()) {
-                data_.shrink_to_fit();
-            }
-        }
+		void pop_back()
+		{
+			if(data_.empty())
+			{
+				throw std::out_of_range("Vector is empty");
+			}
+			data_.pop_back();
 
-        T& operator[](std::size_t index) {
-            return data_[index];
-        }
+			if(data_.empty())
+			{
+				data_.shrink_to_fit();
+			}
+		}
 
-        const T& operator[](std::size_t index) const {
-            return data_[index];
-        }
+		T& operator[](std::size_t index)
+		{
+			return data_[index];
+		}
 
-        std::size_t size() const {
-            return data_.size();
-        }
+		const T& operator[](std::size_t index) const
+		{
+			return data_[index];
+		}
 
-        std::size_t capacity() const {
-            return data_.capacity();
-        }
+		std::size_t size() const
+		{
+			return data_.size();
+		}
 
-        void reserve(std::size_t new_cap) {
-            data_.reserve(new_cap);
-        }
+		std::size_t capacity() const
+		{
+			return data_.capacity();
+		}
 
-        void resize(std::size_t new_size) {
-            data_.resize(new_size);
-        }
+		void reserve(std::size_t new_cap)
+		{
+			data_.reserve(new_cap);
+		}
 
-        bool IsEmpty() const {
-            return data_.empty();
-        }
+		void resize(std::size_t new_size)
+		{
+			data_.resize(new_size);
+		}
 
-        void clear() {
-            data_.clear();
-            data_.shrink_to_fit();
-        }
-    };
+		bool IsEmpty() const
+		{
+			return data_.empty();
+		}
+
+		void clear()
+		{
+			data_.clear();
+			data_.shrink_to_fit();
+		}
+
+		// Iterators
+		auto begin() noexcept { return data_.begin(); }
+		auto end() noexcept { return data_.end(); }
+
+		auto begin() const noexcept { return data_.begin(); }
+		auto end() const noexcept { return data_.end(); }
+	};
 }
 
 #endif //CORE_MATHS_VECTOR_H_
