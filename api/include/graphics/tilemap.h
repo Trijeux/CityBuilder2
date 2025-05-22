@@ -10,7 +10,6 @@ namespace api::graphics
 	class TileMap final : public sf::Drawable
 	{
 	private:
-
 		sf::Vector2u playground_size_u_;
 
 		std::vector<Tile> tiles_;
