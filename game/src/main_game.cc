@@ -5,6 +5,10 @@
 	#include <tracy/Tracy.hpp>
 #endif
 
+#if DEBUG_ENABLE
+#include "debug/button_generator.h"
+#endif
+
 #include "general/resource_manager.h"
 #include "graphics/tilemap.h"
 
@@ -16,6 +20,11 @@ namespace game::MainGame
 		std::optional<sf::Sound> sound;
 		std::optional<sf::Text> text;
 		api::graphics::TileMap tilemap;
+
+		#if DEBUG_ENABLE
+		api::debug::ButtonGenerator button_generator;
+		#endif
+
 	}
 
 	void CreateTilemap()
@@ -32,9 +41,11 @@ namespace game::MainGame
 		window.create(sf::VideoMode({1600, 800}), "Game");
 		api::general::ResourceManager::Setup();
 
-		text = sf::Text(api::general::ResourceManager::Font(api::graphics::ResourceFont::Font::kPixel), "Hello World");
+		text = sf::Text(api::general::ResourceManager::Font(api::graphics::ResourceFont::Font::kPixel), "City Builder 2");
+		text->setFillColor(sf::Color::Red);
 		text->setOrigin(text->getGlobalBounds().size / 2.f);
-		text->setPosition(sf::Vector2f(window.getSize().x / 2.f, window.getSize().y / 2.f));
+		text->setScale(sf::Vector2f(2.f,2.f));
+		text->setPosition(sf::Vector2f(window.getSize().x / 2.f, window.getSize().y / 15.f));
 
 		sound = sf::Sound(api::general::ResourceManager::Sound(api::sound::ResourceSound::Sound::kMusicBG));
 		sound->setLooping(true);
@@ -43,6 +54,10 @@ namespace game::MainGame
 
 
 		CreateTilemap();
+
+		#if DEBUG_ENABLE
+		button_generator.Setup(sf::Vector2f(window.getSize().x - 100, 30), sf::Vector2f(150.f, 25.f));
+		#endif
 	}
 
 	void Run()
@@ -61,6 +76,11 @@ namespace game::MainGame
 			window.clear();
 			window.draw(tilemap);
 			window.draw(*text);
+
+			#if DEBUG_ENABLE
+			window.draw(button_generator);
+			#endif
+
 			window.display();
 		}
 	}

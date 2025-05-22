@@ -12,3 +12,7 @@ if(ENABLE_PROFILING)
     target_link_libraries(game PRIVATE Tracy::TracyClient)
     target_compile_definitions(game PRIVATE TRACY_ENABLE=1)
 endif(ENABLE_PROFILING)
+
+if (ENABLE_DEBUG)
+    target_compile_definitions(game PRIVATE DEBUG_ENABLE=1)
+endif (ENABLE_DEBUG)

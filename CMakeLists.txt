@@ -2,6 +2,7 @@ cmake_minimum_required(VERSION 3.31)
 
 option(ENABLE_PROFILING "Enable Tracy Profiling" OFF)
 option(ENABLE_TESTS "Enable Tests" OFF)
+option(ENABLE_DEBUG "Enable Debug" OFF)
 
 if (ENABLE_TESTS)
     list(APPEND VCPKG_MANIFEST_FEATURES "testing")
