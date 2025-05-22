@@ -16,15 +16,14 @@ namespace game::MainGame
 {
 	namespace
 	{
-		sf::RenderWindow       window;
+		sf::RenderWindow         window;
 		std::optional<sf::Sound> sound;
-		std::optional<sf::Text> text;
-		api::graphics::TileMap tilemap;
+		std::optional<sf::Text>  text;
+		api::graphics::TileMap   tilemap;
 
 		#if DEBUG_ENABLE
 		api::debug::ButtonGenerator button_generator;
 		#endif
-
 	}
 
 	void CreateTilemap()
@@ -44,7 +43,7 @@ namespace game::MainGame
 		text = sf::Text(api::general::ResourceManager::Font(api::graphics::ResourceFont::Font::kPixel), "City Builder 2");
 		text->setFillColor(sf::Color::Red);
 		text->setOrigin(text->getGlobalBounds().size / 2.f);
-		text->setScale(sf::Vector2f(2.f,2.f));
+		text->setScale(sf::Vector2f(2.f, 2.f));
 		text->setPosition(sf::Vector2f(window.getSize().x / 2.f, window.getSize().y / 15.f));
 
 		sound = sf::Sound(api::general::ResourceManager::Sound(api::sound::ResourceSound::Sound::kMusicBG));
@@ -71,7 +70,12 @@ namespace game::MainGame
 			while(const std::optional event = window.pollEvent())
 			{
 				if(event->is<sf::Event::Closed>()) window.close();
+
+				#if DEBUG_ENABLE
+				if(button_generator.ActivateButton(*event, window)) tilemap.InitMap();
+				#endif
 			}
+
 
 			window.clear();
 			window.draw(tilemap);
