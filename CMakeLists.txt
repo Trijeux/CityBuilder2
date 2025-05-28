@@ -37,7 +37,6 @@ add_custom_target(copy_resources ALL
         COMMENT "🔄 Copying all resources to build directory"
 )
 
-
 add_executable(CityBuilder2 main.cc)
 add_dependencies(CityBuilder2 copy_resources)
 

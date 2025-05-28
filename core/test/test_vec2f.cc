@@ -160,25 +160,23 @@ TEST_P(Vec2fOperationFixture, Normalize)
 TEST_P(Vec2fOperationFixture, Rotate)
 {
 	auto [v1, v2] = GetParam();
+	const auto resultv1 = v1.Rotate(core::Degree(90));
+	const auto resultv2 = v2.Rotate(core::Degree(90));
+	EXPECT_FLOAT_EQ(resultv1.x, v1.x * core::Cos(core::Degree(90)) - v1.y * core::Sin(core::Degree(90)));
+	EXPECT_FLOAT_EQ(resultv1.y, v1.x * core::Sin(core::Degree(90)) + v1.y * core::Cos(core::Degree(90)));
+	EXPECT_FLOAT_EQ(resultv2.x, v2.x * core::Cos(core::Degree(90)) - v2.y * core::Sin(core::Degree(90)));
+	EXPECT_FLOAT_EQ(resultv2.y, v2.x * core::Sin(core::Degree(90)) + v2.y * core::Cos(core::Degree(90)));
+	EXPECT_NEAR(resultv1.Dot(v1), 0.0f, 1e-4f);
+	EXPECT_NEAR(resultv2.Dot(v2), 0.0f, 1e-4f);
+}
 
-	const core::maths::Vec2f expected_v1 = {
-		v1.x * std::cos(0.5f) - v1.y * std::sin(0.5f),
-		v1.x * std::sin(0.5f) + v1.y * std::cos(0.5f)
-	};
-
-	const core::maths::Vec2f expected_v2 = {
-		v2.x * std::cos(0.5f) - v2.y * std::sin(0.5f),
-		v2.x * std::sin(0.5f) + v2.y * std::cos(0.5f)
-	};
-
-	v1.Rotate(0.5f);
-	v2.Rotate(0.5f);
-
-	EXPECT_FLOAT_EQ(v1.x, expected_v1.x);
-	EXPECT_FLOAT_EQ(v1.y, expected_v1.y);
-
-	EXPECT_FLOAT_EQ(v2.x, expected_v2.x);
-	EXPECT_FLOAT_EQ(v2.y, expected_v2.y);
+TEST_P(Vec2fOperationFixture, AngleBetween)
+{
+	auto [v1, v2] = GetParam();
+	const auto resultv1 = v1.AngleBetween(v2);
+	const auto resultv2 = v2.AngleBetween(v1);
+	EXPECT_FLOAT_EQ(resultv1, std::atan2(v2.y, v2.x) - std::atan2(v1.y, v1.x));
+	EXPECT_FLOAT_EQ(resultv2,  std::atan2(v1.y, v1.x) - std::atan2(v2.y, v2.x));
 }
 
 INSTANTIATE_TEST_SUITE_P(AllNumbers,

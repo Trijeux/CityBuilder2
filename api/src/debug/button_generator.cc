@@ -60,6 +60,4 @@ namespace api::debug
 
 		return false;
 	}
-
-
 }

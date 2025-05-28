@@ -17,4 +17,4 @@ if (ENABLE_TESTS)
 
     add_test(Core core_test)
 
-endif (ENABLE_TESTS)
+endif ()

@@ -4,33 +4,40 @@
 #include <complex>
 #include <iostream>
 
+#include "func.h"
+
 namespace core::maths
 {
 	struct Vec2f
 	{
 		float x = 0, y = 0;
 
-		constexpr Vec2f operator+(const Vec2f other) const
+		[[nodiscard]] constexpr Vec2f operator+(const Vec2f other) const
 		{
 			return { x + other.x, y + other.y };
 		}
 
-		constexpr Vec2f operator-(const Vec2f other) const
+		[[nodiscard]] constexpr Vec2f operator-(const Vec2f other) const
 		{
 			return { x - other.x, y - other.y };
 		}
 
-		constexpr Vec2f operator-() const
+		[[nodiscard]] constexpr Vec2f operator-() const
 		{
 			return { -x, -y };
 		}
 
-		static constexpr float Dot(const Vec2f v1,const Vec2f v2)
+		[[nodiscard]] constexpr float Dot(const Vec2f& other) const
+		{
+			return x * other.x + y * other.y;
+		}
+
+		[[nodiscard]] static constexpr float Dot(const Vec2f v1,const Vec2f v2)
 		{
 			return v1.x * v2.x + v1.y * v2.y;
 		}
 
-		constexpr Vec2f operator*(const float t) const
+		[[nodiscard]] constexpr Vec2f operator*(const float t) const
 		{
 			return { x * t,y * t };
 		}
@@ -39,7 +46,7 @@ namespace core::maths
 			return { t * vec.x, t * vec.y };
 		}
 
-		constexpr Vec2f operator/(const float t) const
+		[[nodiscard]] constexpr Vec2f operator/(const float t) const
 		{
 			return { x / t,y / t };
 		}
@@ -55,7 +62,7 @@ namespace core::maths
 			return { y, -x };
 		}
 
-		static constexpr float Lerp(const Vec2f v1, const float t)
+		[[nodiscard]] static constexpr float Lerp(const Vec2f v1, const float t)
 		{
 			return v1.x * (1 - t) + v1.y * t;
 		}
@@ -80,20 +87,21 @@ namespace core::maths
 			return *this / man;
 		}
 
-		void Rotate(const float angle)
+		[[nodiscard]] Vec2f Rotate(const Radian angle) const
 		{
-			const float c = std::cos(angle);
-			const float s = std::sin(angle);
+			const float c = Cos(angle);
+			const float s = Sin(angle);
 			const float new_x = c * x - s * y;
 			const float new_y = s * x + c * y;
-			x = new_x;
-			y = new_y;
+			return Vec2f(new_x, new_y);
 		}
 
-		[[nodiscard]] float Rotate() const
+		[[nodiscard]] float AngleBetween(const Vec2f& other) const
 		{
-			return std::atan2(x, y);
+			return std::atan2(other.y, other.x) - std::atan2(y, x);
 		}
+
+
 	}; // struct Vec2i
 } // namespace core
 
