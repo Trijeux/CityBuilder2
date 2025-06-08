@@ -14,7 +14,7 @@ namespace api::debug
 
 	void ButtonGenerator::Setup(const sf::Vector2f position, const sf::Vector2f size)
 	{
-		text_ = sf::Text(general::ResourceManager::Font(graphics::ResourceFont::Font::kPixel));
+		text_ = sf::Text(general::resource_manager::Font(graphics::ResourceFont::Font::kPixel));
 		text_->setString("Generate");
 		text_->setOrigin(sf::Vector2f(text_->getGlobalBounds().position.x + text_->getGlobalBounds().size.x / 2.f,
 		                              text_->getGlobalBounds().position.y + text_->getGlobalBounds().size.y / 2.f));

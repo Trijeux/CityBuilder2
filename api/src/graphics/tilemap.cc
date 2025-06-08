@@ -13,7 +13,7 @@
 api::graphics::TileMap::TileMap()
 {
 	#if TRACY_ENABLE
-	ZoneScopedN("Creat Tilemap");
+	ZoneNamedN(CreatTilemap, "Creat Tilemap", true);
 	#endif
 	size_sprit_ = sf::Vector2u(sf::Texture("resources/sprite/ground.png").getSize());
 }
@@ -21,7 +21,7 @@ api::graphics::TileMap::TileMap()
 void api::graphics::TileMap::Setup(const sf::Vector2u playground_size_u)
 {
 	#if TRACY_ENABLE
-	ZoneScopedN("Setup Tilemap");
+	ZoneNamedN(SetupTilemap, "Setup Tilemap", true);
 	#endif
 	playground_size_u_ = playground_size_u;
 	tiles_.reserve(playground_size_u_.x * playground_size_u_.y);
@@ -30,7 +30,7 @@ void api::graphics::TileMap::Setup(const sf::Vector2u playground_size_u)
 void api::graphics::TileMap::InitMap()
 {
 	#if TRACY_ENABLE
-	ZoneScopedN("InitMap");
+	ZoneNamedN(InitMap, "InitMap", true);
 	#endif
 
 	tiles_.clear();
@@ -85,7 +85,7 @@ void api::graphics::TileMap::InitMap()
 void api::graphics::TileMap::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
 	#if TRACY_ENABLE
-	ZoneScopedN("Draw Tilemap");
+	ZoneNamedN(DrawTilemap, "Draw Tilemap", true);
 	#endif
 	for(const auto& tile : tiles_)
 	{

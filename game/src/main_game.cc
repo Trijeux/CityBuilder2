@@ -35,18 +35,18 @@ namespace game::MainGame
 	static void Setup()
 	{
 		#if TRACY_ENABLE
-		ZoneScopedN("Game Setup");
+		ZoneNamedN(GameSetup, "Game Setup", true);
 		#endif
 		window.create(sf::VideoMode({1600, 800}), "Game");
-		api::general::ResourceManager::Setup();
+		api::general::resource_manager::Setup();
 
-		text = sf::Text(api::general::ResourceManager::Font(api::graphics::ResourceFont::Font::kPixel), "City Builder 2");
+		text = sf::Text(api::general::resource_manager::Font(api::graphics::ResourceFont::Font::kPixel), "City Builder 2");
 		text->setFillColor(sf::Color::Red);
 		text->setOrigin(text->getGlobalBounds().size / 2.f);
 		text->setScale(sf::Vector2f(2.f, 2.f));
 		text->setPosition(sf::Vector2f(window.getSize().x / 2.f, window.getSize().y / 15.f));
 
-		sound = sf::Sound(api::general::ResourceManager::Sound(api::sound::ResourceSound::Sound::kMusicBG));
+		sound = sf::Sound(api::general::resource_manager::Sound(api::sound::ResourceSound::Sound::kMusicBg));
 		sound->setLooping(true);
 		sound->setPitch(0.5f);
 		sound->play();
@@ -61,9 +61,6 @@ namespace game::MainGame
 
 	void Run()
 	{
-		#if TRACY_ENABLE
-		ZoneScopedN("Run Game");
-		#endif
 		Setup();
 		while(window.isOpen())
 		{
@@ -86,6 +83,10 @@ namespace game::MainGame
 			#endif
 
 			window.display();
+
+			#if TRACY_ENABLE
+			FrameMark();
+			#endif
 		}
 	}
 }

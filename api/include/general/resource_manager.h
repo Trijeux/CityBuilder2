@@ -6,7 +6,7 @@
 #include "sound/resource_sound.h"
 
 
-namespace api::general::ResourceManager
+namespace api::general::resource_manager
 {
 	void Setup();
 	sf::Texture& Sprit(graphics::ResourceSprit::Texture resource_id);

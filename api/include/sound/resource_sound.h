@@ -12,7 +12,7 @@ namespace api::sound
 	public:
 		enum class Sound
 		{
-			kMusicBG,
+			kMusicBg,
 			kMax
 		};
 

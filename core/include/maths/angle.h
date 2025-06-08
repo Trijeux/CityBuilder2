@@ -8,9 +8,11 @@ namespace core {
 	class Radian {
 	public:
 		constexpr explicit Radian(const float value): value_(value){}
-		constexpr Radian(const Degree& angle);
+		constexpr Radian(const Degree& degree);
 
 		explicit constexpr operator float() const { return value_; }
+
+		float Value() const { return value_; }
 
 	private:
 		float value_;
@@ -19,16 +21,18 @@ namespace core {
 	class Degree {
 	public:
 		constexpr explicit Degree(const float value): value_(value){}
-		constexpr Degree(const Radian& angle): value_(static_cast<float>(angle)/Pi*180.0f) {}
+		constexpr Degree(const Radian& radian): value_(static_cast<float>(radian) * 180.0f / Pi) {}
 
 		explicit constexpr operator float() const { return value_; }
+
+		float Value() const { return value_; }
 
 	private:
 		float value_;
 	};
 
 
-	constexpr Radian::Radian(const Degree& angle)
-		: value_(static_cast<float>(angle) / 180.0f * Pi) {}
+	constexpr Radian::Radian(const Degree& degree)
+		: value_(static_cast<float>(degree) * Pi / 180.0f) {}
 }
 #endif //CORE_MATHS_ANGLE_H

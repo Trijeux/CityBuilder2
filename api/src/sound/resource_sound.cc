@@ -14,7 +14,7 @@ void api::sound::ResourceSound::Setup()
 sf::SoundBuffer& api::sound::ResourceSound::GetSound(Sound resource_id)
 {
 	#if TRACY_ENABLE
-	ZoneScopedN("Get Sound");
+	ZoneNamedN(GetSound, "Get Sound", true);
 	#endif
 	if(static_cast<int>(resource_id) < sounds_.size())
 	{
@@ -26,11 +26,11 @@ sf::SoundBuffer& api::sound::ResourceSound::GetSound(Sound resource_id)
 void api::sound::ResourceSound::LoadAllSounds()
 {
 	#if TRACY_ENABLE
-	ZoneScopedN("Load All Sound");
+	ZoneNamedN(LoadAllSound, "LoadAllSound", true);
 	#endif
 	blank_sound_ = sf::SoundBuffer();
 
-	if(!sounds_.at(static_cast<int>(Sound::kMusicBG)).loadFromFile("resources/sound/music_bg.ogg"))
+	if(!sounds_.at(static_cast<int>(Sound::kMusicBg)).loadFromFile("resources/sound/music_bg.ogg"))
 	{
 		std::cout << "Error loading music bg sound" << std::endl;
 	}

@@ -100,8 +100,6 @@ namespace core::maths
 		{
 			return std::atan2(other.y, other.x) - std::atan2(y, x);
 		}
-
-
 	}; // struct Vec2i
 } // namespace core
 

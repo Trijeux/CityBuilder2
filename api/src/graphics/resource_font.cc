@@ -14,7 +14,7 @@ void api::graphics::ResourceFont::Setup()
 sf::Font& api::graphics::ResourceFont::GetFont(Font resource_id)
 {
 	#if TRACY_ENABLE
-	ZoneScopedN("Get font");
+	ZoneNamedN(GetFont, "Get Font", true);
 	#endif
 	if(static_cast<int>(resource_id) < fonts_.size())
 	{
@@ -26,7 +26,7 @@ sf::Font& api::graphics::ResourceFont::GetFont(Font resource_id)
 void api::graphics::ResourceFont::LoadAllFonts()
 {
 	#if TRACY_ENABLE
-	ZoneScopedN("Load All Font");
+	ZoneNamedN(LoadAllFont, "Load All Font", true);
 	#endif
 	blank_font_ = sf::Font();
 

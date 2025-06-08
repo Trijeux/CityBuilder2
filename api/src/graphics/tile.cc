@@ -13,20 +13,20 @@ sf::Texture& api::graphics::Tile::GetFromType() const
 	switch(type_)
 	{
 	case TileType::kForest:
-		return general::ResourceManager::Sprit(ResourceSprit::Texture::kForest);
+		return general::resource_manager::Sprit(ResourceSprit::Texture::kForest);
 	case TileType::kGround:
-		return general::ResourceManager::Sprit(ResourceSprit::Texture::kGround);
+		return general::resource_manager::Sprit(ResourceSprit::Texture::kGround);
 	case TileType::kStone:
-		return general::ResourceManager::Sprit(ResourceSprit::Texture::kStone);
+		return general::resource_manager::Sprit(ResourceSprit::Texture::kStone);
 	default:
-		return general::ResourceManager::Sprit(ResourceSprit::Texture::kMax);
+		return general::resource_manager::Sprit(ResourceSprit::Texture::kMax);
 	}
 }
 
 api::graphics::Tile::Tile(const TileType type, const float x, const float y, const bool is_walkable)
 {
 	#if TRACY_ENABLE
-	ZoneScopedN("Creat Tile");
+	ZoneNamedN(CreatTile, "Creat Tile", true);
 	#endif
 	type_ = type;
 
@@ -39,7 +39,7 @@ api::graphics::Tile::Tile(const TileType type, const float x, const float y, con
 void api::graphics::Tile::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
 	#if TRACY_ENABLE
-	ZoneScopedN("Draw Tile");
+	ZoneNamedN(DrawTile, "Draw Tile", true);
 	#endif
 	target.draw(*sprite_, states);
 }

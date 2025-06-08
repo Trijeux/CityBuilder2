@@ -14,7 +14,7 @@ void api::graphics::ResourceSprit::Setup()
 sf::Texture& api::graphics::ResourceSprit::GetTexture(Texture resource_id)
 {
 	#if TRACY_ENABLE
-	ZoneScopedN("Get Texture");
+	ZoneNamedN(GetTexture, "Get Texture", true);
 	#endif
 	if(static_cast<int>(resource_id) < textures_.size())
 	{
@@ -26,7 +26,7 @@ sf::Texture& api::graphics::ResourceSprit::GetTexture(Texture resource_id)
 void api::graphics::ResourceSprit::LoadAllTextures()
 {
 	#if TRACY_ENABLE
-	ZoneScopedN("Load All Texture");
+	ZoneNamedN(LoadAllTexture, "Load All Texture", true);
 	#endif
 	blank_texture_ = sf::Texture();
 
