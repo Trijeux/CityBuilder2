@@ -9,6 +9,7 @@
 #include "debug/button_generator.h"
 #endif
 
+#include "ai/npc.h"
 #include "general/resource_manager.h"
 #include "graphics/tilemap.h"
 
@@ -20,6 +21,7 @@ namespace game::MainGame
 		std::optional<sf::Sound> sound;
 		std::optional<sf::Text>  text;
 		api::graphics::TileMap   tilemap;
+		Npc                      npc;
 
 		#if DEBUG_ENABLE
 		api::debug::ButtonGenerator button_generator;
@@ -54,6 +56,8 @@ namespace game::MainGame
 
 		CreateTilemap();
 
+		npc.Setup();
+
 		#if DEBUG_ENABLE
 		button_generator.Setup(sf::Vector2f(window.getSize().x - 100, 30), sf::Vector2f(150.f, 25.f));
 		#endif
@@ -73,9 +77,12 @@ namespace game::MainGame
 				#endif
 			}
 
+			npc.Update();
+
 
 			window.clear();
 			window.draw(tilemap);
+			window.draw(npc);
 			window.draw(*text);
 
 			#if DEBUG_ENABLE
