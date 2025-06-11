@@ -1,5 +1,5 @@
-﻿#ifndef RESOURCE_FONT_H
-#define RESOURCE_FONT_H
+﻿#ifndef API_GRAPHICS_RESOURCE_FONT_H
+#define API_GRAPHICS_RESOURCE_FONT_H
 
 #include <array>
 
@@ -29,4 +29,4 @@ namespace api::graphics
 	};
 }
 
-#endif //RESOURCE_FONT_H
+#endif //API_GRAPHICS_RESOURCE_FONT_H

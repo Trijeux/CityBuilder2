@@ -1,27 +1,25 @@
-﻿#ifndef BT_NODE_H
-#define BT_NODE_H
+﻿#ifndef CORE_AI_BT_NODE_H
+#define CORE_AI_BT_NODE_H
 
-namespace core::ai {
-    namespace behaviour_tree {
+namespace core::ai
+{
+	enum class Status
+	{
+		kFailure,
+		kRunning,
+		kSuccess
+	};
 
-        enum class Status {
-            kFailure,
-            kRunning,
-            kSuccess
-        };
+	class Node
+	{
+	public:
+		//virtual ~Node() = default;
+		virtual void   Reset() = 0;
+		virtual Status Tick() = 0;
 
-        class Node {
-        public:
-            //virtual ~Node() = default;
-            virtual void Reset() = 0;
-            virtual Status Tick() = 0;
-
-        protected:
-            Status status_ = Status::kFailure;
-
-        };
-
-    }
+	protected:
+		Status status_ = Status::kFailure;
+	};
 }
 
-#endif //BT_NODE_H
+#endif //CORE_AI_BT_NODE_H

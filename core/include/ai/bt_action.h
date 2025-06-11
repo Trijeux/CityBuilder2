@@ -1,31 +1,35 @@
-﻿#ifndef ACTION_H
-#define ACTION_H
+﻿#ifndef CORE_AI_BT_ACTION_H
+#define CORE_AI_BT_ACTION_H
 
 #include <functional>
+#include <utility>
 
 #include "bt_node.h"
-namespace core::ai {
-    namespace behaviour_tree {
 
-        //template<typename Callable>
-        class Action : public Node {
+namespace core::ai
+{
+	//template<typename Callable>
+	class Action : public Node
+	{
+	private:
+		std::function<Status()> action_;
 
-        private:
-            std::function<Status()> action_;
+	public:
+		explicit Action(std::function<Status()> action) : action_(std::move(action))
+		{
+		}
 
-        public:
-            explicit Action(std::function<Status()> action) : action_(action){}
+		void Reset() override
+		{
+		};
 
-            void Reset() override{};
-
-            Status Tick() override{
-                // Faire des trucs ---------------
-                return action_();
-            }
-        };
-
-    }
+		Status Tick() override
+		{
+			// Faire des trucs ---------------
+			return action_();
+		}
+	};
 }
 
 
-#endif //ACTION_H
+#endif //CORE_AI_BT_ACTION_H
