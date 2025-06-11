@@ -25,7 +25,6 @@ namespace core::ai
 
 		Status Tick() override
 		{
-			// Faire des trucs ---------------
 			return action_();
 		}
 	};

@@ -1,16 +1,4 @@
-﻿//
-// Created by sebas on 05/06/2025.
-//
-
-#include "ai/bt_selector.h"
-
-void core::ai::Selector::AddChild(std::unique_ptr<Node> child){
-    children_.push_back(std::move(child));
-}
-
-void core::ai::Selector::Reset(){
-    childIdx_ = 0;
-}
+﻿#include "ai/bt_selector.h"
 
 core::ai::Status core::ai::Selector::Tick(){
 
@@ -25,9 +13,7 @@ core::ai::Status core::ai::Selector::Tick(){
         if (status == Status::kRunning) {
             return Status::kRunning;
         }
-
         childIdx_++;
-
     }
 
     return Status::kFailure;

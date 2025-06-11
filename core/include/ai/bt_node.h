@@ -13,7 +13,6 @@ namespace core::ai
 	class Node
 	{
 	public:
-		//virtual ~Node() = default;
 		virtual void   Reset() = 0;
 		virtual Status Tick() = 0;
 

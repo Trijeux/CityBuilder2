@@ -1,4 +1,4 @@
-﻿#include "debug/button_generator.h"
+﻿#include "debug/button_debug.h"
 
 #include <SFML/Graphics/RenderTarget.hpp>
 
@@ -6,16 +6,16 @@
 
 namespace api::debug
 {
-	void ButtonGenerator::draw(sf::RenderTarget& target, sf::RenderStates states) const
+	void ButtonDebug::draw(sf::RenderTarget& target, sf::RenderStates states) const
 	{
 		target.draw(button_, states);
 		target.draw(*text_, states);
 	}
 
-	void ButtonGenerator::Setup(const sf::Vector2f position, const sf::Vector2f size)
+	void ButtonDebug::Setup(const sf::Vector2f position, const sf::Vector2f size, std::string name_button)
 	{
 		text_ = sf::Text(general::resource_manager::Font(graphics::ResourceFont::Font::kPixel));
-		text_->setString("Generate");
+		text_->setString(name_button);
 		text_->setOrigin(sf::Vector2f(text_->getGlobalBounds().position.x + text_->getGlobalBounds().size.x / 2.f,
 		                              text_->getGlobalBounds().position.y + text_->getGlobalBounds().size.y / 2.f));
 		button_.setSize(size);
@@ -28,7 +28,7 @@ namespace api::debug
 		scale_text_ = text_->getScale();
 	}
 
-	bool ButtonGenerator::ActivateButton(const sf::Event& event, const sf::RenderWindow& window)
+	bool ButtonDebug::ActivateButton(const sf::Event& event, const sf::RenderWindow& window)
 	{
 		const sf::Vector2i pixelPos = sf::Mouse::getPosition(window);
 		const sf::Vector2f worldPos = window.mapPixelToCoords(pixelPos);

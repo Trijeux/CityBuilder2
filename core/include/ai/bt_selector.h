@@ -4,20 +4,15 @@
 #include <memory>
 #include <vector>
 
+#include "bt_composite.h"
 #include "bt_node.h"
 
 namespace core::ai
 {
-	class Selector : public Node
+	class Selector : public Composite
 	{
-		std::vector<std::unique_ptr<Node>> children_;
-		int                                childIdx_ = 0;
-
 	public:
-		void   Reset() override;
 		Status Tick() override;
-
-		void AddChild(std::unique_ptr<Node> child);
 	};
 }
 

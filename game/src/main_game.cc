@@ -6,25 +6,31 @@
 #endif
 
 #if DEBUG_ENABLE
-#include "debug/button_generator.h"
+#include "debug/button_debug.h"
 #endif
 
-#include "ai/npc.h"
+#include "ai/npc_manager.h"
 #include "general/resource_manager.h"
 #include "graphics/tilemap.h"
 
-namespace game::MainGame
+namespace game::main_game
 {
 	namespace
 	{
+		sf::Clock                clock;
 		sf::RenderWindow         window;
 		std::optional<sf::Sound> sound;
 		std::optional<sf::Text>  text;
 		api::graphics::TileMap   tilemap;
-		Npc                      npc;
+		api::ai::NpcManager      npc_manager;
+
+		float delta_time = 0;
 
 		#if DEBUG_ENABLE
-		api::debug::ButtonGenerator button_generator;
+		api::debug::ButtonDebug button_generator;
+		api::debug::ButtonDebug button_add_npc;
+		api::debug::ButtonDebug button_remove_last_npc;
+		api::debug::ButtonDebug button_remove_all_npc;
 		#endif
 	}
 
@@ -56,10 +62,14 @@ namespace game::MainGame
 
 		CreateTilemap();
 
-		npc.Setup();
+
+		npc_manager.Setup();
 
 		#if DEBUG_ENABLE
-		button_generator.Setup(sf::Vector2f(window.getSize().x - 100, 30), sf::Vector2f(150.f, 25.f));
+		button_generator.Setup(sf::Vector2f(window.getSize().x - 100, 30), sf::Vector2f(150.f, 25.f), "Generate");
+		button_add_npc.Setup(sf::Vector2f(window.getSize().x - 100, 60), sf::Vector2f(150.f, 25.f), "Add Npc");
+		button_remove_last_npc.Setup(sf::Vector2f(window.getSize().x - 100, 90), sf::Vector2f(150.f, 25.f), "Remove Last Npc");
+		button_remove_all_npc.Setup(sf::Vector2f(window.getSize().x - 100, 120), sf::Vector2f(150.f, 25.f), "Remove All Npc");
 		#endif
 	}
 
@@ -68,25 +78,33 @@ namespace game::MainGame
 		Setup();
 		while(window.isOpen())
 		{
+			delta_time = clock.restart().asSeconds();
+
 			while(const std::optional event = window.pollEvent())
 			{
 				if(event->is<sf::Event::Closed>()) window.close();
 
 				#if DEBUG_ENABLE
 				if(button_generator.ActivateButton(*event, window)) tilemap.InitMap();
+				if(button_add_npc.ActivateButton(*event, window)) npc_manager.AddNpc();
+				if(button_remove_last_npc.ActivateButton(*event, window)) npc_manager.RemoveLastNpc();
+				if(button_remove_all_npc.ActivateButton(*event, window)) npc_manager.RemoveAllNpc();
 				#endif
 			}
 
-			npc.Update();
+			npc_manager.Update(delta_time);
 
 
 			window.clear();
 			window.draw(tilemap);
-			window.draw(npc);
+			window.draw(npc_manager);
 			window.draw(*text);
 
 			#if DEBUG_ENABLE
 			window.draw(button_generator);
+			window.draw(button_add_npc);
+			window.draw(button_remove_last_npc);
+			window.draw(button_remove_all_npc);
 			#endif
 
 			window.display();

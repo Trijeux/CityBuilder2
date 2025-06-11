@@ -8,7 +8,7 @@
 
 namespace api::debug
 {
-	class ButtonGenerator final : public sf::Drawable
+	class ButtonDebug final : public sf::Drawable
 	{
 	private:
 		sf::RectangleShape button_;
@@ -17,7 +17,7 @@ namespace api::debug
 	protected:
 		void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 	public:
-		void Setup(sf::Vector2f position, sf::Vector2f size);
+		void Setup(sf::Vector2f position, sf::Vector2f size, std::string name_button);
 		bool ActivateButton(const sf::Event& event, const sf::RenderWindow& window);
 	};
 }

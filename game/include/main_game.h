@@ -1,7 +1,7 @@
 ﻿#ifndef GAME_GAME_H
 #define GAME_GAME_H
 
-namespace game::MainGame
+namespace game::main_game
 {
 	void Run();
 }
