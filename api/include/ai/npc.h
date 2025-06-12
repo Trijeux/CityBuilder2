@@ -12,6 +12,8 @@ namespace api::ai
 {
 	class Npc : public sf::Drawable
 	{
+		bool is_moving_ = false;
+
 		bool is_dead_ = false;
 
 		std::optional<sf::Sprite> sprite_;
@@ -32,14 +34,16 @@ namespace api::ai
 
 	public:
 
+		sf::Vector2f Position() const { return sprite_->getPosition(); }
 		bool IsDead() const { return is_dead_; }
-
-		void Setup(motion::Path& path);
+		bool IsMoving() const { return is_moving_; }
+		void Setup();
 		void Update(float dt);
 
 		core::ai::Status Move();
 		core::ai::Status Eat();
 
+		void SetPath(const motion::Path& path) { points_ = path.Points(); }
 		void SetupBehaviourTree();
 
 		float hunger_ = 0;

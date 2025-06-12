@@ -94,25 +94,34 @@ void api::ai::Npc::SetupBehaviourTree()
 	root_ = std::move(selector);
 }
 
-void api::ai::Npc::Setup(motion::Path& path)
+void api::ai::Npc::Setup()
 {
 	sprite_ = sf::Sprite(api::general::resource_manager::Sprit(api::graphics::ResourceSprit::Texture::kBlue));
 
 	SetupBehaviourTree();
-	points_ = path.Points();
 	motor_.SetSpeed(50);
 }
 
 void api::ai::Npc::Update(const float dt)
 {
-
-	motor_.SetDestination(points_[index_point_]);
+	if(!points_.empty())
+	{
+		motor_.SetDestination(points_[index_point_]);
+	}
 
 	root_->Tick();
 
 	if(motor_.Update(dt))
-		if(points_.size() - 1 > index_point_) index_point_++;
-		else index_point_ = 0;
+	{
+		is_moving_ = true;
+		if(points_.size() - 1 > index_point_)
+			index_point_++;
+	}
+	if(points_.size() - 1 <= index_point_)
+	{
+		index_point_ = 0;
+		is_moving_ = false;
+	}
 
 	sprite_->setPosition(motor_.GetPosition());
 }

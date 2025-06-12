@@ -77,6 +77,7 @@ void api::graphics::TileMap::InitMap()
 				                    x * SizeSprit().x,
 				                    y * SizeSprit().y,
 				                    true);
+				tiles_walkable_.emplace_back(x * SizeSprit().x, y * SizeSprit().y);
 			}
 		}
 	}

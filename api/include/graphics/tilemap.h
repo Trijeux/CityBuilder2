@@ -12,14 +12,16 @@ namespace api::graphics
 	private:
 		sf::Vector2u playground_size_u_;
 
-		std::vector<Tile> tiles_;
-		sf::Vector2u size_sprit_;
+		std::vector<Tile>         tiles_;
+		std::vector<sf::Vector2f> tiles_walkable_;
+		sf::Vector2u              size_sprit_;
 	protected:
 		void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 	public:
 		TileMap();
 		void Setup(sf::Vector2u playground_size_u);
 		void InitMap();
+		[[nodiscard]] std::vector<sf::Vector2f> TilesWalkable() const { return tiles_walkable_; }
 		[[nodiscard]] sf::Vector2u SizeSprit() const { return size_sprit_; }
 	};
 }

@@ -18,6 +18,8 @@ namespace api::graphics
 
 		Tile(TileType type, float x, float y, bool is_walkable);
 
+		bool IsWalkable() const { return is_walkable_; }
+
 	protected:
 		void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 

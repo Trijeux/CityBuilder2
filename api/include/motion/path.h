@@ -11,12 +11,14 @@ namespace api::motion
 	{
 		std::vector<sf::Vector2f> points_;
 
-		const sf::Vector2f tile_size_ = sf::Vector2f(sf::Texture("resources/sprite/ground.png").getSize());
 	public:
 		void AddPoint(sf::Vector2f start);
 		void AddPoints(const std::vector<sf::Vector2f>& points);
 
-		const std::vector<sf::Vector2f>& Points() const { return points_; }
+		void Fill(std::vector<sf::Vector2f>& pathPoints);
+		
+		[[nodiscard]] bool IsValid() const;
+		[[nodiscard]] const std::vector<sf::Vector2f>& Points() const { return points_; }
 
 	};
 }

@@ -63,7 +63,7 @@ namespace game::main_game
 		CreateTilemap();
 
 
-		npc_manager.Setup();
+		npc_manager.Setup(&tilemap);
 
 		#if DEBUG_ENABLE
 		button_generator.Setup(sf::Vector2f(window.getSize().x - 100, 30), sf::Vector2f(150.f, 25.f), "Generate");

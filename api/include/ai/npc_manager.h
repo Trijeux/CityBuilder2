@@ -4,19 +4,22 @@
 #include <vector>
 
 #include "npc.h"
+#include "graphics/tilemap.h"
+#include "motion/astar.h"
 
 namespace api::ai
 {
 	class NpcManager : public sf::Drawable
 	{
-		motion::Path     path_;
-		std::vector<Npc> npcs_;
+		motion::Path       path_;
+		std::vector<Npc>   npcs_;
+		const graphics::TileMap* tile_map_ = nullptr;
 
 	protected:
 		void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
 	public:
-		void Setup();
+		void Setup(const graphics::TileMap* tile_map);
 		void AddNpc();
 		void RemoveNpc(const Npc& npc);
 		void RemoveAllNpc();
