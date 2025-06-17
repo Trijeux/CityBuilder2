@@ -16,6 +16,9 @@ namespace api::graphics
 			kStone,
 			kForest,
 			kBlue,
+			kButton,
+			kHome,
+			kLumberjack,
 			kMax
 		};
 

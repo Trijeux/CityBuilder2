@@ -34,6 +34,7 @@ void api::graphics::TileMap::InitMap()
 	#endif
 
 	tiles_.clear();
+	tiles_walkable_.clear();
 
 	FastNoiseLite noise;
 	noise.SetNoiseType(FastNoiseLite::NoiseType_Perlin);
@@ -82,6 +83,52 @@ void api::graphics::TileMap::InitMap()
 		}
 	}
 }
+
+void api::graphics::TileMap::HandleEvent(const sf::RenderWindow& window, const sf::View& view)
+{
+	if(sf::Mouse::getPosition(window) != mouse_last_position_)
+	{
+		// Convert mouse position to world coordinates
+		const sf::Vector2f mouse_world_position = window.mapPixelToCoords(sf::Mouse::getPosition(window), view);
+
+		// Adjust mouse position based on tile size
+		auto adjusted_mouse_position = sf::Vector2f(
+			std::floor(mouse_world_position.x / size_sprit_.x) * size_sprit_.x,
+			std::floor(mouse_world_position.y / size_sprit_.y) * size_sprit_.y
+		);
+
+		// Unselect previously selected tile
+		if(tile_selected_ != nullptr)
+		{
+			tile_selected_->Unselect();
+		}
+
+		// Find the tile under the adjusted mouse position
+		if(const auto tile_found = std::ranges::find_if(tiles_,
+		                                                [&adjusted_mouse_position](const Tile& t)
+		                                                {
+			                                                return t.Position() == adjusted_mouse_position;
+		                                                }); tile_found != tiles_.end())
+		{
+			tile_selected_ = &(*tile_found); // Select the found tile
+			tile_selected_->Select();
+		}
+
+		mouse_last_position_ = sf::Mouse::getPosition(window);
+	}
+
+	bool pressed = sf::Mouse::isButtonPressed(sf::Mouse::Button::Left);
+
+	if(was_pressed_ && !pressed)
+	{
+		if(clicked_tile_ && tile_selected_ != nullptr)
+		{
+			clicked_tile_(*tile_selected_); // Handle click on the selected tile
+		}
+	}
+	was_pressed_ = pressed;
+}
+
 
 void api::graphics::TileMap::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {

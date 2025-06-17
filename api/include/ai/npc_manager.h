@@ -13,18 +13,17 @@ namespace api::ai
 	{
 		motion::Path       path_;
 		std::vector<Npc>   npcs_;
-		const graphics::TileMap* tile_map_ = nullptr;
+
 
 	protected:
 		void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
 	public:
-		void Setup(const graphics::TileMap* tile_map);
 		void AddNpc();
 		void RemoveNpc(const Npc& npc);
 		void RemoveAllNpc();
 		void RemoveLastNpc();
-		void Update(float dt);
+		void Update(float dt, const graphics::TileMap& tile_map);
 	};
 }
 

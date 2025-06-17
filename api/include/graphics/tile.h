@@ -1,6 +1,7 @@
 ﻿#ifndef API_GRAPHICS_TILE_H
 #define API_GRAPHICS_TILE_H
 
+#include <SFML/Graphics/RectangleShape.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Graphics/Sprite.hpp>
 
@@ -13,17 +14,34 @@ namespace api::graphics
 		{
 			kGround,
 			kForest,
-			kStone
+			kStone,
+			kHome,
+			kLumberjack
 		};
 
 		Tile(TileType type, float x, float y, bool is_walkable);
 
 		bool IsWalkable() const { return is_walkable_; }
+		sf::Vector2f Position() const { return sprite_->getPosition(); }
+
+		void Select();
+
+		void Unselect();
+
+		void SetTileType(TileType);
+
+		void SetTileSprite();
+
+		TileType type() const;
 
 	protected:
 		void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
 	private:
+		sf::RectangleShape outline_;
+
+		bool is_selected_ = false;
+
 		std::optional<sf::Sprite> sprite_;
 
 		bool is_walkable_;

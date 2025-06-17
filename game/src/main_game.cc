@@ -9,20 +9,27 @@
 #include "debug/button_debug.h"
 #endif
 
+#include <iostream>
+
 #include "ai/npc_manager.h"
+#include "gameplay/building.h"
+#include "gameplay/building_manager.h"
 #include "general/resource_manager.h"
 #include "graphics/tilemap.h"
+#include "ui/ui_button.h"
 
 namespace game::main_game
 {
 	namespace
 	{
-		sf::Clock                clock;
-		sf::RenderWindow         window;
-		std::optional<sf::Sound> sound;
-		std::optional<sf::Text>  text;
-		api::graphics::TileMap   tilemap;
-		api::ai::NpcManager      npc_manager;
+		sf::Clock                      clock;
+		sf::RenderWindow               window;
+		std::optional<sf::Sound>       sound;
+		std::optional<sf::Text>        text;
+		api::graphics::TileMap         tilemap;
+		api::ai::NpcManager            npc_manager;
+		api::gameplay::BuildingManager building_manager;
+		auto                           build = api::gameplay::Build::kHome;
 
 		float delta_time = 0;
 
@@ -59,11 +66,13 @@ namespace game::main_game
 		sound->setPitch(0.5f);
 		sound->play();
 
+		//button_manager.Setup(&tilemap);
 
 		CreateTilemap();
-
-
-		npc_manager.Setup(&tilemap);
+		tilemap.clicked_tile_ = [](api::graphics::Tile& tile)
+		{
+			building_manager.AddBuilding(tile, build);
+		};
 
 		#if DEBUG_ENABLE
 		button_generator.Setup(sf::Vector2f(window.getSize().x - 100, 30), sf::Vector2f(150.f, 25.f), "Generate");
@@ -92,8 +101,9 @@ namespace game::main_game
 				#endif
 			}
 
-			npc_manager.Update(delta_time);
+			npc_manager.Update(delta_time, tilemap);
 
+			tilemap.HandleEvent(window, window.getView());
 
 			window.clear();
 			window.draw(tilemap);

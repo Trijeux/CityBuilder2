@@ -46,11 +46,11 @@ namespace api::debug
 
 		}
 
-		if (const auto* mouseButtonEvent = event.getIf<sf::Event::MouseButtonPressed>())
+		if (const auto* mouse_button_event = event.getIf<sf::Event::MouseButtonPressed>())
 		{
-			if (mouseButtonEvent->button == sf::Mouse::Button::Left)
+			if (mouse_button_event->button == sf::Mouse::Button::Left)
 			{
-				if(const sf::Vector2f worldPosClick = window.mapPixelToCoords(mouseButtonEvent->position); button_.getGlobalBounds().contains(worldPosClick))
+				if(const sf::Vector2f world_pos_click = window.mapPixelToCoords(mouse_button_event->position); button_.getGlobalBounds().contains(world_pos_click))
 				{
 					text_->setFillColor(sf::Color::Red);
 					return true;
