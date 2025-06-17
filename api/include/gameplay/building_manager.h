@@ -7,7 +7,7 @@
 
 namespace api::gameplay
 {
-    class BuildingManager final : public sf::Drawable
+    class BuildingManager
     {
     private:
         bool is_active_ = false; // Flag indicating if the building manager is active
@@ -36,10 +36,6 @@ namespace api::gameplay
 
         // Method to build/render all buildings managed by this manager
         void build(sf::RenderWindow& window);
-
-    protected:
-        // Overridden method from sf::Drawable to draw all buildings managed by this manager
-        void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
     };
 }
 #endif // BUILDING_MANAGER_H

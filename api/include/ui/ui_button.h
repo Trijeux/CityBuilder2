@@ -16,7 +16,7 @@ namespace api::ui
 
         // Private method to draw the button
         void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
-        bool ContainsMouse(const sf::Event& event) const;
+        bool ContainsMouse(const sf::Event& event, const sf::RenderWindow& window);
 
         // Private method to check if mouse cursor is within the button area
 
@@ -24,10 +24,11 @@ namespace api::ui
         // Public method to set the color of the button sprite
         void SetColorSprite(const sf::Color color) { sprite_->setColor(color); }
 
+        void SetScale(const sf::Vector2f& scale) { sprite_->setScale(scale); button_text_->setScale(scale); }
         // Public method to handle SFML events related to the button
 
 
-        bool HandleEvent(const sf::Event& event);
+        bool HandleEvent(const sf::Event& event, const sf::RenderWindow& window);
         // Public method to create the button
         void CreateButton(sf::Vector2f pos, const std::string& text, int character_size, sf::Color color_text);
 

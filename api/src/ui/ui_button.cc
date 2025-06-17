@@ -9,42 +9,46 @@
 void api::ui::UiButton::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
 	states.transform *= getTransform(); // Apply the button's transform to the render states
-
 	target.draw(*sprite_, states); // Draw the button's sprite
 	target.draw(*button_text_, states); // Draw the button's text
 }
 
 // Check if the mouse click event is inside the button's bounds
-bool api::ui::UiButton::ContainsMouse(const sf::Event& event) const
+bool api::ui::UiButton::ContainsMouse(const sf::Event& event, const sf::RenderWindow& window)
 {
-	float mouse_x = 0.f;
-	float mouse_y = 0.f;
+	const sf::Vector2i pixel_pos = sf::Mouse::getPosition(window);
+	auto pixel_pos_in_float = sf::Vector2f(pixel_pos);
 	if(const auto* mouse_button_pressed = event.getIf<sf::Event::MouseButtonPressed>())
 	{
 		// Calculate mouse position relative to button's position
-		mouse_x = static_cast<float>(mouse_button_pressed->position.x) - getPosition().x;
-		mouse_y = static_cast<float>(mouse_button_pressed->position.y) - getPosition().y;
+		pixel_pos_in_float.x = static_cast<float>(mouse_button_pressed->position.x) - getPosition().x;
+		pixel_pos_in_float.y = static_cast<float>(mouse_button_pressed->position.y) - getPosition().y;
+	}
+
+	if(event.getIf<sf::Event::MouseButtonReleased>() && was_pressed_)
+	{
+		was_pressed_ = false;
+		return true;
 	}
 
 	// Check if the mouse position is inside the button's global bounds
-	if(sprite_->getGlobalBounds().contains(sf::Vector2f(mouse_x, mouse_y)))
+	if(sprite_->getGlobalBounds().contains(pixel_pos_in_float))
 	{
+		std::cout << "True" << std::endl;
+		was_pressed_ = true;
 		return true;
 	}
-	else
-	{
-		return false;
-	}
+	return false;
 }
 
 // Handle events for the UiButton
-bool api::ui::UiButton::HandleEvent(const sf::Event& event)
+bool api::ui::UiButton::HandleEvent(const sf::Event& event , const sf::RenderWindow& window)
 {
 	// Check for mouse button released event
 	if(const auto* mouse_button_pressed = event.getIf<sf::Event::MouseButtonReleased>())
 	{
 		// If the mouse click is inside the button
-		if(ContainsMouse(event))
+		if(ContainsMouse(event, window))
 		{
 			// Scale down the button slightly
 			setScale(sf::Vector2f(getScale().x / 0.9f, getScale().y / 0.9f));
@@ -64,7 +68,7 @@ bool api::ui::UiButton::HandleEvent(const sf::Event& event)
 	if(event.is<sf::Event::MouseButtonPressed>())
 	{
 		// If the mouse click is inside the button
-		if(ContainsMouse(event))
+		if(ContainsMouse(event, window))
 		{
 			// Scale down the button slightly and set build_on flag
 			setScale(sf::Vector2f(0.9f * getScale().x, 0.9f * getScale().y));
@@ -72,15 +76,14 @@ bool api::ui::UiButton::HandleEvent(const sf::Event& event)
 		}
 	}
 
-	// Check if the mouse is currently inside the button
-	if(ContainsMouse(event))
+	const sf::Vector2i pixel_pos = sf::Mouse::getPosition(window);
+	auto pixel_pos_in_float = sf::Vector2f(pixel_pos) - getPosition();
+	if(sprite_->getGlobalBounds().contains(pixel_pos_in_float))
 	{
 		return true;
 	}
-	else
-	{
-		return false;
-	}
+
+	return false;
 }
 
 // Create a new UiButton with specified parameters
@@ -102,10 +105,6 @@ void api::ui::UiButton::CreateButton(const sf::Vector2f pos, const std::string& 
 	const sf::FloatRect shape_rect = sprite_->getGlobalBounds();
 	button_text_->setOrigin(sf::Vector2f(text_rect.position.x + text_rect.size.x / 2.0f, text_rect.position.y + text_rect.size.y / 2.0f));
 	button_text_->setPosition(sf::Vector2f(shape_rect.position.x + shape_rect.size.x / 2.0f, shape_rect.position.y + shape_rect.size.y / 2.0f));
-
-	// Load the button's textur
-
-	setScale(sf::Vector2f(1, 1)); // Set the initial scale of the button
 
 	build_on_ = false; // Initialize the build_on flag
 }

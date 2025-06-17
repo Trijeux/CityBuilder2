@@ -31,6 +31,9 @@ namespace game::main_game
 		api::gameplay::BuildingManager building_manager;
 		auto                           build = api::gameplay::Build::kHome;
 
+		bool in_button = false;
+
+
 		float delta_time = 0;
 
 		#if DEBUG_ENABLE
@@ -66,13 +69,12 @@ namespace game::main_game
 		sound->setPitch(0.5f);
 		sound->play();
 
-		//button_manager.Setup(&tilemap);
-
 		CreateTilemap();
 		tilemap.clicked_tile_ = [](api::graphics::Tile& tile)
 		{
 			building_manager.AddBuilding(tile, build);
 		};
+
 
 		#if DEBUG_ENABLE
 		button_generator.Setup(sf::Vector2f(window.getSize().x - 100, 30), sf::Vector2f(150.f, 25.f), "Generate");
@@ -102,8 +104,10 @@ namespace game::main_game
 			}
 
 			npc_manager.Update(delta_time, tilemap);
-
-			tilemap.HandleEvent(window, window.getView());
+			if(!in_button)
+			{
+				tilemap.HandleEvent(window, window.getView());
+			}
 
 			window.clear();
 			window.draw(tilemap);

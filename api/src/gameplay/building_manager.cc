@@ -26,14 +26,6 @@ void api::gameplay::BuildingManager::build(sf::RenderWindow& window)
 	}
 }
 
-void api::gameplay::BuildingManager::draw(sf::RenderTarget& target, const sf::RenderStates states) const
-{
-	for (const auto& b : buildings_)
-	{
-		target.draw(b, states); // Draw each building in the BuildingManager
-	}
-}
-
 void api::gameplay::BuildingManager::CreateFirstBuildingHome(std::vector<graphics::Tile>& tiles)
 {
 	bool homeNotPlace = true; // Flag to control the placement loop
@@ -47,7 +39,7 @@ void api::gameplay::BuildingManager::CreateFirstBuildingHome(std::vector<graphic
 		if (const int mean = uniform_dist(e1); tiles[mean].type() == graphics::Tile::TileType::kGround)
 		{
 			// Place the first home building on a randomly selected ground tile
-			buildings_.emplace_back(tiles[mean].Position().x, tiles[mean].Position().y, Build::kHome);
+			homes_.emplace_back(tiles[mean].Position().x, tiles[mean].Position().y);
 			//resource->AddBuilding(Build::kHome);
 			tiles[mean].SetTileType(graphics::Tile::TileType::kHome);
 			tiles[mean].SetTileSprite();
@@ -132,5 +124,6 @@ void api::gameplay::BuildingManager::SubBuilding(graphics::Tile& tile)
 
 void api::gameplay::BuildingManager::ClearMap()
 {
-	buildings_.clear(); // Clear all buildings from the map
+	homes_.clear(); // Clear all buildings from the map
+	lumberjacks_.clear();
 }
