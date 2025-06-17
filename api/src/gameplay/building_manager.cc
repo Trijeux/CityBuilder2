@@ -72,7 +72,7 @@ void api::gameplay::BuildingManager::AddBuilding(graphics::Tile& tile, const Bui
 		{
 		case Build::kHome:
 		{
-			buildings_.emplace_back(tile.Position().x, tile.Position().y, Build::kHome);
+			homes_.emplace_back(tile.Position().x, tile.Position().y);
 			//resource.AddBuilding(Build::kHome);
 			//resource.PayBuilding(Build::kHome);
 			type = graphics::Tile::TileType::kHome;
@@ -81,7 +81,7 @@ void api::gameplay::BuildingManager::AddBuilding(graphics::Tile& tile, const Bui
 		break;
 		case Build::kLumberjack:
 		{
-			buildings_.emplace_back(tile.Position().x, tile.Position().y, Build::kLumberjack);
+			lumberjacks_.emplace_back(tile.Position().x, tile.Position().y);
 			//resource.AddBuilding(Build::kFarm);
 			//resource.PayBuilding(Build::kFarm);
 			type = graphics::Tile::TileType::kLumberjack;
@@ -113,12 +113,17 @@ void api::gameplay::BuildingManager::SubBuilding(graphics::Tile& tile)
 	// Check if the tile contains a building that can be removed
 	if (tile.type() == graphics::Tile::TileType::kHome || tile.type() == graphics::Tile::TileType::kLumberjack)
 	{
-		// Find the building in the list of buildings and remove it
-		const auto it = std::ranges::find_if(buildings_, [&tile](Building& b) {
-			return b.Position() == tile.Position(); });
-
-		buildings_.erase(it); // Erase the building from the list
-		//resource.SubBuilding(tile.Type()); // Subtract the building type from the resources
+		switch(tile.type())
+		{
+		case graphics::Tile::TileType::kHome:
+			homes_.erase(std::ranges::find(homes_, tile.Position()));
+			break;
+		case graphics::Tile::TileType::kLumberjack:
+			lumberjacks_.erase(std::ranges::find(lumberjacks_, tile.Position()));
+			break;
+		default:
+			break;
+		}
 	}
 
 	tile.SetTileType(graphics::Tile::TileType::kGround); // Set the tile type back to ground
