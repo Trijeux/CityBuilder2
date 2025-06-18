@@ -2,6 +2,8 @@
 
 #include <gtest/gtest.h>
 
+using namespace core::maths;
+
 struct Vec2fOperationFixture : public ::testing::TestWithParam<std::pair<core::maths::Vec2f, core::maths::Vec2f>>
 {
 };
@@ -160,12 +162,12 @@ TEST_P(Vec2fOperationFixture, Normalize)
 TEST_P(Vec2fOperationFixture, Rotate)
 {
 	auto [v1, v2] = GetParam();
-	const auto resultv1 = v1.Rotate(core::Degree(90));
-	const auto resultv2 = v2.Rotate(core::Degree(90));
-	EXPECT_FLOAT_EQ(resultv1.x, v1.x * core::Cos(core::Degree(90)) - v1.y * core::Sin(core::Degree(90)));
-	EXPECT_FLOAT_EQ(resultv1.y, v1.x * core::Sin(core::Degree(90)) + v1.y * core::Cos(core::Degree(90)));
-	EXPECT_FLOAT_EQ(resultv2.x, v2.x * core::Cos(core::Degree(90)) - v2.y * core::Sin(core::Degree(90)));
-	EXPECT_FLOAT_EQ(resultv2.y, v2.x * core::Sin(core::Degree(90)) + v2.y * core::Cos(core::Degree(90)));
+	const auto resultv1 = v1.Rotate(Degree<float>(90));
+	const auto resultv2 = v2.Rotate(Degree<float>(90));
+	EXPECT_FLOAT_EQ(resultv1.x, v1.x * Cos<float>(Degree<float>(90)) - v1.y * Sin<float>(Degree<float>(90)));
+	EXPECT_FLOAT_EQ(resultv1.y, v1.x * Sin<float>(Degree<float>(90)) + v1.y * Cos<float>(Degree<float>(90)));
+	EXPECT_FLOAT_EQ(resultv2.x, v2.x * Cos<float>(Degree<float>(90)) - v2.y * Sin<float>(Degree<float>(90)));
+	EXPECT_FLOAT_EQ(resultv2.y, v2.x * Sin<float>(Degree<float>(90)) + v2.y * Cos<float>(Degree<float>(90)));
 	EXPECT_NEAR(resultv1.Dot(v1), 0.0f, 1e-4f);
 	EXPECT_NEAR(resultv2.Dot(v2), 0.0f, 1e-4f);
 }

@@ -22,9 +22,9 @@ namespace api::ui
 
     public:
         // Public method to set the color of the button sprite
-        void SetColorSprite(const sf::Color color) { sprite_->setColor(color); }
+        void set_color_sprite(const sf::Color color) { sprite_->setColor(color); }
 
-        void SetScale(const sf::Vector2f& scale) { sprite_->setScale(scale); button_text_->setScale(scale); }
+        void set_scale(const sf::Vector2f& scale) { sprite_->setScale(scale); button_text_->setScale(scale); }
         // Public method to handle SFML events related to the button
 
 

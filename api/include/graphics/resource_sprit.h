@@ -24,7 +24,7 @@ namespace api::graphics
 
 		void Setup();
 
-		sf::Texture& GetTexture(Texture resource_id);
+		sf::Texture& texture(Texture resource_id);
 	protected:
 	private:
 		std::array<sf::Texture, static_cast<int>(Texture::kMax)> textures_;

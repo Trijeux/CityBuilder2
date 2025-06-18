@@ -30,12 +30,12 @@ namespace api::graphics
 		void                       InitMap();
 		void                       HandleEvent(const sf::RenderWindow& window, const sf::View& view);
 
-		[[nodiscard]] std::vector<sf::Vector2f> TilesWalkable() const
+		[[nodiscard]] std::vector<sf::Vector2f> tiles_walkable() const
 		{
 			return tiles_walkable_;
 		}
 
-		[[nodiscard]] sf::Vector2u SizeSprit() const
+		[[nodiscard]] sf::Vector2u size_sprit() const
 		{
 			return size_sprit_;
 		}

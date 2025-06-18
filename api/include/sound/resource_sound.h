@@ -18,7 +18,7 @@ namespace api::sound
 
 		void Setup();
 
-		sf::SoundBuffer& GetSound(Sound resource_id);
+		sf::SoundBuffer& sound(Sound resource_id);
 	protected:
 	private:
 		std::array<sf::SoundBuffer, static_cast<int>(Sound::kMax)> sounds_;

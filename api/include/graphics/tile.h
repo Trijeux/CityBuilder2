@@ -21,16 +21,16 @@ namespace api::graphics
 
 		Tile(TileType type, float x, float y, bool is_walkable);
 
-		bool IsWalkable() const { return is_walkable_; }
-		sf::Vector2f Position() const { return sprite_->getPosition(); }
+		bool is_walkable() const { return is_walkable_; }
+		sf::Vector2f position() const { return sprite_->getPosition(); }
 
 		void Select();
 
 		void Unselect();
 
-		void SetTileType(TileType);
+		void set_tile_type(TileType);
 
-		void SetTileSprite();
+		void set_tile_sprite();
 
 		TileType type() const;
 

@@ -20,7 +20,9 @@ namespace api::gameplay
         Building(float x, float y, Build build);
 
         // Function to retrieve the position of the building
-        sf::Vector2f Position() const { return position_; }
+        sf::Vector2f position() const { return position_; }
+
+        bool is_occupied() const { return is_occupied_; }
 
     protected:
         // Overridden draw function from sf::Drawable to draw the building
@@ -29,6 +31,7 @@ namespace api::gameplay
     private:
         std::optional<sf::Sprite> shape_;      // Sprite representing the visual shape of the building
         sf::Vector2f position_; // Position of the building
+        bool is_occupied_ = false;
     };
 }
 

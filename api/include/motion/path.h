@@ -17,8 +17,8 @@ namespace api::motion
 
 		void Fill(std::vector<sf::Vector2f>& pathPoints);
 		
-		[[nodiscard]] bool IsValid() const;
-		[[nodiscard]] const std::vector<sf::Vector2f>& Points() const { return points_; }
+		[[nodiscard]] bool is_valid() const;
+		[[nodiscard]] const std::vector<sf::Vector2f>& points() const { return points_; }
 
 	};
 }

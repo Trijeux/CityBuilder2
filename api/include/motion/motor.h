@@ -15,10 +15,10 @@ namespace api::motion {
 		bool Update(float dt);
 
 		// getter / setter
-		void SetSpeed(const float speed){speed_ = speed;}
-		void SetDestination(const sf::Vector2f destination){destination_ = destination;};
-		void SetPosition(const sf::Vector2f position){position_ = position;}
-		[[nodiscard]] const sf::Vector2f& GetPosition() const{return position_;}
+		void set_seed(const float speed){speed_ = speed;}
+		void set_destination(const sf::Vector2f destination){destination_ = destination;};
+		void set_position(const sf::Vector2f position){position_ = position;}
+		[[nodiscard]] const sf::Vector2f& position() const{return position_;}
 
 	};
 

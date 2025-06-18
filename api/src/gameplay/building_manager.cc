@@ -2,50 +2,46 @@
 
 #include <random> // Include for random number generation
 
-void api::gameplay::BuildingManager::SetActive(const bool active)
+void api::gameplay::BuildingManager::set_active(const bool active)
 {
 	is_active_ = active; // Set the active state of the BuildingManager
 }
 
-bool api::gameplay::BuildingManager::GetActive() const
-{
-	return is_active_; // Get the current active state of the BuildingManager
-}
-
 void api::gameplay::BuildingManager::build(sf::RenderWindow& window)
 {
-	if (GetActive())
+	if(is_active())
 	{
-		SetActive(false); // Deactivate building mode
+		set_active(false); // Deactivate building mode
 		//ChangeCursor::BasicCursor(window); // Change cursor to basic mode
 	}
 	else
 	{
-		SetActive(true); // Activate building mode
+		set_active(true); // Activate building mode
 		//ChangeCursor::BuildingCursor(window); // Change cursor to building mode
 	}
 }
 
 void api::gameplay::BuildingManager::CreateFirstBuildingHome(std::vector<graphics::Tile>& tiles)
 {
-	bool homeNotPlace = true; // Flag to control the placement loop
-	std::random_device r; // Random device for seeding
+	bool                       homeNotPlace = true; // Flag to control the placement loop
+	std::random_device         r; // Random device for seeding
 	std::default_random_engine e1(r()); // Random engine using the random device
 
 	do
 	{
 		std::uniform_int_distribution<int> uniform_dist(tiles.size() / 4, tiles.size() / 1.2); // Uniform distribution for selecting a tile
 
-		if (const int mean = uniform_dist(e1); tiles[mean].type() == graphics::Tile::TileType::kGround)
+		if(const int mean = uniform_dist(e1); tiles[mean].type() == graphics::Tile::TileType::kGround)
 		{
 			// Place the first home building on a randomly selected ground tile
-			homes_.emplace_back(tiles[mean].Position().x, tiles[mean].Position().y);
+			homes_.emplace_back(tiles[mean].position().x, tiles[mean].position().y, Build::kHome);
 			//resource->AddBuilding(Build::kHome);
-			tiles[mean].SetTileType(graphics::Tile::TileType::kHome);
-			tiles[mean].SetTileSprite();
+			tiles[mean].set_tile_type(graphics::Tile::TileType::kHome);
+			tiles[mean].set_tile_sprite();
 			homeNotPlace = false; // Exit the loop after placing the home building
 		}
-	} while (homeNotPlace);
+	}
+	while(homeNotPlace);
 }
 
 void api::gameplay::BuildingManager::AddBuilding(graphics::Tile& tile, const Build building)
@@ -55,71 +51,82 @@ void api::gameplay::BuildingManager::AddBuilding(graphics::Tile& tile, const Bui
 	// 	return; // Exit if building mode is not active
 	// }
 
-	if (tile.type() == graphics::Tile::TileType::kGround)
+	if(tile.type() == graphics::Tile::TileType::kGround)
 	{
 		bool                     build_ok = false;
 		graphics::Tile::TileType type;
 
-		switch (building)
+		switch(building)
 		{
 		case Build::kHome:
-		{
-			homes_.emplace_back(tile.Position().x, tile.Position().y);
-			//resource.AddBuilding(Build::kHome);
-			//resource.PayBuilding(Build::kHome);
-			type = graphics::Tile::TileType::kHome;
-			build_ok = true;
-		}
-		break;
+			{
+				homes_.emplace_back(tile.position().x, tile.position().y, Build::kHome);
+				//resource.AddBuilding(Build::kHome);
+				//resource.PayBuilding(Build::kHome);
+				type = graphics::Tile::TileType::kHome;
+				build_ok = true;
+			}
+			break;
 		case Build::kLumberjack:
-		{
-			lumberjacks_.emplace_back(tile.Position().x, tile.Position().y);
-			//resource.AddBuilding(Build::kFarm);
-			//resource.PayBuilding(Build::kFarm);
-			type = graphics::Tile::TileType::kLumberjack;
-			build_ok = true;
-		}
-		break;
+			{
+				lumberjacks_.emplace_back(tile.position().x, tile.position().y, Build::kLumberjack);
+				//resource.AddBuilding(Build::kFarm);
+				//resource.PayBuilding(Build::kFarm);
+				type = graphics::Tile::TileType::kLumberjack;
+				build_ok = true;
+			}
+			break;
 		case Build::kNothing:
 			break;
-		default:;
+		default: ;
 			break;
 		}
 
 
-		if (build_ok)
+		if(build_ok)
 		{
-			tile.SetTileType(type); // Set the tile type to the newly added building type
-			tile.SetTileSprite(); // Set the tile sprite to match the building type
+			tile.set_tile_type(type); // Set the tile type to the newly added building type
+			tile.set_tile_sprite(); // Set the tile sprite to match the building type
 		}
 	}
 }
 
 void api::gameplay::BuildingManager::SubBuilding(graphics::Tile& tile)
 {
-	if (!is_active_)
+	if(!is_active_)
 	{
 		return; // Exit if building mode is not active
 	}
 
 	// Check if the tile contains a building that can be removed
-	if (tile.type() == graphics::Tile::TileType::kHome || tile.type() == graphics::Tile::TileType::kLumberjack)
+	if(tile.type() == graphics::Tile::TileType::kHome || tile.type() == graphics::Tile::TileType::kLumberjack)
 	{
+		const auto it_home = std::ranges::find_if(homes_,
+		                                          [&tile](Building& b)
+		                                          {
+			                                          return b.position() == tile.position();
+		                                          });
+
+		const auto it_lumberjack = std::ranges::find_if(lumberjacks_,
+		                                                [&tile](Building& b)
+		                                                {
+			                                                return b.position() == tile.position();
+		                                                });
+
 		switch(tile.type())
 		{
 		case graphics::Tile::TileType::kHome:
-			homes_.erase(std::ranges::find(homes_, tile.Position()));
+			homes_.erase(it_home);
 			break;
 		case graphics::Tile::TileType::kLumberjack:
-			lumberjacks_.erase(std::ranges::find(lumberjacks_, tile.Position()));
+			lumberjacks_.erase(it_lumberjack);
 			break;
-		default:
-			break;
+		default: ;
 		}
 	}
 
-	tile.SetTileType(graphics::Tile::TileType::kGround); // Set the tile type back to ground
-	tile.SetTileSprite(); // Set the tile sprite to match the ground type
+	tile.set_tile_type(graphics::Tile::TileType::kGround); // Set the tile type back to ground
+	tile.set_tile_sprite(); // Set the tile sprite to match the ground type
 }
 
 void api::gameplay::BuildingManager::ClearMap()

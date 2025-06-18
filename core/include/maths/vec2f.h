@@ -87,7 +87,7 @@ namespace core::maths
 			return *this / man;
 		}
 
-		[[nodiscard]] Vec2f Rotate(const Radian angle) const
+		[[nodiscard]] Vec2f Rotate(const Radian<float> angle) const
 		{
 			const float c = Cos(angle);
 			const float s = Sin(angle);

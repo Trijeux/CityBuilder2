@@ -11,7 +11,7 @@ void api::sound::ResourceSound::Setup()
 	LoadAllSounds();
 }
 
-sf::SoundBuffer& api::sound::ResourceSound::GetSound(Sound resource_id)
+sf::SoundBuffer& api::sound::ResourceSound::sound(Sound resource_id)
 {
 	#if TRACY_ENABLE
 	ZoneNamedN(GetSound, "Get Sound", true);

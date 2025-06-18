@@ -49,8 +49,7 @@ namespace api::motion {
         AStarNode *current_node = &start_node;
 
         while (current_node != nullptr) {
-            std::cout << "reconstiution point : " << current_node->position.x << ":" << current_node->position.y <<
-                    std::endl;
+           //std::cout << "reconstiution point : " << current_node->position.x << ":" << current_node->position.y << std::endl;
             pathPoints.emplace_back(current_node->position);
             current_node = current_node->previous_node;
         }
@@ -61,19 +60,19 @@ namespace api::motion {
         return path;
     }
 
-    Path GetPath(sf::Vector2f start, sf::Vector2f end, std::vector<sf::Vector2f> walkableTiles){
+    Path path(sf::Vector2f start, sf::Vector2f end, std::vector<sf::Vector2f> walkableTiles){
         Path aStarPath;
 
         // Are start / end point in walkables tiles ?
         auto f = std::find(walkableTiles.begin(), walkableTiles.end(), start);
         if (f == walkableTiles.end()) {
-            std::cout << "Start point not in walkable tiles" << std::endl;
+            //std::cout << "Start point not in walkable tiles" << std::endl;
             return aStarPath;
         }
 
         auto g = std::find(walkableTiles.begin(), walkableTiles.end(), end);
         if (g == walkableTiles.end()) {
-            std::cout << "End point not in walkable tiles" << std::endl;
+            //std::cout << "End point not in walkable tiles" << std::endl;
             return aStarPath;
         }
 
@@ -87,10 +86,10 @@ namespace api::motion {
             AStarNode currentNode = openList.top();
             openList.pop();
 
-            std::cout << "current node : " << currentNode.position.x << ":" << currentNode.position.y << std::endl;
+            //std::cout << "current node : " << currentNode.position.x << ":" << currentNode.position.y << std::endl;
 
             if (currentNode.position == end) {
-                std::cout << "Found path" << std::endl;
+                //std::cout << "Found path" << std::endl;
                 return ReconstitutePath(currentNode);
             }
 

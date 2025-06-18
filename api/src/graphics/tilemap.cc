@@ -60,25 +60,25 @@ void api::graphics::TileMap::InitMap()
 				if(noise_value > 0.5f)
 				{
 					tiles_.emplace_back(Tile::TileType::kStone,
-					                    x * SizeSprit().x,
-					                    y * SizeSprit().y,
+					                    x * size_sprit().x,
+					                    y * size_sprit().y,
 					                    false);
 				}
 				else
 				{
 					tiles_.emplace_back(Tile::TileType::kForest,
-					                    x * SizeSprit().x,
-					                    y * SizeSprit().y,
+					                    x * size_sprit().x,
+					                    y * size_sprit().y,
 					                    false);
 				}
 			}
 			else
 			{
 				tiles_.emplace_back(Tile::TileType::kGround,
-				                    x * SizeSprit().x,
-				                    y * SizeSprit().y,
+				                    x * size_sprit().x,
+				                    y * size_sprit().y,
 				                    true);
-				tiles_walkable_.emplace_back(x * SizeSprit().x, y * SizeSprit().y);
+				tiles_walkable_.emplace_back(x * size_sprit().x, y * size_sprit().y);
 			}
 		}
 	}
@@ -107,7 +107,7 @@ void api::graphics::TileMap::HandleEvent(const sf::RenderWindow& window, const s
 		if(const auto tile_found = std::ranges::find_if(tiles_,
 		                                                [&adjusted_mouse_position](const Tile& t)
 		                                                {
-			                                                return t.Position() == adjusted_mouse_position;
+			                                                return t.position() == adjusted_mouse_position;
 		                                                }); tile_found != tiles_.end())
 		{
 			tile_selected_ = &(*tile_found); // Select the found tile

@@ -8,7 +8,7 @@
 
 namespace api::motion
 {
-    Path GetPath(sf::Vector2f start, sf::Vector2f end, std::vector<sf::Vector2f> walkableTiles);
+    Path path(sf::Vector2f start, sf::Vector2f end, std::vector<sf::Vector2f> walkableTiles);
 }
 
 

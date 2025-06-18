@@ -18,6 +18,6 @@ void api::motion::Path::Fill(std::vector<sf::Vector2f>& pathPoints){
 		points_ = pathPoints;
 }
 
-bool api::motion::Path::IsValid() const{
+bool api::motion::Path::is_valid() const{
 	return !points_.empty();
 }

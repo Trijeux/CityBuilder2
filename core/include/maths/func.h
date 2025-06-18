@@ -5,12 +5,14 @@
 
 #include <iostream>
 
-namespace core
+namespace core::maths
 {
-	inline float Cos(const Radian angle)
+	template<typename T>
+	requires std::is_floating_point_v<T>
+	T Cos(const Radian<T> angle)
 	{
-		float val = 1;
-		float somme = 0;
+		T val = 1;
+		T somme = 0;
 		for(int n = 1; n < 20; n++)
 		{
 			somme += val;
@@ -19,10 +21,12 @@ namespace core
 		return somme;
 	}
 
-	inline float Sin(const Radian angle)
+	template<typename T>
+	requires std::is_floating_point_v<T>
+	T Sin(const Radian<T>& angle)
 	{
-		float val = angle.Value();
-		float somme = 0;
+		T val = angle.Value();
+		T somme = 0;
 		for(int n = 1; n < 20; n++)
 		{
 			somme += val;
@@ -31,17 +35,21 @@ namespace core
 		return somme;
 	}
 
-	inline float Tan(const Radian angle)
+	template<typename T>
+	requires std::is_floating_point_v<T>
+	T Tan(const Radian<T> angle)
 	{
 		return Sin(angle) / Cos(angle);
 	}
 
-	inline float Sec(const Radian angle)
+	template<typename T>
+	requires std::is_floating_point_v<T>
+	T Sec(const Radian<T> angle)
 	{
 
-		const float cos = Cos(angle);
+		const T cos = Cos(angle);
 
-		if(constexpr float epsilon = 1e-10; std::abs(cos) < epsilon)
+		if(constexpr T epsilon = 1e-10; std::abs(cos) < epsilon)
 		{
 			std::cerr << "Erreur : cos(x) est trop proche de zéro. Sécante indéfinie." << std::endl;
 			return std::numeric_limits<float>::quiet_NaN(); // Retourne NaN
@@ -50,9 +58,11 @@ namespace core
 		return 1.0f / cos;
 	}
 
-	inline float Pow(const float base, const float exponent)
+	template<typename T>
+	requires std::is_floating_point_v<T>
+	T Pow(T base, T exponent)
 	{
-		float result = 1;
+		T result = 1;
 		for(int i = 0; i < exponent; i++)
 		{
 			result *= base;
@@ -60,47 +70,55 @@ namespace core
 		return result;
 	}
 
-	inline float ASin(const float value)
+	template<typename T>
+	requires std::is_floating_point_v<T>
+	Radian<T> ASin(const T value)
 	{
-		float val = value;
-		float somme = 0;
+		T val = value;
+		T somme = 0;
 		for(int n = 1; n < 100000; n++)
 		{
 			somme += val;
 			val *= (2* n - 1) * (2 * n - 1) * (value * value) / (2 * n * (2 * n + 1));
 		}
-		return somme;
+		return Radian<T>(somme);
 	}
 
-	inline float Acos(const float value)
+	template<typename T>
+	requires std::is_floating_point_v<T>
+	Radian<T> Acos(const T value)
 	{
-		return Pi / 2 - ASin(value);
+		return Radian<T>(Pi<T> / 2 - ASin(value).Value());
 	}
 
-	inline float Atan(const float x)
+	template<typename T>
+	requires std::is_floating_point_v<T>
+	Radian<T> Atan(const T x)
 	{
 		if (std::abs(x) > 1.0f)
 		{
-			return (x > 0 ? Pi / 2 : -Pi / 2) - Atan(1 / x);
+			return Radian<T>((x > 0 ? Pi<T> / 2 : -Pi<T> / 2) - Atan(1 / x).Value());
 		}
 
-		float result = 0.0f;
+		T result = 0.0f;
 		for (int n = 0; n < 20; ++n)
 		{
-			float term = Pow(-1.f, n) * Pow(x, 2 * n + 1) / (2 * n + 1);
+			T term = Pow<T>(-1.f, n) * Pow<T>(x, 2 * n + 1) / (2 * n + 1);
 			result += term;
 		}
-		return result;
+		return Radian<T>(result);
 	}
 
-	inline float Atan2(const float y, const float x)
+	template<typename T>
+	requires std::is_floating_point_v<T>
+	Radian<T> Atan2(const T y, const T x)
 	{
-		if (x > 0) return Atan(y / x);
-		if (x < 0 && y >= 0) return Atan(y / x) + Pi;
-		if (x < 0 && y < 0) return Atan(y / x) - Pi;
-		if (x == 0 && y > 0) return Pi / 2;
-		if (x == 0 && y < 0) return -Pi / 2;
-		return 0.0f;
+		if (x > 0) return Radian<T>(Atan(y / x).Value());
+		if (x < 0 && y >= 0) return Radian<T>(Atan(y / x).Value() + Pi<T>);
+		if (x < 0 && y < 0) return Radian<T>(Atan(y / x).Value() - Pi<T>);
+		if (x == 0 && y > 0) return Radian<T>(Pi<T> / 2);
+		if (x == 0 && y < 0) return Radian<T>(-Pi<T> / 2);
+		return Radian<T>(0.0f);
 	}
 }
 

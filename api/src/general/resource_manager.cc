@@ -18,18 +18,18 @@ namespace api::general::resource_manager
 		resource_font.Setup();
 	}
 
-	sf::Texture& Sprit(const graphics::ResourceSprit::Texture resource_id)
+	sf::Texture& texture(const graphics::ResourceSprit::Texture resource_id)
 	{
-		return resource_sprit.GetTexture(resource_id);
+		return resource_sprit.texture(resource_id);
 	}
 
-	sf::SoundBuffer& Sound(const sound::ResourceSound::Sound resource_id)
+	sf::SoundBuffer& sound(const sound::ResourceSound::Sound resource_id)
 	{
-		return resource_sound.GetSound(resource_id);
+		return resource_sound.sound(resource_id);
 	}
 
-	sf::Font& Font(const graphics::ResourceFont::Font resource_id)
+	sf::Font& font(const graphics::ResourceFont::Font resource_id)
 	{
-		return resource_font.GetFont(resource_id);
+		return resource_font.font(resource_id);
 	}
 }

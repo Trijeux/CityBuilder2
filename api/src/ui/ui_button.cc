@@ -89,13 +89,13 @@ bool api::ui::UiButton::HandleEvent(const sf::Event& event , const sf::RenderWin
 // Create a new UiButton with specified parameters
 void api::ui::UiButton::CreateButton(const sf::Vector2f pos, const std::string& text, const int character_size, const sf::Color color_text)
 {
-	button_text_ = sf::Text(api::general::resource_manager::Font(api::graphics::ResourceFont::Font::kPixel)); // Set the font for the button text
+	button_text_ = sf::Text(api::general::resource_manager::font(api::graphics::ResourceFont::Font::kPixel)); // Set the font for the button text
 	button_text_->setString(text); // Set the text content
 	setPosition(pos); // Set the button's position
 	button_text_->setCharacterSize(character_size); // Set the character size of the text
 	button_text_->setFillColor(color_text); // Set the color of the text
 
-	sprite_ = sf::Sprite(api::general::resource_manager::Sprit(api::graphics::ResourceSprit::Texture::kButton)); // Set the texture for the button's sprite
+	sprite_ = sf::Sprite(api::general::resource_manager::texture(api::graphics::ResourceSprit::Texture::kButton)); // Set the texture for the button's sprite
 	sprite_->setOrigin(sf::Vector2f(sprite_->getGlobalBounds().size.x / 2.0f, sprite_->getGlobalBounds().size.y / 2.0f));
 	// Set the origin of the sprite to its center
 	sprite_->setColor(sf::Color::White); // Set the color of the sprite

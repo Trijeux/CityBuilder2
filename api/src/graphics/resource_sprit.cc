@@ -11,7 +11,7 @@ void api::graphics::ResourceSprit::Setup()
 	LoadAllTextures();
 }
 
-sf::Texture& api::graphics::ResourceSprit::GetTexture(Texture resource_id)
+sf::Texture& api::graphics::ResourceSprit::texture(Texture resource_id)
 {
 	#if TRACY_ENABLE
 	ZoneNamedN(GetTexture, "Get Texture", true);

@@ -13,17 +13,17 @@ sf::Texture& api::graphics::Tile::GetFromType() const
 	switch(type_)
 	{
 	case TileType::kForest:
-		return general::resource_manager::Sprit(ResourceSprit::Texture::kForest);
+		return general::resource_manager::texture(ResourceSprit::Texture::kForest);
 	case TileType::kGround:
-		return general::resource_manager::Sprit(ResourceSprit::Texture::kGround);
+		return general::resource_manager::texture(ResourceSprit::Texture::kGround);
 	case TileType::kStone:
-		return general::resource_manager::Sprit(ResourceSprit::Texture::kStone);
+		return general::resource_manager::texture(ResourceSprit::Texture::kStone);
 		case TileType::kHome:
-		return general::resource_manager::Sprit(ResourceSprit::Texture::kHome);
+		return general::resource_manager::texture(ResourceSprit::Texture::kHome);
 		case TileType::kLumberjack:
-		return general::resource_manager::Sprit(ResourceSprit::Texture::kLumberjack);
+		return general::resource_manager::texture(ResourceSprit::Texture::kLumberjack);
 	default:
-		return general::resource_manager::Sprit(ResourceSprit::Texture::kMax);
+		return general::resource_manager::texture(ResourceSprit::Texture::kMax);
 	}
 }
 
@@ -68,13 +68,13 @@ void api::graphics::Tile::Unselect()
 	is_selected_ = false;
 }
 
-void api::graphics::Tile::SetTileType(const TileType type)
+void api::graphics::Tile::set_tile_type(const TileType type)
 {
 	type_ = type;
 }
 
 // Update the sprite's texture based on the TileType
-void api::graphics::Tile::SetTileSprite()
+void api::graphics::Tile::set_tile_sprite()
 {
 	sprite_->setTexture(GetFromType());
 }

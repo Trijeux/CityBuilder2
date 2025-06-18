@@ -10,11 +10,11 @@ api::gameplay::Building::Building(const float x, const float y, const Build buil
     {
     case Build::kHome:
         // If building type is home, set its texture to the corresponding texture from ResourceManager
-        shape_ = sf::Sprite(general::resource_manager::Sprit(graphics::ResourceSprit::Texture::kHome));
+        shape_ = sf::Sprite(general::resource_manager::texture(graphics::ResourceSprit::Texture::kHome));
         break;
     case Build::kLumberjack:
         // If building type is mine, set its texture to the corresponding texture from ResourceManager
-        shape_ = sf::Sprite(general::resource_manager::Sprit(graphics::ResourceSprit::Texture::kLumberjack));
+        shape_ = sf::Sprite(general::resource_manager::texture(graphics::ResourceSprit::Texture::kLumberjack));
         break;
     default: ;
     }

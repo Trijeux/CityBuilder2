@@ -29,7 +29,7 @@ namespace game::main_game
 		api::graphics::TileMap         tilemap;
 		api::ai::NpcManager            npc_manager;
 		api::gameplay::BuildingManager building_manager;
-		auto                           build = api::gameplay::Build::kHome;
+		auto                           build = api::gameplay::Build::kLumberjack;
 
 		bool in_button = false;
 
@@ -46,7 +46,7 @@ namespace game::main_game
 
 	void CreateTilemap()
 	{
-		tilemap.Setup(sf::Vector2u(window.getSize().x / tilemap.SizeSprit().x, window.getSize().y / tilemap.SizeSprit().y));
+		tilemap.Setup(sf::Vector2u(window.getSize().x / tilemap.size_sprit().x, window.getSize().y / tilemap.size_sprit().y));
 		tilemap.InitMap();
 	}
 
@@ -58,13 +58,13 @@ namespace game::main_game
 		window.create(sf::VideoMode({1600, 800}), "Game");
 		api::general::resource_manager::Setup();
 
-		text = sf::Text(api::general::resource_manager::Font(api::graphics::ResourceFont::Font::kPixel), "City Builder 2");
+		text = sf::Text(api::general::resource_manager::font(api::graphics::ResourceFont::Font::kPixel), "City Builder 2");
 		text->setFillColor(sf::Color::Red);
 		text->setOrigin(text->getGlobalBounds().size / 2.f);
 		text->setScale(sf::Vector2f(2.f, 2.f));
 		text->setPosition(sf::Vector2f(window.getSize().x / 2.f, window.getSize().y / 15.f));
 
-		sound = sf::Sound(api::general::resource_manager::Sound(api::sound::ResourceSound::Sound::kMusicBg));
+		sound = sf::Sound(api::general::resource_manager::sound(api::sound::ResourceSound::Sound::kMusicBg));
 		sound->setLooping(true);
 		sound->setPitch(0.5f);
 		sound->play();

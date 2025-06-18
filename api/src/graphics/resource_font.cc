@@ -11,7 +11,7 @@ void api::graphics::ResourceFont::Setup()
 	LoadAllFonts();
 }
 
-sf::Font& api::graphics::ResourceFont::GetFont(Font resource_id)
+sf::Font& api::graphics::ResourceFont::font(Font resource_id)
 {
 	#if TRACY_ENABLE
 	ZoneNamedN(GetFont, "Get Font", true);

@@ -1,38 +1,59 @@
 ﻿#ifndef CORE_MATHS_ANGLE_H
 #define CORE_MATHS_ANGLE_H
 
+#include <type_traits>
 #include "maths/const.h"
 
-namespace core {
-	class Degree;
+namespace core::maths {
+
+	template<typename R>
+	requires std::is_floating_point_v<R>
+	class Degree; // Forward declaration
+
+	template<typename R>
+	requires std::is_floating_point_v<R>
 	class Radian {
 	public:
-		constexpr explicit Radian(const float value): value_(value){}
-		constexpr Radian(const Degree& degree);
+		constexpr explicit Radian(R value) : value_(value) {}
 
-		explicit constexpr operator float() const { return value_; }
+		template<typename D>
+		requires std::is_floating_point_v<D>
+		Radian(const Degree<D>& degree);
 
-		float Value() const { return value_; }
+		explicit constexpr operator R() const { return value_; }
+
+		R Value() const { return value_; }
 
 	private:
-		float value_;
+		R value_;
 	};
 
+	template<typename D>
+	requires std::is_floating_point_v<D>
 	class Degree {
 	public:
-		constexpr explicit Degree(const float value): value_(value){}
-		constexpr Degree(const Radian& radian): value_(static_cast<float>(radian) * 180.0f / Pi) {}
+		constexpr explicit Degree(D value) : value_(value) {}
 
-		explicit constexpr operator float() const { return value_; }
+		template<typename R>
+		requires std::is_floating_point_v<R>
+		Degree(const Radian<R>& radian)
+			: value_(static_cast<D>(radian.Value() * static_cast<D>(180.0) / Pi<D>)) {}
 
-		float Value() const { return value_; }
+		explicit constexpr operator D() const { return value_; }
+
+		D Value() const { return value_; }
 
 	private:
-		float value_;
+		D value_;
 	};
 
+	template<typename R>
+	requires std::is_floating_point_v<R>
+	template<typename D>
+	requires std::is_floating_point_v<D>
+	Radian<R>::Radian(const Degree<D>& degree)
+		: value_(static_cast<R>(degree.Value()) * Pi<R> / static_cast<R>(180.0)) {}
 
-	constexpr Radian::Radian(const Degree& degree)
-		: value_(static_cast<float>(degree) * Pi / 180.0f) {}
-}
-#endif //CORE_MATHS_ANGLE_H
+} // namespace core
+
+#endif // CORE_MATHS_ANGLE_H

@@ -12,12 +12,12 @@ namespace api::gameplay
     private:
         bool is_active_ = false; // Flag indicating if the building manager is active
 
-        std::vector<sf::Vector2f> homes_;// Vector to store instances of Building
-        std::vector<sf::Vector2f> lumberjacks_;
+        std::vector<Building> homes_;// Vector to store instances of Building
+        std::vector<Building> lumberjacks_;
 
         // Private methods
-        void SetActive(bool active); // Method to set the activity status of the manager
-        [[nodiscard]] bool GetActive() const; // Method to retrieve the activity status of the manager
+        void set_active(bool active); // Method to set the activity status of the manager
+        [[nodiscard]] bool is_active() const { return is_active_; } // Method to retrieve the activity status of the manager
 
     public:
         // Public methods

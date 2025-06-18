@@ -28,7 +28,7 @@ void api::ai::NpcManager::RemoveNpc(const Npc& npc)
 	std::erase_if(npcs_,
 	              [&](const Npc& n)
 	              {
-		              return npc.IsDead();
+		              return npc.is_dead();
 	              });
 }
 
@@ -36,11 +36,11 @@ void api::ai::NpcManager::Update(const float dt, const graphics::TileMap& tile_m
 {
 	for(auto& npc : npcs_)
 	{
-		if(!npc.IsMoving())
+		if(!npc.is_moving())
 		{
-			sf::Vector2f objectif = tile_map.TilesWalkable()[15];
-			path_ = motion::GetPath(npc.Position(), objectif, tile_map.TilesWalkable());
-			if(path_.IsValid()) npc.SetPath(path_);
+			sf::Vector2f objectif = tile_map.tiles_walkable()[15];
+			path_ = motion::path(npc.Position(), objectif, tile_map.tiles_walkable());
+			if(path_.is_valid()) npc.set_path(path_);
 		}
 		npc.Update(dt);
 	}

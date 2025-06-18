@@ -9,9 +9,9 @@
 namespace api::general::resource_manager
 {
 	void             Setup();
-	sf::Texture&     Sprit(graphics::ResourceSprit::Texture resource_id);
-	sf::SoundBuffer& Sound(sound::ResourceSound::Sound resource_id);
-	sf::Font&        Font(graphics::ResourceFont::Font resource_id);
+	sf::Texture&     texture(graphics::ResourceSprit::Texture resource_id);
+	sf::SoundBuffer& sound(sound::ResourceSound::Sound resource_id);
+	sf::Font&        font(graphics::ResourceFont::Font resource_id);
 }
 
 #endif //API_GRAPHICS_RESOURCE_MANAGER_H

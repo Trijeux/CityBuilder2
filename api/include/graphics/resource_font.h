@@ -18,7 +18,7 @@ namespace api::graphics
 
 		void Setup();
 
-		sf::Font& GetFont(Font resource_id);
+		sf::Font& font(Font resource_id);
 	protected:
 	private:
 		std::array<sf::Font, static_cast<int>(Font::kMax)> fonts_;
