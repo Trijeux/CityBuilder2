@@ -7,7 +7,7 @@
 
 namespace api::gameplay
 {
-    class BuildingManager
+    class BuildingManager final : public sf::Drawable
     {
     private:
         bool is_active_ = false; // Flag indicating if the building manager is active
@@ -18,10 +18,10 @@ namespace api::gameplay
         // Private methods
         void set_active(bool active); // Method to set the activity status of the manager
         [[nodiscard]] bool is_active() const { return is_active_; } // Method to retrieve the activity status of the manager
-
+    protected:
+        void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
     public:
         // Public methods
-
         // Method to add a new building to a tile using game resources
         void AddBuilding(api::graphics::Tile& tile, api::gameplay::Build build);
 

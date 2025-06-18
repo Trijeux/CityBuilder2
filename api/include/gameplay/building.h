@@ -29,7 +29,8 @@ namespace api::gameplay
         void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
     private:
-        std::optional<sf::Sprite> shape_;      // Sprite representing the visual shape of the building
+        sf::RectangleShape detection_zone_;
+        std::optional<sf::Sprite> sprite_;      // Sprite representing the visual shape of the building
         sf::Vector2f position_; // Position of the building
         bool is_occupied_ = false;
     };

@@ -44,6 +44,19 @@ void api::gameplay::BuildingManager::CreateFirstBuildingHome(std::vector<graphic
 	while(homeNotPlace);
 }
 
+void api::gameplay::BuildingManager::draw(sf::RenderTarget& target, sf::RenderStates states) const
+{
+	for(const auto& home : homes_)
+	{
+		target.draw(home, states); // Draw each home building on the render target
+	}
+
+	for(const auto& lumberjack : lumberjacks_)
+	{
+		target.draw(lumberjack, states); // Draw each lumberjack building on the render target
+	}
+}
+
 void api::gameplay::BuildingManager::AddBuilding(graphics::Tile& tile, const Build building)
 {
 	// if (!is_active_)

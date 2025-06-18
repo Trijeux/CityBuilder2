@@ -10,8 +10,8 @@
     "id": "TASK_2",
     "priority": "HIGH",
     "tags": [],
-    "description": "Ajouter Bucheron (maison de bucheron) avec une zone de detection d\u0027arbre pour savoir si il y a des arbre a couper ",
-    "status": "TODO"
+    "description": "Ajouter Bucheron (maison de bucheron) avec une zone de detection d\u0027arbre pour savoir si il y a des arbre a couper \npour detecter les arbre utiliser la position de la maison et prendre les naibore",
+    "status": "IN_PROGRESS"
   },
   {
     "id": "TASK_3",

@@ -47,6 +47,7 @@ namespace game::main_game
 	void CreateTilemap()
 	{
 		tilemap.Setup(sf::Vector2u(window.getSize().x / tilemap.size_sprit().x, window.getSize().y / tilemap.size_sprit().y));
+		building_manager.ClearMap();
 		tilemap.InitMap();
 	}
 
@@ -96,7 +97,11 @@ namespace game::main_game
 				if(event->is<sf::Event::Closed>()) window.close();
 
 				#if DEBUG_ENABLE
-				if(button_generator.ActivateButton(*event, window)) tilemap.InitMap();
+				if(button_generator.ActivateButton(*event, window))
+				{
+					tilemap.InitMap();
+					building_manager.ClearMap();
+				}
 				if(button_add_npc.ActivateButton(*event, window)) npc_manager.AddNpc();
 				if(button_remove_last_npc.ActivateButton(*event, window)) npc_manager.RemoveLastNpc();
 				if(button_remove_all_npc.ActivateButton(*event, window)) npc_manager.RemoveAllNpc();
@@ -111,6 +116,7 @@ namespace game::main_game
 
 			window.clear();
 			window.draw(tilemap);
+			window.draw(building_manager);
 			window.draw(npc_manager);
 			window.draw(*text);
 
