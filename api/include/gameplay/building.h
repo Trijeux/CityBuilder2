@@ -19,6 +19,8 @@ namespace api::gameplay
         // Constructor to initialize a Building object
         Building(float x, float y, Build build);
 
+        Build type() const { return type_; }
+
         // Function to retrieve the position of the building
         sf::Vector2f position() const { return position_; }
 
@@ -30,6 +32,7 @@ namespace api::gameplay
 
     private:
         sf::RectangleShape detection_zone_;
+        Build type_ = Build::kNothing;
         std::optional<sf::Sprite> sprite_;      // Sprite representing the visual shape of the building
         sf::Vector2f position_; // Position of the building
         bool is_occupied_ = false;

@@ -19,6 +19,7 @@ api::gameplay::Building::Building(const float x, const float y, const Build buil
 	default: ;
 	}
 	// Set the position of the building
+	type_ = build;
 	position_ = sf::Vector2f(x, y);
 	sprite_->setPosition(position_); // Set position of the sprite shape
 
@@ -33,6 +34,7 @@ api::gameplay::Building::Building(const float x, const float y, const Build buil
 
 void api::gameplay::Building::draw(sf::RenderTarget& target, const sf::RenderStates states) const
 {
-	target.draw(detection_zone_, states); // Draw the building's detection_zone_ on the render target
+	if(type_ == Build::kNothing) return;
+	if(type_ != Build::kHome) target.draw(detection_zone_, states); // Draw the building's detection_zone_ on the render target
 	target.draw(*sprite_, states); // Draw the building's sprite on the render target
 }
