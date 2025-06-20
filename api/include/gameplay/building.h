@@ -26,16 +26,22 @@ namespace api::gameplay
 
         bool is_occupied() const { return is_occupied_; }
 
+        std::vector<sf::Vector2f> neighbor() const { return neighbor_; }
     protected:
         // Overridden draw function from sf::Drawable to draw the building
         void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
     private:
+        std::vector<sf::Vector2f> neighbor_;
         sf::RectangleShape detection_zone_;
         Build type_ = Build::kNothing;
         std::optional<sf::Sprite> sprite_;      // Sprite representing the visual shape of the building
         sf::Vector2f position_; // Position of the building
         bool is_occupied_ = false;
+        // 5 = nombre de tiles en largeur et en longeur (5*5)
+        float numbers_tiles_ = 5.f;
+
+        void CreateNeighbor(const sf::Vector2f& center_pos, int radius, float tile_size);
     };
 }
 

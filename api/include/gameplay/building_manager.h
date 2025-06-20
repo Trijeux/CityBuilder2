@@ -20,6 +20,7 @@ namespace api::gameplay
         [[nodiscard]] bool is_active() const { return is_active_; } // Method to retrieve the activity status of the manager
     protected:
         void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
+
     public:
         // Public methods
         // Method to add a new building to a tile using game resources

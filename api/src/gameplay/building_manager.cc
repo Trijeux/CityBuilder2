@@ -48,7 +48,7 @@ void api::gameplay::BuildingManager::draw(sf::RenderTarget& target, sf::RenderSt
 {
 	for(const auto& home : homes_)
 	{
-		target.draw(home, states); // Draw each home building on the render target
+		target.draw(home, states);// Draw each home building on the render target
 	}
 
 	for(const auto& lumberjack : lumberjacks_)

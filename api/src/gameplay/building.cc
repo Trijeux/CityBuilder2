@@ -24,12 +24,14 @@ api::gameplay::Building::Building(const float x, const float y, const Build buil
 	sprite_->setPosition(position_); // Set position of the sprite shape
 
 	// 5 = nombre de tiles en largeur et en longeur (5*5)
-	detection_zone_.setSize(sf::Vector2f(sprite_->getTexture().getSize()) * 5.f);
+	detection_zone_.setSize(sf::Vector2f(sprite_->getTexture().getSize()) * numbers_tiles_);
 	detection_zone_.setOrigin(sf::Vector2f(detection_zone_.getSize() / 2.f));
 	detection_zone_.setPosition(position_ + sf::Vector2f(sprite_->getTexture().getSize()) / 2.f);
 	detection_zone_.setFillColor(sf::Color(200, 147, 141, 65)); // Transparent fill color
 	detection_zone_.setOutlineColor(sf::Color(200, 147, 141, 255)); // White outline color
 	detection_zone_.setOutlineThickness(-1);
+
+	CreateNeighbor(sprite_->getPosition(), 2, sprite_->getTexture().getSize().x);
 }
 
 void api::gameplay::Building::draw(sf::RenderTarget& target, const sf::RenderStates states) const
@@ -37,4 +39,22 @@ void api::gameplay::Building::draw(sf::RenderTarget& target, const sf::RenderSta
 	if(type_ == Build::kNothing) return;
 	if(type_ != Build::kHome) target.draw(detection_zone_, states); // Draw the building's detection_zone_ on the render target
 	target.draw(*sprite_, states); // Draw the building's sprite on the render target
+}
+
+void api::gameplay::Building::CreateNeighbor(const sf::Vector2f& center_pos, int radius, float tile_size)
+{
+	neighbor_.clear();
+
+	for (int dx = -radius; dx <= radius; dx++)
+	{
+		for (int dy = -radius; dy <= radius; dy++)
+		{
+			if (dx == 0 && dy == 0)
+				continue;
+
+			// Ajoute une position autour du centre
+			sf::Vector2f pos(center_pos.x + dx * tile_size, center_pos.y + dy * tile_size);
+			neighbor_.push_back(pos);
+		}
+	}
 }
