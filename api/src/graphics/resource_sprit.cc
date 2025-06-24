@@ -52,10 +52,14 @@ void api::graphics::ResourceSprit::LoadAllTextures()
 	}
 	if(!textures_.at(static_cast<int>(Texture::kHome)).loadFromFile("resources/sprite/home.png"))
 	{
-		std::cout << "Error loading button texture" << std::endl;
+		std::cout << "Error loading home texture" << std::endl;
 	}
 	if(!textures_.at(static_cast<int>(Texture::kLumberjack)).loadFromFile("resources/sprite/lumberjack.png"))
 	{
-		std::cout << "Error loading button texture" << std::endl;
+		std::cout << "Error loading lumberjack texture" << std::endl;
+	}
+	if(!textures_.at(static_cast<int>(Texture::kQuarry)).loadFromFile("resources/sprite/quarry.png"))
+	{
+		std::cout << "Error loading quarry texture" << std::endl;
 	}
 }

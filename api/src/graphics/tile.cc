@@ -18,10 +18,12 @@ sf::Texture& api::graphics::Tile::GetFromType() const
 		return general::resource_manager::texture(ResourceSprit::Texture::kGround);
 	case TileType::kStone:
 		return general::resource_manager::texture(ResourceSprit::Texture::kStone);
-		case TileType::kHome:
+	case TileType::kHome:
 		return general::resource_manager::texture(ResourceSprit::Texture::kHome);
-		case TileType::kLumberjack:
+	case TileType::kLumberjack:
 		return general::resource_manager::texture(ResourceSprit::Texture::kLumberjack);
+	case TileType::kQuarry:
+		return general::resource_manager::texture(ResourceSprit::Texture::kQuarry);
 	default:
 		return general::resource_manager::texture(ResourceSprit::Texture::kMax);
 	}
@@ -39,8 +41,8 @@ api::graphics::Tile::Tile(const TileType type, const float x, const float y, con
 
 	outline_.setSize(sf::Vector2f(sprite_->getTexture().getSize()));
 	outline_.setPosition(sf::Vector2f(x, y));
-	outline_.setFillColor(sf::Color(255, 255, 255, 0));  // Transparent fill color
-	outline_.setOutlineColor(sf::Color::White);  // White outline color
+	outline_.setFillColor(sf::Color(255, 255, 255, 0)); // Transparent fill color
+	outline_.setOutlineColor(sf::Color::White); // White outline color
 	outline_.setOutlineThickness(-1);
 
 	is_walkable_ = is_walkable;
@@ -53,8 +55,9 @@ void api::graphics::Tile::draw(sf::RenderTarget& target, sf::RenderStates states
 	#endif
 	target.draw(*sprite_, states);
 
-	if (is_selected_) {
-		target.draw(outline_, states);  // Draw the outline if the tile is selected
+	if(is_selected_)
+	{
+		target.draw(outline_, states); // Draw the outline if the tile is selected
 	}
 }
 

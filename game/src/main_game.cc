@@ -29,7 +29,7 @@ namespace game::main_game
 		api::graphics::TileMap         tilemap;
 		api::ai::NpcManager            npc_manager;
 		api::gameplay::BuildingManager building_manager;
-		auto                           build = api::gameplay::Build::kLumberjack;
+		auto                           build = api::gameplay::Build::kQuarry;
 
 		bool in_button = false;
 

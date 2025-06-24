@@ -16,7 +16,8 @@ namespace api::graphics
 			kForest,
 			kStone,
 			kHome,
-			kLumberjack
+			kLumberjack,
+			kQuarry
 		};
 
 		Tile(TileType type, float x, float y, bool is_walkable);

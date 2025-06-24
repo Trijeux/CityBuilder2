@@ -89,6 +89,15 @@ void api::gameplay::BuildingManager::AddBuilding(graphics::Tile& tile, const Bui
 				build_ok = true;
 			}
 			break;
+			case Build::kQuarry:
+			{
+				lumberjacks_.emplace_back(tile.position().x, tile.position().y, Build::kQuarry);
+				//resource.AddBuilding(Build::kFarm);
+				//resource.PayBuilding(Build::kFarm);
+				type = graphics::Tile::TileType::kQuarry;
+				build_ok = true;
+			}
+			break;
 		case Build::kNothing:
 			break;
 		default: ;

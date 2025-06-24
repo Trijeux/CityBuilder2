@@ -10,6 +10,7 @@ namespace api::gameplay
     {
         kHome,
         kLumberjack,
+        kQuarry,
         kNothing
     };
 

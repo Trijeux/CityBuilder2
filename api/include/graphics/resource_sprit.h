@@ -19,6 +19,7 @@ namespace api::graphics
 			kButton,
 			kHome,
 			kLumberjack,
+			kQuarry,
 			kMax
 		};
 

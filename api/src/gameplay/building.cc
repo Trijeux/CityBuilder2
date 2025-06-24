@@ -16,6 +16,9 @@ api::gameplay::Building::Building(const float x, const float y, const Build buil
 		// If building type is mine, set its texture to the corresponding texture from ResourceManager
 		sprite_ = sf::Sprite(general::resource_manager::texture(graphics::ResourceSprit::Texture::kLumberjack));
 		break;
+	case Build::kQuarry:
+		sprite_ = sf::Sprite(general::resource_manager::texture(graphics::ResourceSprit::Texture::kQuarry));
+		break;
 	default: ;
 	}
 	// Set the position of the building
@@ -45,12 +48,11 @@ void api::gameplay::Building::CreateNeighbor(const sf::Vector2f& center_pos, int
 {
 	neighbor_.clear();
 
-	for (int dx = -radius; dx <= radius; dx++)
+	for(int dx = -radius; dx <= radius; dx++)
 	{
-		for (int dy = -radius; dy <= radius; dy++)
+		for(int dy = -radius; dy <= radius; dy++)
 		{
-			if (dx == 0 && dy == 0)
-				continue;
+			if(dx == 0 && dy == 0) continue;
 
 			// Ajoute une position autour du centre
 			sf::Vector2f pos(center_pos.x + dx * tile_size, center_pos.y + dy * tile_size);
