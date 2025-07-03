@@ -51,15 +51,16 @@ void api::gameplay::BuildingManager::draw(sf::RenderTarget& target, sf::RenderSt
 		target.draw(home, states);// Draw each home building on the render target
 	}
 
-	for(const auto& lumberjack : lumberjacks_)
+	for(const auto& work : works_)
 	{
-		target.draw(lumberjack, states); // Draw each lumberjack building on the render target
+		target.draw(work, states); // Draw each lumberjack building on the render target
 	}
 }
 
-void api::gameplay::BuildingManager::AddBuilding(graphics::Tile& tile, const Build building)
+api::gameplay::Building api::gameplay::BuildingManager::AddBuilding(graphics::Tile& tile, const Build building)
 {
-	// if (!is_active_)
+	// if (!is_a
+	// ctive_)
 	// {
 	// 	return; // Exit if building mode is not active
 	// }
@@ -69,11 +70,13 @@ void api::gameplay::BuildingManager::AddBuilding(graphics::Tile& tile, const Bui
 		bool                     build_ok = false;
 		graphics::Tile::TileType type;
 
+		std::optional<Building> building_return;
+
 		switch(building)
 		{
 		case Build::kHome:
 			{
-				homes_.emplace_back(tile.position().x, tile.position().y, Build::kHome);
+				building_return = homes_.emplace_back(tile.position().x, tile.position().y, Build::kHome);
 				//resource.AddBuilding(Build::kHome);
 				//resource.PayBuilding(Build::kHome);
 				type = graphics::Tile::TileType::kHome;
@@ -82,7 +85,7 @@ void api::gameplay::BuildingManager::AddBuilding(graphics::Tile& tile, const Bui
 			break;
 		case Build::kLumberjack:
 			{
-				lumberjacks_.emplace_back(tile.position().x, tile.position().y, Build::kLumberjack);
+				building_return = works_.emplace_back(tile.position().x, tile.position().y, Build::kLumberjack);
 				//resource.AddBuilding(Build::kFarm);
 				//resource.PayBuilding(Build::kFarm);
 				type = graphics::Tile::TileType::kLumberjack;
@@ -91,7 +94,7 @@ void api::gameplay::BuildingManager::AddBuilding(graphics::Tile& tile, const Bui
 			break;
 			case Build::kQuarry:
 			{
-				lumberjacks_.emplace_back(tile.position().x, tile.position().y, Build::kQuarry);
+				building_return = works_.emplace_back(tile.position().x, tile.position().y, Build::kQuarry);
 				//resource.AddBuilding(Build::kFarm);
 				//resource.PayBuilding(Build::kFarm);
 				type = graphics::Tile::TileType::kQuarry;
@@ -109,6 +112,7 @@ void api::gameplay::BuildingManager::AddBuilding(graphics::Tile& tile, const Bui
 		{
 			tile.set_tile_type(type); // Set the tile type to the newly added building type
 			tile.set_tile_sprite(); // Set the tile sprite to match the building type
+			return building_return.value();
 		}
 	}
 }
@@ -129,7 +133,7 @@ void api::gameplay::BuildingManager::SubBuilding(graphics::Tile& tile)
 			                                          return b.position() == tile.position();
 		                                          });
 
-		const auto it_lumberjack = std::ranges::find_if(lumberjacks_,
+		const auto it_lumberjack = std::ranges::find_if(works_,
 		                                                [&tile](Building& b)
 		                                                {
 			                                                return b.position() == tile.position();
@@ -141,7 +145,7 @@ void api::gameplay::BuildingManager::SubBuilding(graphics::Tile& tile)
 			homes_.erase(it_home);
 			break;
 		case graphics::Tile::TileType::kLumberjack:
-			lumberjacks_.erase(it_lumberjack);
+			works_.erase(it_lumberjack);
 			break;
 		default: ;
 		}
@@ -154,5 +158,5 @@ void api::gameplay::BuildingManager::SubBuilding(graphics::Tile& tile)
 void api::gameplay::BuildingManager::ClearMap()
 {
 	homes_.clear(); // Clear all buildings from the map
-	lumberjacks_.clear();
+	works_.clear();
 }

@@ -17,6 +17,8 @@ namespace api::graphics
 		Tile*                     tile_selected_;
 		sf::Vector2i              mouse_last_position_;
 		std::vector<Tile>         tiles_;
+		std::vector<sf::Vector2f> tiles_forest_;
+		std::vector<sf::Vector2f> tiles_stone_;
 		std::vector<sf::Vector2f> tiles_walkable_;
 		sf::Vector2u              size_sprit_;
 

@@ -42,18 +42,14 @@ void api::graphics::TileMap::InitMap()
 	std::random_device                 r;
 	std::default_random_engine         e1(r());
 	std::uniform_int_distribution<int> uniform_dist(8.0f, 20.0f);
-	const int                          mean = uniform_dist(e1);
-	std::uniform_int_distribution<int> uniform_dist2(8.0f, 20.0f);
-	const int                          mean2 = uniform_dist2(e1);
-
-	const float scale_x = mean;
-	const float scale_y = mean2;
+	const int                          scale_x = uniform_dist(e1);
+	const int                          scale_y = uniform_dist(e1);
 
 	for(int x = 0; x < playground_size_u_.x; x++)
 	{
 		for(int y = 0; y < playground_size_u_.y; y++)
 		{
-			const float noise_value = noise.GetNoise(x * scale_x, y * scale_y);
+			const float noise_value = noise.GetNoise(static_cast<float>(x * scale_x), static_cast<float>(y * scale_y));
 
 			if(noise_value > 0.2f)
 			{
@@ -63,6 +59,7 @@ void api::graphics::TileMap::InitMap()
 					                    x * size_sprit().x,
 					                    y * size_sprit().y,
 					                    false);
+					tiles_stone_.emplace_back(x * size_sprit().x, y * size_sprit().y);
 				}
 				else
 				{
@@ -70,6 +67,7 @@ void api::graphics::TileMap::InitMap()
 					                    x * size_sprit().x,
 					                    y * size_sprit().y,
 					                    false);
+					tiles_forest_.emplace_back(x * size_sprit().x, y * size_sprit().y);
 				}
 			}
 			else

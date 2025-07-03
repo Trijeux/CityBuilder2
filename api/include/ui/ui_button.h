@@ -13,6 +13,7 @@ namespace api::ui
         bool was_pressed_ = false;// Font for the button text
         std::optional<sf::Sprite> sprite_; // Sprite for the button
         std::optional<sf::Text> button_text_; // Text displayed on the button// Texture for the button (not used in current implementation)
+        sf::Color color_text_;
 
         // Private method to draw the button
         void draw(sf::RenderTarget& target, sf::RenderStates states) const override;

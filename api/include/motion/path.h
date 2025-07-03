@@ -10,6 +10,7 @@ namespace api::motion
 	class Path
 	{
 		std::vector<sf::Vector2f> points_;
+		int idx_point_ = 0;
 
 	public:
 		void AddPoint(sf::Vector2f start);
@@ -19,6 +20,8 @@ namespace api::motion
 		
 		[[nodiscard]] bool is_valid() const;
 		[[nodiscard]] const std::vector<sf::Vector2f>& points() const { return points_; }
+		[[nodiscard]] bool IsDone() const;
+		[[nodiscard]] sf::Vector2f StartPoint() const;
 
 	};
 }

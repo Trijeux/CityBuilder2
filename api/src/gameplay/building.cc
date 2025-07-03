@@ -27,12 +27,23 @@ api::gameplay::Building::Building(const float x, const float y, const Build buil
 	sprite_->setPosition(position_); // Set position of the sprite shape
 
 	// 5 = nombre de tiles en largeur et en longeur (5*5)
-	detection_zone_.setSize(sf::Vector2f(sprite_->getTexture().getSize()) * numbers_tiles_);
-	detection_zone_.setOrigin(sf::Vector2f(detection_zone_.getSize() / 2.f));
-	detection_zone_.setPosition(position_ + sf::Vector2f(sprite_->getTexture().getSize()) / 2.f);
-	detection_zone_.setFillColor(sf::Color(200, 147, 141, 65)); // Transparent fill color
-	detection_zone_.setOutlineColor(sf::Color(200, 147, 141, 255)); // White outline color
-	detection_zone_.setOutlineThickness(-1);
+	if(build != Build::kHome)
+	{
+		detection_zone_.setSize(sf::Vector2f(sprite_->getTexture().getSize()) * numbers_tiles_);
+		detection_zone_.setOrigin(sf::Vector2f(detection_zone_.getSize() / 2.f));
+		detection_zone_.setPosition(position_ + sf::Vector2f(sprite_->getTexture().getSize()) / 2.f);
+		if(build == Build::kLumberjack)
+		{
+			detection_zone_.setFillColor(sf::Color(200, 147, 141, 45)); // Transparent fill color
+			detection_zone_.setOutlineColor(sf::Color(200, 147, 141, 255)); // White outline color
+		}
+		if(build == Build::kQuarry)
+		{
+			detection_zone_.setFillColor(sf::Color(141, 147, 200, 45)); // Transparent fill color
+			detection_zone_.setOutlineColor(sf::Color(141, 147, 200, 255)); // White outline color
+		}
+		detection_zone_.setOutlineThickness(-1);
+	}
 
 	CreateNeighbor(sprite_->getPosition(), 2, sprite_->getTexture().getSize().x);
 }

@@ -34,7 +34,6 @@ bool api::ui::UiButton::ContainsMouse(const sf::Event& event, const sf::RenderWi
 	// Check if the mouse position is inside the button's global bounds
 	if(sprite_->getGlobalBounds().contains(pixel_pos_in_float))
 	{
-		std::cout << "True" << std::endl;
 		was_pressed_ = true;
 		return true;
 	}
@@ -80,9 +79,10 @@ bool api::ui::UiButton::HandleEvent(const sf::Event& event , const sf::RenderWin
 	auto pixel_pos_in_float = sf::Vector2f(pixel_pos) - getPosition();
 	if(sprite_->getGlobalBounds().contains(pixel_pos_in_float))
 	{
+		button_text_->setFillColor(sf::Color::Green);
 		return true;
 	}
-
+	button_text_->setFillColor(color_text_);
 	return false;
 }
 
@@ -94,6 +94,7 @@ void api::ui::UiButton::CreateButton(const sf::Vector2f pos, const std::string& 
 	setPosition(pos); // Set the button's position
 	button_text_->setCharacterSize(character_size); // Set the character size of the text
 	button_text_->setFillColor(color_text); // Set the color of the text
+	color_text_ = color_text;
 
 	sprite_ = sf::Sprite(api::general::resource_manager::texture(api::graphics::ResourceSprit::Texture::kButton)); // Set the texture for the button's sprite
 	sprite_->setOrigin(sf::Vector2f(sprite_->getGlobalBounds().size.x / 2.0f, sprite_->getGlobalBounds().size.y / 2.0f));

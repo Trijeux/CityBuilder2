@@ -21,3 +21,15 @@ void api::motion::Path::Fill(std::vector<sf::Vector2f>& pathPoints){
 bool api::motion::Path::is_valid() const{
 	return !points_.empty();
 }
+
+bool api::motion::Path::IsDone() const
+{
+	return idx_point_ == points_.size() - 1;
+}
+
+sf::Vector2f api::motion::Path::StartPoint() const{
+	if (is_valid()) {
+		return points_[0];
+	}
+	return {0, 0,};
+}

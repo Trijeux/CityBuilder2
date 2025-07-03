@@ -22,26 +22,95 @@ namespace game::main_game
 {
 	namespace
 	{
-		sf::Clock                      clock;
-		sf::RenderWindow               window;
-		std::optional<sf::Sound>       sound;
-		std::optional<sf::Text>        text;
-		api::graphics::TileMap         tilemap;
-		api::ai::NpcManager            npc_manager;
-		api::gameplay::BuildingManager building_manager;
-		auto                           build = api::gameplay::Build::kQuarry;
+		sf::Clock                            clock;
+		sf::RenderWindow                     window;
+		std::optional<sf::Sound>             sound;
+		std::optional<sf::Text>              text;
+		api::graphics::TileMap               tilemap;
+		api::ai::NpcManager                  npc_manager;
+		api::gameplay::BuildingManager       building_manager;
+		auto                                 build = api::gameplay::Build::kHome;
+		std::vector<api::gameplay::Building> work = {};
 
 		bool in_button = false;
+		bool build_active = false;
 
+		api::ui::UiButton btn_activate_building;
+		api::ui::UiButton btn_building_home;
+		api::ui::UiButton btn_building_lumberjack;
+		api::ui::UiButton btn_building_quarry;
 
 		float delta_time = 0;
 
 		#if DEBUG_ENABLE
 		api::debug::ButtonDebug button_generator;
-		api::debug::ButtonDebug button_add_npc;
-		api::debug::ButtonDebug button_remove_last_npc;
-		api::debug::ButtonDebug button_remove_all_npc;
+		//api::debug::ButtonDebug button_add_npc;
+		//api::debug::ButtonDebug button_remove_last_npc;
+		//api::debug::ButtonDebug button_remove_all_npc;
 		#endif
+	}
+
+	void CreateButtonActiveBuilding(const int x, const int y, const std::string& text, const int size, const sf::Color color_text)
+	{
+		btn_activate_building.CreateButton(sf::Vector2f(x, y), text, size, color_text);
+		btn_activate_building.set_scale({0.8f, 0.8f});
+		btn_activate_building.call_back_ = []()
+		{
+			building_manager.build(window);
+			if(build_active == false)
+			{
+				build_active = true;
+			}
+			else if(build_active == true)
+			{
+				build_active = false;
+			}
+		};
+	}
+
+	void CreateButtonBuildHome(const int x, const int y, const std::string& text, const int size, const sf::Color color_text)
+	{
+		btn_building_home.CreateButton(sf::Vector2f(x, y), text, size, color_text);
+		btn_building_home.set_scale({0.8f, 0.8f});
+		btn_building_home.call_back_ = []()
+		{
+			btn_building_home.set_scale({0.8f, 0.8f});
+			build = api::gameplay::Build::kHome;
+			btn_building_lumberjack.build_on_ = false;
+			btn_building_lumberjack.set_scale({0.5f, 0.5f});
+			btn_building_quarry.build_on_ = false;
+			btn_building_quarry.set_scale({0.5f, 0.5f});
+		};
+	}
+
+	void CreateButtonBuildLumberjack(const int x, const int y, const std::string& text, const int size, const sf::Color color_text)
+	{
+		btn_building_lumberjack.CreateButton(sf::Vector2f(x, y), text, size, color_text);
+		btn_building_lumberjack.set_scale({0.5f, 0.5f});
+		btn_building_lumberjack.call_back_ = []()
+		{
+			btn_building_lumberjack.set_scale({0.8f, 0.8f});
+			build = api::gameplay::Build::kLumberjack;
+			btn_building_home.build_on_ = false;
+			btn_building_home.set_scale({0.5f, 0.5f});
+			btn_building_quarry.build_on_ = false;
+			btn_building_quarry.set_scale({0.5f, 0.5f});
+		};
+	}
+
+	void CreateButtonBuildQuarry(const int x, const int y, const std::string& text, const int size, const sf::Color color_text)
+	{
+		btn_building_quarry.CreateButton(sf::Vector2f(x, y), text, size, color_text);
+		btn_building_quarry.set_scale({0.5f, 0.5f});
+		btn_building_quarry.call_back_ = []()
+		{
+			btn_building_quarry.set_scale({0.8f, 0.8f});
+			build = api::gameplay::Build::kQuarry;
+			btn_building_lumberjack.build_on_ = false;
+			btn_building_lumberjack.set_scale({0.5f, 0.5f});
+			btn_building_home.build_on_ = false;
+			btn_building_home.set_scale({0.5f, 0.5f});
+		};
 	}
 
 	void CreateTilemap()
@@ -73,16 +142,41 @@ namespace game::main_game
 		CreateTilemap();
 		tilemap.clicked_tile_ = [](api::graphics::Tile& tile)
 		{
-			building_manager.AddBuilding(tile, build);
+			if(tile.type() == api::graphics::Tile::TileType::kGround)
+			{
+				api::gameplay::Building home = building_manager.AddBuilding(tile, build);
+				if(build == api::gameplay::Build::kHome)
+				{
+					if(home.type() == api::gameplay::Build::kHome)
+					{
+						npc_manager.AddNpc(std::move(&home));
+					}
+				}
+			}
 		};
 
+		npc_manager.set_building_manager(&building_manager);
 
 		#if DEBUG_ENABLE
 		button_generator.Setup(sf::Vector2f(window.getSize().x - 100, 30), sf::Vector2f(150.f, 25.f), "Generate");
-		button_add_npc.Setup(sf::Vector2f(window.getSize().x - 100, 60), sf::Vector2f(150.f, 25.f), "Add Npc");
-		button_remove_last_npc.Setup(sf::Vector2f(window.getSize().x - 100, 90), sf::Vector2f(150.f, 25.f), "Remove Last Npc");
-		button_remove_all_npc.Setup(sf::Vector2f(window.getSize().x - 100, 120), sf::Vector2f(150.f, 25.f), "Remove All Npc");
+		//button_add_npc.Setup(sf::Vector2f(window.getSize().x - 100, 60), sf::Vector2f(150.f, 25.f), "Add Npc");
+		//button_remove_last_npc.Setup(sf::Vector2f(window.getSize().x - 100, 90), sf::Vector2f(150.f, 25.f), "Remove Last Npc");
+		//button_remove_all_npc.Setup(sf::Vector2f(window.getSize().x - 100, 120), sf::Vector2f(150.f, 25.f), "Remove All Npc");
+
+		CreateButtonActiveBuilding(100, 760, "Build", 20, sf::Color::Yellow);
+		CreateButtonBuildHome(100, 700, "Home", 20, sf::Color::Yellow);
+		CreateButtonBuildLumberjack(250, 700, "Lumberjack", 20, sf::Color::Yellow);
+		CreateButtonBuildQuarry(400, 700, "Quarry", 20, sf::Color::Yellow);
 		#endif
+	}
+
+	bool ButtonEvent(const sf::Event& event, const sf::RenderWindow& window)
+	{
+		bool in_button_return = btn_activate_building.HandleEvent(event, window);
+		in_button_return |= btn_building_home.HandleEvent(event, window);
+		in_button_return |= btn_building_lumberjack.HandleEvent(event, window);
+		in_button_return |= btn_building_quarry.HandleEvent(event, window);
+		return in_button_return;
 	}
 
 	void Run()
@@ -102,14 +196,16 @@ namespace game::main_game
 					tilemap.InitMap();
 					building_manager.ClearMap();
 				}
-				if(button_add_npc.ActivateButton(*event, window)) npc_manager.AddNpc();
-				if(button_remove_last_npc.ActivateButton(*event, window)) npc_manager.RemoveLastNpc();
-				if(button_remove_all_npc.ActivateButton(*event, window)) npc_manager.RemoveAllNpc();
+				//if(button_add_npc.ActivateButton(*event, window)) npc_manager.AddNpc();
+				//if(button_remove_last_npc.ActivateButton(*event, window)) npc_manager.RemoveLastNpc();
+				//if(button_remove_all_npc.ActivateButton(*event, window)) npc_manager.RemoveAllNpc();
 				#endif
+
+				in_button = ButtonEvent(*event, window);
 			}
 
 			npc_manager.Update(delta_time, tilemap);
-			if(!in_button)
+			if(!in_button && build_active)
 			{
 				tilemap.HandleEvent(window, window.getView());
 			}
@@ -120,11 +216,19 @@ namespace game::main_game
 			window.draw(npc_manager);
 			window.draw(*text);
 
+			window.draw(btn_activate_building);
+			if(build_active)
+			{
+				window.draw(btn_building_home);
+				window.draw(btn_building_lumberjack);
+				window.draw(btn_building_quarry);
+			}
+
 			#if DEBUG_ENABLE
 			window.draw(button_generator);
-			window.draw(button_add_npc);
-			window.draw(button_remove_last_npc);
-			window.draw(button_remove_all_npc);
+			//window.draw(button_add_npc);
+			//window.draw(button_remove_last_npc);
+			//window.draw(button_remove_all_npc);
 			#endif
 
 			window.display();

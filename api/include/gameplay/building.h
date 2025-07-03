@@ -27,6 +27,8 @@ namespace api::gameplay
 
         bool is_occupied() const { return is_occupied_; }
 
+        void set_occupied() { is_occupied_ = true; }
+
         std::vector<sf::Vector2f> neighbor() const { return neighbor_; }
     protected:
         // Overridden draw function from sf::Drawable to draw the building
