@@ -22,7 +22,7 @@ namespace api::ai
 	public:
 		void set_building_manager(gameplay::BuildingManager* building){ building_manager_ = building; }
 
-		void AddNpc(gameplay::Building* building);
+		void AddNpc(gameplay::Building building);
 		//void RemoveNpc(const Npc& npc);
 		//void RemoveAllNpc();
 		//void RemoveLastNpc();

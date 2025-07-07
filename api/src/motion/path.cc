@@ -16,6 +16,22 @@ void api::motion::Path::AddPoints(const std::vector<sf::Vector2f>& points)
 void api::motion::Path::Fill(std::vector<sf::Vector2f>& pathPoints){
 	if (!pathPoints.empty())
 		points_ = pathPoints;
+	idx_point_ = 0;
+}
+
+sf::Vector2f api::motion::Path::GetNextPoint()
+{
+	if(!is_valid())
+	{
+		return {0, 0,};
+	}
+
+	if(!IsDone())
+	{
+		++idx_point_;
+	}
+
+	return points_[idx_point_];
 }
 
 bool api::motion::Path::is_valid() const{

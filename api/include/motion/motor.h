@@ -9,13 +9,15 @@ namespace api::motion {
 		sf::Vector2f position_;
 		sf::Vector2f destination_;
 		float speed_ = 0;
+		float remaining_distance_ = 0;;
 
 	public:
 		// choix 2
 		bool Update(float dt);
 
 		// getter / setter
-		void set_seed(const float speed){speed_ = speed;}
+		float remaining_distance() const {return remaining_distance_;}
+		void set_speed(const float speed){speed_ = speed;}
 		void set_destination(const sf::Vector2f destination){destination_ = destination;};
 		void set_position(const sf::Vector2f position){position_ = position;}
 		[[nodiscard]] const sf::Vector2f& position() const{return position_;}

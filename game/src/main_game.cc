@@ -149,7 +149,7 @@ namespace game::main_game
 				{
 					if(home.type() == api::gameplay::Build::kHome)
 					{
-						npc_manager.AddNpc(std::move(&home));
+						npc_manager.AddNpc(std::move(home));
 					}
 				}
 			}

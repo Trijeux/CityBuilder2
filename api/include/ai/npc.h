@@ -14,10 +14,12 @@ namespace api::ai
 {
 	class Npc : public sf::Drawable
 	{
-		gameplay::Building* home_;
-		gameplay::Building* work_;
+		std::optional<gameplay::Building> home_;
+		std::optional<gameplay::Building> work_;
 
 		bool have_work_ = false;
+
+		bool new_path_ = false;
 
 		bool is_moving_ = false;
 
@@ -40,6 +42,11 @@ namespace api::ai
 		void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
 	public:
+		void have_new_path()
+		{
+			new_path_ = false;
+		}
+
 		bool have_work() const
 		{
 			return have_work_;
@@ -55,21 +62,22 @@ namespace api::ai
 			return sprite_->getPosition();
 		}
 
+		bool new_path() const
+		{
+			return new_path_;
+		}
+
 		bool is_dead() const
 		{
 			return is_dead_;
 		}
 
-		bool is_moving() const
-		{
-			return is_moving_;
-		}
-
-		void             Setup(gameplay::Building* building);
-		core::ai::Status CheckHunger() const;
+		void             Setup(gameplay::Building building);
+		core::ai::Status CheckEat();
+		core::ai::Status CheckWork();
 		void             Update(float dt);
 
-		core::ai::Status Move() const;
+		core::ai::Status Move();
 		core::ai::Status Eat(float foodQty);
 
 		void set_path(const motion::Path& path)
@@ -81,7 +89,7 @@ namespace api::ai
 		core::ai::Status Idle();
 		void             SetupBehaviourTree();
 
-		void set_work(gameplay::Building* work)
+		void set_work(gameplay::Building& work)
 		{
 			work_ = work;
 			have_work_ = true;

@@ -1,11 +1,13 @@
 ﻿#include "ai/npc_manager.h"
 
+#include <iostream>
+
 void api::ai::NpcManager::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
 	for(const auto& npc : npcs_) target.draw(*npc, states);
 }
 
-void api::ai::NpcManager::AddNpc(gameplay::Building* building)
+void api::ai::NpcManager::AddNpc(gameplay::Building building)
 {
 	npcs_.emplace_back(std::make_unique<Npc>());
 	npcs_.back()->Setup(building);
@@ -41,17 +43,20 @@ void api::ai::NpcManager::Update(const float dt, const graphics::TileMap& tile_m
 			{
 				if(!work.is_occupied())
 				{
-					npc->set_work(&work);
+					npc->set_work(work);
 					work.set_occupied();
+					break;
 				}
 			}
 		}
 
-		if(!npc->is_moving())
+		if(npc->new_path())
 		{
+			std::cout << "new path" << std::endl;
 			const sf::Vector2f objectif = npc->objectif();
 			path_ = motion::path(npc->Position(), objectif, tile_map.tiles_walkable());
 			if(path_.is_valid()) npc->set_path(path_);
+			npc->have_new_path();
 		}
 		npc->Update(dt);
 	}

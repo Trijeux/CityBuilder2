@@ -5,7 +5,7 @@
 bool api::motion::Motor::Update(const float dt)
 {
 	const sf::Vector2f distance = destination_ - position_;
-
+	remaining_distance_ = distance.length();
 	if(distance.length() < speed_ * dt)
 	{
 		position_ = destination_;
