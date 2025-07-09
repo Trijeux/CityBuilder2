@@ -181,7 +181,7 @@ core::ai::Status api::ai::Npc::Eat(float foodQty)
 	// No failure, until we have food storage system
 	if(!is_moving_ && sprite_->getPosition() == home_->position())
 	{
-		std::cout << "I'm Eat" << hunger_ << "\n";
+		//std::cout << "I'm Eat" << hunger_ << "\n";
 		hunger_ -= foodQty;
 		if(hunger_ <= 0)
 		{
@@ -206,7 +206,7 @@ core::ai::Status api::ai::Npc::Work()
 		if(!is_moving_ && sprite_->getPosition() == work_->position())
 		{
 			hunger_ += hunger_rate_ * 2;
-			std::cout << "I'm working" << hunger_ << "\n";
+			//std::cout << "I'm working" << hunger_ << "\n";
 
 			if(resource_available_)
 			{

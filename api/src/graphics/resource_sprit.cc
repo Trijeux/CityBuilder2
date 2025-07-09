@@ -42,6 +42,10 @@ void api::graphics::ResourceSprit::LoadAllTextures()
 	{
 		std::cout << "Error loading forest texture" << std::endl;
 	}
+	if(!textures_.at(static_cast<int>(Texture::kForestCut)).loadFromFile("resources/sprite/forest_cut.png"))
+	{
+		std::cout << "Error loading forest_cut texture" << std::endl;
+	}
 	if(!textures_.at(static_cast<int>(Texture::kBlue)).loadFromFile("resources/sprite/npc_blue.png"))
 	{
 		std::cout << "Error loading blue texture" << std::endl;

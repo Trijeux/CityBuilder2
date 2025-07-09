@@ -15,6 +15,7 @@ namespace api::graphics
 			kGround,
 			kStone,
 			kForest,
+			kForestCut,
 			kBlue,
 			kButton,
 			kHome,

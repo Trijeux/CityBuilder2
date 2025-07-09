@@ -22,6 +22,9 @@ namespace api::graphics
 		std::vector<sf::Vector2f> tiles_walkable_;
 		sf::Vector2u              size_sprit_;
 
+		float timer_ = 0.f;
+		float cooldown_ = 10.f;
+
 	protected:
 		void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
@@ -31,6 +34,8 @@ namespace api::graphics
 		void                       Setup(sf::Vector2u playground_size_u);
 		void                       InitMap();
 		void                       HandleEvent(const sf::RenderWindow& window, const sf::View& view);
+
+		//void Update(float dt);
 
 		[[nodiscard]] std::vector<sf::Vector2f> tiles_walkable() const
 		{

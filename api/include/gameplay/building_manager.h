@@ -25,7 +25,8 @@ namespace api::gameplay
         std::vector<Building>& works() { return works_; } // Method to retrieve the vector of homes>
         // Public methods
         // Method to add a new building to a tile using game resources
-        api::gameplay::Building AddBuilding(api::graphics::Tile& tile, api::gameplay::Build build);
+
+        std::optional<Building> AddBuilding(api::graphics::Tile& tile, api::gameplay::Build build);
 
         // Method to remove a building from a tile using game resources
         void SubBuilding(api::graphics::Tile& tile);

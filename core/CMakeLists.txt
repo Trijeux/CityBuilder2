@@ -4,6 +4,10 @@ file(GLOB_RECURSE HEADER_FILES include/*.h)
 add_library(core ${SRC_FILES} ${HEADER_FILES})
 target_include_directories(core PUBLIC include/)
 
+if(MSVC)
+    target_compile_options(core PUBLIC /WX)
+endif (MSVC)
+
 if (ENABLE_TESTS)
 
     file(GLOB_RECURSE TEST_FILES test/*.cc)

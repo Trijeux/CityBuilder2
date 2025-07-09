@@ -2,7 +2,7 @@
 #include <SFML/Graphics/Text.hpp>
 
 #if TRACY_ENABLE
-	#include <tracy/Tracy.hpp>
+#include <tracy/Tracy.hpp>
 #endif
 
 #if DEBUG_ENABLE
@@ -144,12 +144,12 @@ namespace game::main_game
 		{
 			if(tile.type() == api::graphics::Tile::TileType::kGround)
 			{
-				api::gameplay::Building home = building_manager.AddBuilding(tile, build);
+				auto home = building_manager.AddBuilding(tile, build);
 				if(build == api::gameplay::Build::kHome)
 				{
-					if(home.type() == api::gameplay::Build::kHome)
+					if(home->type() == api::gameplay::Build::kHome)
 					{
-						npc_manager.AddNpc(std::move(home));
+						npc_manager.AddNpc(std::move(*home));
 					}
 				}
 			}
@@ -162,12 +162,12 @@ namespace game::main_game
 		//button_add_npc.Setup(sf::Vector2f(window.getSize().x - 100, 60), sf::Vector2f(150.f, 25.f), "Add Npc");
 		//button_remove_last_npc.Setup(sf::Vector2f(window.getSize().x - 100, 90), sf::Vector2f(150.f, 25.f), "Remove Last Npc");
 		//button_remove_all_npc.Setup(sf::Vector2f(window.getSize().x - 100, 120), sf::Vector2f(150.f, 25.f), "Remove All Npc");
+		#endif
 
 		CreateButtonActiveBuilding(100, 760, "Build", 20, sf::Color::Yellow);
 		CreateButtonBuildHome(100, 700, "Home", 20, sf::Color::Yellow);
 		CreateButtonBuildLumberjack(250, 700, "Lumberjack", 20, sf::Color::Yellow);
 		CreateButtonBuildQuarry(400, 700, "Quarry", 20, sf::Color::Yellow);
-		#endif
 	}
 
 	bool ButtonEvent(const sf::Event& event, const sf::RenderWindow& window)
@@ -210,6 +210,8 @@ namespace game::main_game
 				tilemap.HandleEvent(window, window.getView());
 			}
 
+			//tilemap.Update(delta_time);
+
 			window.clear();
 			window.draw(tilemap);
 			window.draw(building_manager);
@@ -234,7 +236,7 @@ namespace game::main_game
 			window.display();
 
 			#if TRACY_ENABLE
-			FrameMark();
+			FrameMark;
 			#endif
 		}
 	}

@@ -33,6 +33,8 @@ namespace api::graphics
 
 		void set_tile_sprite();
 
+		void set_walkable(bool is_walkable) { is_walkable_ = is_walkable; }
+
 		TileType type() const;
 
 	protected:

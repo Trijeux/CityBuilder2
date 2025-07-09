@@ -48,7 +48,7 @@ void api::gameplay::BuildingManager::draw(sf::RenderTarget& target, sf::RenderSt
 {
 	for(const auto& home : homes_)
 	{
-		target.draw(home, states);// Draw each home building on the render target
+		target.draw(home, states); // Draw each home building on the render target
 	}
 
 	for(const auto& work : works_)
@@ -57,7 +57,7 @@ void api::gameplay::BuildingManager::draw(sf::RenderTarget& target, sf::RenderSt
 	}
 }
 
-api::gameplay::Building api::gameplay::BuildingManager::AddBuilding(graphics::Tile& tile, const Build building)
+std::optional<api::gameplay::Building> api::gameplay::BuildingManager::AddBuilding(graphics::Tile& tile, const Build building)
 {
 	// if (!is_a
 	// ctive_)
@@ -65,56 +65,54 @@ api::gameplay::Building api::gameplay::BuildingManager::AddBuilding(graphics::Ti
 	// 	return; // Exit if building mode is not active
 	// }
 
-	if(tile.type() == graphics::Tile::TileType::kGround)
+	bool                     build_ok = false;
+	graphics::Tile::TileType type = tile.type();
+
+	std::optional<Building> building_return;
+
+	switch(building)
 	{
-		bool                     build_ok = false;
-		graphics::Tile::TileType type;
-
-		std::optional<Building> building_return;
-
-		switch(building)
+	case Build::kHome:
 		{
-		case Build::kHome:
-			{
-				building_return = homes_.emplace_back(tile.position().x, tile.position().y, Build::kHome);
-				//resource.AddBuilding(Build::kHome);
-				//resource.PayBuilding(Build::kHome);
-				type = graphics::Tile::TileType::kHome;
-				build_ok = true;
-			}
-			break;
-		case Build::kLumberjack:
-			{
-				building_return = works_.emplace_back(tile.position().x, tile.position().y, Build::kLumberjack);
-				//resource.AddBuilding(Build::kFarm);
-				//resource.PayBuilding(Build::kFarm);
-				type = graphics::Tile::TileType::kLumberjack;
-				build_ok = true;
-			}
-			break;
-			case Build::kQuarry:
-			{
-				building_return = works_.emplace_back(tile.position().x, tile.position().y, Build::kQuarry);
-				//resource.AddBuilding(Build::kFarm);
-				//resource.PayBuilding(Build::kFarm);
-				type = graphics::Tile::TileType::kQuarry;
-				build_ok = true;
-			}
-			break;
-		case Build::kNothing:
-			break;
-		default: ;
-			break;
+			building_return = homes_.emplace_back(tile.position().x, tile.position().y, Build::kHome);
+			//resource.AddBuilding(Build::kHome);
+			//resource.PayBuilding(Build::kHome);
+			type = graphics::Tile::TileType::kHome;
+			build_ok = true;
 		}
-
-
-		if(build_ok)
+		break;
+	case Build::kLumberjack:
 		{
-			tile.set_tile_type(type); // Set the tile type to the newly added building type
-			tile.set_tile_sprite(); // Set the tile sprite to match the building type
-			return building_return.value();
+			building_return = works_.emplace_back(tile.position().x, tile.position().y, Build::kLumberjack);
+			//resource.AddBuilding(Build::kFarm);
+			//resource.PayBuilding(Build::kFarm);
+			type = graphics::Tile::TileType::kLumberjack;
+			build_ok = true;
 		}
+		break;
+	case Build::kQuarry:
+		{
+			building_return = works_.emplace_back(tile.position().x, tile.position().y, Build::kQuarry);
+			//resource.AddBuilding(Build::kFarm);
+			//resource.PayBuilding(Build::kFarm);
+			type = graphics::Tile::TileType::kQuarry;
+			build_ok = true;
+		}
+		break;
+	case Build::kNothing:
+		break;
+	default: ;
+		break;
 	}
+
+
+	if(build_ok)
+	{
+		tile.set_tile_type(type); // Set the tile type to the newly added building type
+		tile.set_tile_sprite(); // Set the tile sprite to match the building type
+		return building_return.value();
+	}
+	return std::nullopt;
 }
 
 void api::gameplay::BuildingManager::SubBuilding(graphics::Tile& tile)
