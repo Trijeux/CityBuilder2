@@ -35,7 +35,7 @@ namespace api::graphics
 		void                       InitMap();
 		void                       HandleEvent(const sf::RenderWindow& window, const sf::View& view);
 
-		//void Update(float dt);
+		void Update(float dt);
 
 		[[nodiscard]] std::vector<sf::Vector2f> tiles_walkable() const
 		{

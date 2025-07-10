@@ -52,7 +52,7 @@ void api::ai::NpcManager::Update(const float dt, const graphics::TileMap& tile_m
 
 		if(npc->new_path())
 		{
-			std::cout << "new path" << std::endl;
+			//std::cout << "new path" << std::endl;
 			const sf::Vector2f objectif = npc->objectif();
 			path_ = motion::path(npc->Position(), objectif, tile_map.tiles_walkable());
 			if(path_.is_valid()) npc->set_path(path_);
