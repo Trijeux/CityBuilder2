@@ -14,6 +14,7 @@
 #include "ai/npc_manager.h"
 #include "gameplay/building.h"
 #include "gameplay/building_manager.h"
+#include "gameplay/resource.h"
 #include "general/resource_manager.h"
 #include "graphics/tilemap.h"
 #include "ui/ui_button.h"
@@ -39,6 +40,8 @@ namespace game::main_game
 		api::ui::UiButton btn_building_home;
 		api::ui::UiButton btn_building_lumberjack;
 		api::ui::UiButton btn_building_quarry;
+
+		Resource resource;
 
 		float delta_time = 0;
 
@@ -70,7 +73,7 @@ namespace game::main_game
 
 	void CreateButtonBuildHome(const int x, const int y, const std::string& text, const int size, const sf::Color color_text)
 	{
-		btn_building_home.CreateButton(sf::Vector2f(x, y), text, size, color_text);
+		btn_building_home.CreateButton(sf::Vector2f(x, y), text, size, color_text, "Wood x100");
 		btn_building_home.set_scale({0.8f, 0.8f});
 		btn_building_home.call_back_ = []()
 		{
@@ -85,7 +88,7 @@ namespace game::main_game
 
 	void CreateButtonBuildLumberjack(const int x, const int y, const std::string& text, const int size, const sf::Color color_text)
 	{
-		btn_building_lumberjack.CreateButton(sf::Vector2f(x, y), text, size, color_text);
+		btn_building_lumberjack.CreateButton(sf::Vector2f(x, y), text, size, color_text, "Wood x50");
 		btn_building_lumberjack.set_scale({0.5f, 0.5f});
 		btn_building_lumberjack.call_back_ = []()
 		{
@@ -100,7 +103,7 @@ namespace game::main_game
 
 	void CreateButtonBuildQuarry(const int x, const int y, const std::string& text, const int size, const sf::Color color_text)
 	{
-		btn_building_quarry.CreateButton(sf::Vector2f(x, y), text, size, color_text);
+		btn_building_quarry.CreateButton(sf::Vector2f(x, y), text, size, color_text, "Wood x150 \n Stone x50");
 		btn_building_quarry.set_scale({0.5f, 0.5f});
 		btn_building_quarry.call_back_ = []()
 		{
@@ -137,7 +140,9 @@ namespace game::main_game
 		sound = sf::Sound(api::general::resource_manager::sound(api::sound::ResourceSound::Sound::kMusicBg));
 		sound->setLooping(true);
 		sound->setPitch(0.5f);
-		sound->play();
+		//sound->play();
+
+		npc_manager.Setup(&tilemap, &resource);
 
 		CreateTilemap();
 		tilemap.clicked_tile_ = [](api::graphics::Tile& tile)

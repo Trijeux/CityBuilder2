@@ -2,15 +2,23 @@
 
 #include <iostream>
 
+#include "gameplay/resource.h"
+
 void api::ai::NpcManager::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
 	for(const auto& npc : npcs_) target.draw(*npc, states);
 }
 
+void api::ai::NpcManager::Setup(graphics::TileMap* tile_map, Resource* resource)
+{
+	tile_map_ = tile_map;
+	resource_ = resource;
+}
+
 void api::ai::NpcManager::AddNpc(gameplay::Building building)
 {
 	npcs_.emplace_back(std::make_unique<Npc>());
-	npcs_.back()->Setup(building);
+	npcs_.back()->Setup(building, tile_map_, resource_);
 }
 
 // void api::ai::NpcManager::RemoveAllNpc()
@@ -43,7 +51,15 @@ void api::ai::NpcManager::Update(const float dt, const graphics::TileMap& tile_m
 			{
 				if(!work.is_occupied())
 				{
-					npc->set_work(work);
+					if(work.type() == gameplay::Build::kLumberjack)
+					{
+						npc->set_work(work, Job::kWood);
+					}
+					if(work.type() == gameplay::Build::kQuarry)
+					{
+						npc->set_work(work, Job::kStone);
+					}
+
 					work.set_occupied();
 					break;
 				}

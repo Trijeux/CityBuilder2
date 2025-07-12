@@ -29,6 +29,8 @@ namespace api::graphics
 		void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
 	public:
+		std::vector<sf::Vector2f> tiles_stone() const { return tiles_stone_; }
+		std::vector<sf::Vector2f> tiles_forest() const { return tiles_forest_; }
 		TileMap();
 		std::function<void(Tile&)> clicked_tile_;
 		void                       Setup(sf::Vector2u playground_size_u);

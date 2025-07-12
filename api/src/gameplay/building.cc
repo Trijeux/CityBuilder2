@@ -57,7 +57,7 @@ void api::gameplay::Building::draw(sf::RenderTarget& target, const sf::RenderSta
 
 void api::gameplay::Building::CreateNeighbor(const sf::Vector2f& center_pos, int radius, float tile_size)
 {
-	neighbor_.clear();
+	neighbors_.clear();
 
 	for(int dx = -radius; dx <= radius; dx++)
 	{
@@ -67,7 +67,7 @@ void api::gameplay::Building::CreateNeighbor(const sf::Vector2f& center_pos, int
 
 			// Ajoute une position autour du centre
 			sf::Vector2f pos(center_pos.x + dx * tile_size, center_pos.y + dy * tile_size);
-			neighbor_.push_back(pos);
+			neighbors_.push_back(pos);
 		}
 	}
 }

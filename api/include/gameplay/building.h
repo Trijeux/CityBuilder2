@@ -29,13 +29,13 @@ namespace api::gameplay
 
         void set_occupied() { is_occupied_ = true; }
 
-        std::vector<sf::Vector2f> neighbor() const { return neighbor_; }
+        std::vector<sf::Vector2f> neighbors() const { return neighbors_; }
     protected:
         // Overridden draw function from sf::Drawable to draw the building
         void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
     private:
-        std::vector<sf::Vector2f> neighbor_;
+        std::vector<sf::Vector2f> neighbors_;
         sf::RectangleShape detection_zone_;
         Build type_ = Build::kNothing;
         std::optional<sf::Sprite> sprite_;      // Sprite representing the visual shape of the building

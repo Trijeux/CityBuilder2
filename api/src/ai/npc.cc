@@ -7,6 +7,7 @@
 #include <ai/bt_action.h>
 
 #include "ai/bt_sequence.h"
+#include "gameplay/resource.h"
 
 // core::ai::Status api::ai::Npc::Move()
 // {
@@ -107,9 +108,11 @@
 // 	root_ = std::move(selector);
 // }
 
-void api::ai::Npc::Setup(gameplay::Building building)
+void api::ai::Npc::Setup(gameplay::Building building, graphics::TileMap* tile_map, Resource* resource)
 {
 	home_ = building;
+	tile_map_ = tile_map;
+	resource_ = resource;
 	sprite_ = sf::Sprite(api::general::resource_manager::texture(api::graphics::ResourceSprit::Texture::kBlue));
 	sprite_->setPosition(home_->position());
 	SetupBehaviourTree();
@@ -126,6 +129,7 @@ core::ai::Status api::ai::Npc::CheckEat()
 	{
 		new_path_ = true;
 		is_moving_ = true;
+		is_working_ = false;
 		objectif_ = home_->position();
 	}
 
@@ -143,8 +147,41 @@ core::ai::Status api::ai::Npc::CheckWork()
 		new_path_ = true;
 		is_moving_ = true;
 		objectif_ = work_->position();
+
+		if(!resource_good_)
+		{
+			resource_number_ = 0;
+			for(auto neighbor : work_->neighbors())
+			{
+				switch(job_)
+				{
+				case Job::kNothing:
+					break;
+				case Job::kWood:
+					for(auto forest : tile_map_->tiles_forest())
+					{
+						if(neighbor == forest)
+						{
+							resource_number_++;
+						}
+					}
+					break;
+				case Job::kStone:
+					for(auto stone : tile_map_->tiles_stone())
+					{
+						if(neighbor == stone)
+						{
+							resource_number_++;
+						}
+					}
+					break;
+				}
+			}
+			//std::cout << resource_number_ << std::endl;
+			resource_good_ = true;
+		}
 	}
-		return core::ai::Status::kSuccess;
+	return core::ai::Status::kSuccess;
 }
 
 core::ai::Status api::ai::Npc::Move()
@@ -207,7 +244,7 @@ core::ai::Status api::ai::Npc::Work()
 		{
 			hunger_ += hunger_rate_ * 2;
 			//std::cout << "I'm working" << hunger_ << "\n";
-
+			is_working_ = true;
 			if(resource_available_)
 			{
 				//std::cout << "Resource Available, working....." << "\n";
@@ -215,6 +252,7 @@ core::ai::Status api::ai::Npc::Work()
 			}
 		}
 	}
+	is_working_ = false;
 	return core::ai::Status::kFailure;
 }
 
@@ -280,6 +318,23 @@ void api::ai::Npc::Update(float dt)
 	{
 		motor_.Update(dt);
 		sprite_->setPosition(motor_.position());
+	}
+	if(is_working_)
+	{
+		timer_add_resource_ += dt;
+		if(timer_add_resource_ >= cool_down_add_resource_)
+		{
+			switch(work_->type())
+			{
+			case gameplay::Build::kLumberjack:
+				resource_->add_wood(resource_number_);
+				break;
+			case gameplay::Build::kQuarry:
+				resource_->add_stone(resource_number_);
+				break;
+			}
+			timer_add_resource_ = 0;
+		}
 	}
 	// std::cout << "this ? = " << this << "\n";
 }

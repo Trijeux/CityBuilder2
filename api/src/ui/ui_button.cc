@@ -10,14 +10,15 @@ void api::ui::UiButton::draw(sf::RenderTarget& target, sf::RenderStates states) 
 {
 	states.transform *= getTransform(); // Apply the button's transform to the render states
 	target.draw(*sprite_, states); // Draw the button's sprite
-	target.draw(*button_text_, states); // Draw the button's text
+	target.draw(*button_text_, states);
+	if(have_prize_) target.draw(*have_prize_text_, states); // Draw the button's text
 }
 
 // Check if the mouse click event is inside the button's bounds
 bool api::ui::UiButton::ContainsMouse(const sf::Event& event, const sf::RenderWindow& window)
 {
 	const sf::Vector2i pixel_pos = sf::Mouse::getPosition(window);
-	auto pixel_pos_in_float = sf::Vector2f(pixel_pos);
+	auto               pixel_pos_in_float = sf::Vector2f(pixel_pos);
 	if(const auto* mouse_button_pressed = event.getIf<sf::Event::MouseButtonPressed>())
 	{
 		// Calculate mouse position relative to button's position
@@ -41,7 +42,7 @@ bool api::ui::UiButton::ContainsMouse(const sf::Event& event, const sf::RenderWi
 }
 
 // Handle events for the UiButton
-bool api::ui::UiButton::HandleEvent(const sf::Event& event , const sf::RenderWindow& window)
+bool api::ui::UiButton::HandleEvent(const sf::Event& event, const sf::RenderWindow& window)
 {
 	// Check for mouse button released event
 	if(const auto* mouse_button_pressed = event.getIf<sf::Event::MouseButtonReleased>())
@@ -76,7 +77,7 @@ bool api::ui::UiButton::HandleEvent(const sf::Event& event , const sf::RenderWin
 	}
 
 	const sf::Vector2i pixel_pos = sf::Mouse::getPosition(window);
-	auto pixel_pos_in_float = sf::Vector2f(pixel_pos) - getPosition();
+	auto               pixel_pos_in_float = sf::Vector2f(pixel_pos) - getPosition();
 	if(sprite_->getGlobalBounds().contains(pixel_pos_in_float))
 	{
 		button_text_->setFillColor(sf::Color::Green);
@@ -86,8 +87,8 @@ bool api::ui::UiButton::HandleEvent(const sf::Event& event , const sf::RenderWin
 	return false;
 }
 
-// Create a new UiButton with specified parameters
-void api::ui::UiButton::CreateButton(const sf::Vector2f pos, const std::string& text, const int character_size, const sf::Color color_text)
+void api::ui::UiButton::CreateButton(const sf::Vector2f pos, const std::string& text, const int character_size, const sf::Color color_text,
+                                     const std::string& have_prize_text)
 {
 	button_text_ = sf::Text(api::general::resource_manager::font(api::graphics::ResourceFont::Font::kPixel)); // Set the font for the button text
 	button_text_->setString(text); // Set the text content
@@ -107,5 +108,22 @@ void api::ui::UiButton::CreateButton(const sf::Vector2f pos, const std::string& 
 	button_text_->setOrigin(sf::Vector2f(text_rect.position.x + text_rect.size.x / 2.0f, text_rect.position.y + text_rect.size.y / 2.0f));
 	button_text_->setPosition(sf::Vector2f(shape_rect.position.x + shape_rect.size.x / 2.0f, shape_rect.position.y + shape_rect.size.y / 2.0f));
 
+	if(have_prize_text != "")
+	{
+		have_prize_text_ = sf::Text(api::general::resource_manager::font(api::graphics::ResourceFont::Font::kPixel)); // Set the font for the button text
+		have_prize_text_->setString(have_prize_text);
+		have_prize_text_->setFillColor(sf::Color::Black);
+		have_prize_text_->setCharacterSize(character_size);
+		const sf::FloatRect text_prize_rect = have_prize_text_->getLocalBounds();
+		have_prize_text_->setOrigin(sf::Vector2f(text_prize_rect.position.x + text_prize_rect.size.x / 2.0f, text_prize_rect.position.y + text_prize_rect.size.y / 2.0f));
+		have_prize_text_->setPosition(sf::Vector2f(shape_rect.position.x + shape_rect.size.x / 2.0f, (shape_rect.position.y + shape_rect.size.y / 2.0f) - 40));
+		have_prize_ = true;
+	}
+
 	build_on_ = false; // Initialize the build_on flag
+}
+
+void api::ui::UiButton::CreateButton(const sf::Vector2f pos, const std::string& text, const int character_size, const sf::Color color_text)
+{
+	CreateButton(pos, text, character_size, color_text, "");
 }

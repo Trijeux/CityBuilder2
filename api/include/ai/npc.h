@@ -7,15 +7,30 @@
 #include "ai/bt_node.h"
 #include "ai/bt_selector.h"
 #include "gameplay/building.h"
+#include "gameplay/resource.h"
+#include "graphics/tilemap.h"
 #include "motion/motor.h"
 #include "motion/path.h"
 
 namespace api::ai
 {
+	enum class Job
+	{
+		kNothing,
+		kWood,
+		kStone
+	};
+
 	class Npc : public sf::Drawable
 	{
 		std::optional<gameplay::Building> home_;
 		std::optional<gameplay::Building> work_;
+		graphics::TileMap*                tile_map_ = nullptr;
+		Resource*               resource_ = nullptr;
+		float timer_add_resource_ = 0;
+		float cool_down_add_resource_ = 5.f;
+
+		int resource_number_ = 0;
 
 		bool have_work_ = false;
 
@@ -24,6 +39,10 @@ namespace api::ai
 		bool is_moving_ = false;
 
 		bool is_dead_ = false;
+
+		bool resource_good_ = false;
+
+		bool is_working_ = false;
 
 		std::optional<sf::Sprite> sprite_;
 
@@ -37,6 +56,8 @@ namespace api::ai
 		static constexpr float moving_speed_ = 0.5f;
 
 		motion::Motor motor_;
+
+		Job job_ = Job::kNothing;
 
 	protected:
 		void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
@@ -72,7 +93,7 @@ namespace api::ai
 			return is_dead_;
 		}
 
-		void             Setup(gameplay::Building building);
+		void             Setup(gameplay::Building building, graphics::TileMap* tile_map, Resource* resource);
 		core::ai::Status CheckEat();
 		core::ai::Status CheckWork();
 		void             Update(float dt);
@@ -89,8 +110,9 @@ namespace api::ai
 		core::ai::Status Idle();
 		void             SetupBehaviourTree();
 
-		void set_work(gameplay::Building& work)
+		void set_work(gameplay::Building& work, const Job job)
 		{
+			job_ = job;
 			work_ = work;
 			have_work_ = true;
 		}
