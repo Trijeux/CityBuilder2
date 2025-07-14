@@ -86,3 +86,8 @@ api::graphics::Tile::TileType api::graphics::Tile::type() const
 {
 	return type_;
 }
+
+void api::graphics::Tile::set_color_outilne(sf::Color color)
+{
+	outline_.setOutlineColor(color);
+}

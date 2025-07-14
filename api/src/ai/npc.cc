@@ -116,7 +116,7 @@ void api::ai::Npc::Setup(gameplay::Building building, graphics::TileMap* tile_ma
 	sprite_ = sf::Sprite(api::general::resource_manager::texture(api::graphics::ResourceSprit::Texture::kBlue));
 	sprite_->setPosition(home_->position());
 	SetupBehaviourTree();
-	motor_.set_speed(25);
+	motor_.set_speed(35);
 	motor_.set_position(sprite_->getPosition());
 	motor_.set_destination(sprite_->getPosition());
 }

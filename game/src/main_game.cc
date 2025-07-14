@@ -73,12 +73,19 @@ namespace game::main_game
 
 	void CreateButtonBuildHome(const int x, const int y, const std::string& text, const int size, const sf::Color color_text)
 	{
-		btn_building_home.CreateButton(sf::Vector2f(x, y), text, size, color_text, "Wood x100");
+		btn_building_home.CreateButton(sf::Vector2f(x, y), text, size, color_text, "Wood x50");
 		btn_building_home.set_scale({0.8f, 0.8f});
 		btn_building_home.call_back_ = []()
 		{
 			btn_building_home.set_scale({0.8f, 0.8f});
-			build = api::gameplay::Build::kHome;
+			if (resource.wood_amount() >= 50)
+			{
+				build = api::gameplay::Build::kHome;
+			}
+			else
+			{
+				build = api::gameplay::Build::kNothing;
+			}
 			btn_building_lumberjack.build_on_ = false;
 			btn_building_lumberjack.set_scale({0.5f, 0.5f});
 			btn_building_quarry.build_on_ = false;
@@ -93,7 +100,14 @@ namespace game::main_game
 		btn_building_lumberjack.call_back_ = []()
 		{
 			btn_building_lumberjack.set_scale({0.8f, 0.8f});
-			build = api::gameplay::Build::kLumberjack;
+			if (resource.wood_amount() >= 50)
+			{
+				build = api::gameplay::Build::kLumberjack;
+			}
+			else
+			{
+				build = api::gameplay::Build::kNothing;
+			}
 			btn_building_home.build_on_ = false;
 			btn_building_home.set_scale({0.5f, 0.5f});
 			btn_building_quarry.build_on_ = false;
@@ -108,7 +122,14 @@ namespace game::main_game
 		btn_building_quarry.call_back_ = []()
 		{
 			btn_building_quarry.set_scale({0.8f, 0.8f});
-			build = api::gameplay::Build::kQuarry;
+			if (resource.wood_amount() >= 150 && resource.stone_amount() >= 50)
+			{
+				build = api::gameplay::Build::kQuarry;
+			}
+			else
+			{
+				build = api::gameplay::Build::kNothing;
+			}
 			btn_building_lumberjack.build_on_ = false;
 			btn_building_lumberjack.set_scale({0.5f, 0.5f});
 			btn_building_home.build_on_ = false;
@@ -130,7 +151,7 @@ namespace game::main_game
 		#endif
 		window.create(sf::VideoMode({1600, 800}), "Game");
 		api::general::resource_manager::Setup();
-
+		resource.Setup();
 		text = sf::Text(api::general::resource_manager::font(api::graphics::ResourceFont::Font::kPixel), "City Builder 2");
 		text->setFillColor(sf::Color::Red);
 		text->setOrigin(text->getGlobalBounds().size / 2.f);
@@ -140,7 +161,7 @@ namespace game::main_game
 		sound = sf::Sound(api::general::resource_manager::sound(api::sound::ResourceSound::Sound::kMusicBg));
 		sound->setLooping(true);
 		sound->setPitch(0.5f);
-		//sound->play();
+		sound->play();
 
 		npc_manager.Setup(&tilemap, &resource);
 
@@ -150,6 +171,17 @@ namespace game::main_game
 			if(tile.type() == api::graphics::Tile::TileType::kGround)
 			{
 				auto home = building_manager.AddBuilding(tile, build);
+				switch(build)
+				{
+				case api::gameplay::Build::kHome:
+				case api::gameplay::Build::kLumberjack:
+					resource.sub_wood(50);
+					break;
+				case api::gameplay::Build::kQuarry:
+					resource.sub_wood(150);
+					resource.sub_stone(50);
+					break;
+				}
 				if(build == api::gameplay::Build::kHome)
 				{
 					if(home->type() == api::gameplay::Build::kHome)
@@ -157,6 +189,13 @@ namespace game::main_game
 						npc_manager.AddNpc(std::move(*home));
 					}
 				}
+				build = api::gameplay::Build::kNothing;
+				btn_building_home.build_on_ = false;
+				btn_building_home.set_scale({0.5f, 0.5f});
+				btn_building_lumberjack.build_on_ = false;
+				btn_building_lumberjack.set_scale({0.5f, 0.5f});
+				btn_building_quarry.build_on_ = false;
+				btn_building_quarry.set_scale({0.5f, 0.5f});
 			}
 		};
 
@@ -209,10 +248,19 @@ namespace game::main_game
 				in_button = ButtonEvent(*event, window);
 			}
 
+			resource.Update();
 			npc_manager.Update(delta_time, tilemap);
 			if(!in_button && build_active)
 			{
 				tilemap.HandleEvent(window, window.getView());
+				if(build == api::gameplay::Build::kNothing)
+				{
+					tilemap.set_color_outilne(sf::Color::Red);
+				}
+				else
+				{
+					tilemap.set_color_outilne(sf::Color::Green);
+				}
 			}
 
 			//tilemap.Update(delta_time);
@@ -223,6 +271,8 @@ namespace game::main_game
 			window.draw(npc_manager);
 			window.draw(*text);
 
+
+			window.draw(resource);
 			window.draw(btn_activate_building);
 			if(build_active)
 			{

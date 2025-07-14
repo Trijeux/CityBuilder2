@@ -37,6 +37,8 @@ namespace api::graphics
 
 		TileType type() const;
 
+void set_color_outilne(sf::Color color);
+
 	protected:
 		void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 

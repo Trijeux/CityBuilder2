@@ -36,7 +36,7 @@ namespace api::graphics
 		void                       Setup(sf::Vector2u playground_size_u);
 		void                       InitMap();
 		void                       HandleEvent(const sf::RenderWindow& window, const sf::View& view);
-
+		void set_color_outilne(sf::Color color);
 		void Update(float dt);
 
 		[[nodiscard]] std::vector<sf::Vector2f> tiles_walkable() const

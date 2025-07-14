@@ -21,6 +21,8 @@ namespace api::graphics
 			kHome,
 			kLumberjack,
 			kQuarry,
+			kIconWood,
+			kIconStone,
 			kMax
 		};
 

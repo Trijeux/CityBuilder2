@@ -66,4 +66,12 @@ void api::graphics::ResourceSprit::LoadAllTextures()
 	{
 		std::cout << "Error loading quarry texture" << std::endl;
 	}
+	if(!textures_.at(static_cast<int>(Texture::kIconWood)).loadFromFile("resources/sprite/wood_icon.png"))
+	{
+		std::cout << "Error loading icon Wood texture" << std::endl;
+	}
+	if(!textures_.at(static_cast<int>(Texture::kIconStone)).loadFromFile("resources/sprite/stone_icon.png"))
+	{
+		std::cout << "Error loading icon stone texture" << std::endl;
+	}
 }

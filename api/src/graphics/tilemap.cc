@@ -124,6 +124,11 @@ void api::graphics::TileMap::HandleEvent(const sf::RenderWindow& window, const s
 	was_pressed_ = pressed;
 }
 
+void api::graphics::TileMap::set_color_outilne(sf::Color color)
+{
+	tile_selected_->set_color_outilne(color);
+}
+
 bool positionsEqual(const sf::Vector2f& a, const sf::Vector2f& b, float epsilon = 0.1f)
 {
     return (std::abs(a.x - b.x) < epsilon) && (std::abs(a.y - b.y) < epsilon);
