@@ -1,6 +1,6 @@
 ﻿#include <SFML/Audio/Sound.hpp>
 #include <SFML/Graphics/Text.hpp>
-
+#include <windows.h>
 #if TRACY_ENABLE
 #include <tracy/Tracy.hpp>
 #endif
@@ -18,6 +18,7 @@
 #include "general/resource_manager.h"
 #include "graphics/tilemap.h"
 #include "ui/ui_button.h"
+
 
 namespace game::main_game
 {
@@ -146,6 +147,14 @@ namespace game::main_game
 
 	static void Setup()
 	{
+		const HWND console_window = GetConsoleWindow();
+		#if DEBUG_ENABLE
+		ShowWindow(console_window, SW_SHOW);
+		#elif !DEBUG_ENABLE
+		ShowWindow(console_window, SW_HIDE);
+		#endif
+
+
 		#if TRACY_ENABLE
 		ZoneNamedN(GameSetup, "Game Setup", true);
 		#endif
