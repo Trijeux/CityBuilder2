@@ -21,8 +21,12 @@ namespace api::ui
 
         // Private method to check if mouse cursor is within the button area
 
-        bool have_prize_ = false;
-        std::optional<sf::Text> have_prize_text_;
+        bool have_prize_wood_ = false;
+        bool have_prize_stone_ = false;
+        std::optional<sf::Text> have_prize_wood_text_;
+        std::optional<sf::Text> have_prize_stone_text_;
+        std::optional<sf::Sprite> have_prize_wood_sprite_;
+        std::optional<sf::Sprite> have_prize_stone_sprite_;
 
     public:
         // Public method to set the color of the button sprite
@@ -34,8 +38,9 @@ namespace api::ui
 
         bool HandleEvent(const sf::Event& event, const sf::RenderWindow& window);
         // Public method to create the button
-        void CreateButton(sf::Vector2f pos, const std::string& text, int character_size, sf::Color color_text, const std::string& have_prize_text);
+        void CreateButton(sf::Vector2f pos, const std::string& text, int character_size, sf::Color color_text, const std::string& have_prize_wood, const std::string& have_prize_stone);
         void CreateButton(sf::Vector2f pos, const std::string& text, int character_size, sf::Color color_text);
+        void CreateButton(sf::Vector2f pos, const std::string& text, int character_size, sf::Color color_text, const std::string& have_prize_, char SorW);
 
         // Public boolean indicating if building is on (purpose unclear from provided context)
         bool build_on_;

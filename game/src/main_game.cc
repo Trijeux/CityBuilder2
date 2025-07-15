@@ -73,7 +73,7 @@ namespace game::main_game
 
 	void CreateButtonBuildHome(const int x, const int y, const std::string& text, const int size, const sf::Color color_text)
 	{
-		btn_building_home.CreateButton(sf::Vector2f(x, y), text, size, color_text, "Wood x50");
+		btn_building_home.CreateButton(sf::Vector2f(x, y), text, size, color_text, "x50", 'W');
 		btn_building_home.set_scale({0.8f, 0.8f});
 		btn_building_home.call_back_ = []()
 		{
@@ -95,7 +95,7 @@ namespace game::main_game
 
 	void CreateButtonBuildLumberjack(const int x, const int y, const std::string& text, const int size, const sf::Color color_text)
 	{
-		btn_building_lumberjack.CreateButton(sf::Vector2f(x, y), text, size, color_text, "Wood x50");
+		btn_building_lumberjack.CreateButton(sf::Vector2f(x, y), text, size, color_text, "x50", 'W');
 		btn_building_lumberjack.set_scale({0.5f, 0.5f});
 		btn_building_lumberjack.call_back_ = []()
 		{
@@ -117,7 +117,7 @@ namespace game::main_game
 
 	void CreateButtonBuildQuarry(const int x, const int y, const std::string& text, const int size, const sf::Color color_text)
 	{
-		btn_building_quarry.CreateButton(sf::Vector2f(x, y), text, size, color_text, "Wood x150 \n Stone x50");
+		btn_building_quarry.CreateButton(sf::Vector2f(x, y), text, size, color_text, "x150", "x50");
 		btn_building_quarry.set_scale({0.5f, 0.5f});
 		btn_building_quarry.call_back_ = []()
 		{
@@ -208,10 +208,10 @@ namespace game::main_game
 		//button_remove_all_npc.Setup(sf::Vector2f(window.getSize().x - 100, 120), sf::Vector2f(150.f, 25.f), "Remove All Npc");
 		#endif
 
-		CreateButtonActiveBuilding(100, 760, "Build", 20, sf::Color::Yellow);
-		CreateButtonBuildHome(100, 700, "Home", 20, sf::Color::Yellow);
-		CreateButtonBuildLumberjack(250, 700, "Lumberjack", 20, sf::Color::Yellow);
-		CreateButtonBuildQuarry(400, 700, "Quarry", 20, sf::Color::Yellow);
+		CreateButtonActiveBuilding(100, 760, "Build", 30, sf::Color::Yellow);
+		CreateButtonBuildHome(100, 700, "Home", 30, sf::Color::Yellow);
+		CreateButtonBuildLumberjack(250, 700, "Lumberjack", 30, sf::Color::Yellow);
+		CreateButtonBuildQuarry(400, 700, "Quarry", 30, sf::Color::Yellow);
 	}
 
 	bool ButtonEvent(const sf::Event& event, const sf::RenderWindow& window)
