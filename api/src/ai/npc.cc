@@ -242,7 +242,7 @@ core::ai::Status api::ai::Npc::Work()
 	{
 		if(!is_moving_ && sprite_->getPosition() == work_->position())
 		{
-			hunger_ += hunger_rate_ * 2;
+			hunger_ += hunger_rate_ * 1.2f;
 			//std::cout << "I'm working" << hunger_ << "\n";
 			is_working_ = true;
 			if(resource_available_)
