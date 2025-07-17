@@ -28,7 +28,7 @@ namespace api::ai
 		graphics::TileMap*                tile_map_ = nullptr;
 		Resource*               resource_ = nullptr;
 		float timer_add_resource_ = 0;
-		float cool_down_add_resource_ = 1.5f;
+		float cool_down_add_resource_ = 2.5f;
 
 		int resource_number_ = 0;
 

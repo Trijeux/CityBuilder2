@@ -113,7 +113,7 @@ void api::ai::Npc::Setup(gameplay::Building building, graphics::TileMap* tile_ma
 	home_ = building;
 	tile_map_ = tile_map;
 	resource_ = resource;
-	sprite_ = sf::Sprite(api::general::resource_manager::texture(api::graphics::ResourceSprit::Texture::kBlue));
+	sprite_ = sf::Sprite(api::general::resource_manager::texture(api::graphics::ResourceSprit::Texture::kNpc));
 	sprite_->setPosition(home_->position());
 	SetupBehaviourTree();
 	motor_.set_speed(35);
@@ -223,6 +223,7 @@ core::ai::Status api::ai::Npc::Eat(float foodQty)
 		if(hunger_ <= 0)
 		{
 			hunger_ = 0;
+			resource_->sub_food(1);
 			return core::ai::Status::kFailure;
 		}
 		return core::ai::Status::kRunning;
@@ -242,7 +243,7 @@ core::ai::Status api::ai::Npc::Work()
 	{
 		if(!is_moving_ && sprite_->getPosition() == work_->position())
 		{
-			hunger_ += hunger_rate_ * 1.2f;
+			hunger_ += hunger_rate_ * 2.f;
 			//std::cout << "I'm working" << hunger_ << "\n";
 			is_working_ = true;
 			if(resource_available_)
@@ -328,6 +329,7 @@ void api::ai::Npc::Update(float dt)
 			{
 			case gameplay::Build::kLumberjack:
 				resource_->add_wood(resource_number_);
+				resource_->add_food(ceil(resource_number_ / 2));
 				break;
 			case gameplay::Build::kQuarry:
 				resource_->add_stone(resource_number_);

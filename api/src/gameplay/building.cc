@@ -29,9 +29,14 @@ api::gameplay::Building::Building(const float x, const float y, const Build buil
 	// 5 = nombre de tiles en largeur et en longeur (5*5)
 	if(build != Build::kHome)
 	{
-		detection_zone_.setSize(sf::Vector2f(sprite_->getTexture().getSize()) * numbers_tiles_);
-		detection_zone_.setOrigin(sf::Vector2f(detection_zone_.getSize() / 2.f));
-		detection_zone_.setPosition(position_ + sf::Vector2f(sprite_->getTexture().getSize()) / 2.f);
+		detection_zone_debug_.setSize(sf::Vector2f(sprite_->getTexture().getSize()) * numbers_tiles_);
+		detection_zone_debug_.setOrigin(sf::Vector2f(detection_zone_debug_.getSize() / 2.f));
+		detection_zone_debug_.setPosition(position_ + sf::Vector2f(sprite_->getTexture().getSize()) / 2.f);
+
+		detection_zone_.setRadius(sprite_->getTexture().getSize().x * 2.5f);
+		detection_zone_.setOrigin(sf::Vector2f(detection_zone_.getRadius(), detection_zone_.getRadius()));
+		detection_zone_.setPosition(detection_zone_debug_.getPosition());
+
 		if(build == Build::kLumberjack)
 		{
 			detection_zone_.setFillColor(sf::Color(200, 147, 141, 45)); // Transparent fill color
@@ -42,6 +47,10 @@ api::gameplay::Building::Building(const float x, const float y, const Build buil
 			detection_zone_.setFillColor(sf::Color(141, 147, 200, 45)); // Transparent fill color
 			detection_zone_.setOutlineColor(sf::Color(141, 147, 200, 255)); // White outline color
 		}
+
+		detection_zone_debug_.setFillColor(sf::Color(141, 147, 200, 45)); // Transparent fill color
+		detection_zone_debug_.setOutlineColor(sf::Color(141, 147, 200, 255)); // White outline color
+
 		detection_zone_.setOutlineThickness(-1);
 	}
 
@@ -52,6 +61,7 @@ void api::gameplay::Building::draw(sf::RenderTarget& target, const sf::RenderSta
 {
 	if(type_ == Build::kNothing) return;
 	if(type_ != Build::kHome) target.draw(detection_zone_, states); // Draw the building's detection_zone_ on the render target
+	//if(type_ != Build::kHome) target.draw(detection_zone_debug_, states);
 	target.draw(*sprite_, states); // Draw the building's sprite on the render target
 }
 

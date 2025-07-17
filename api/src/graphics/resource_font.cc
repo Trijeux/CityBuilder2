@@ -30,8 +30,14 @@ void api::graphics::ResourceFont::LoadAllFonts()
 	#endif
 	blank_font_ = sf::Font();
 
-	if(!fonts_.at(static_cast<int>(Font::kPixel)).openFromFile("resources/font/pixel.ttf"))
+	for(int i = 0; i < fonts_.size(); i++)
 	{
-		std::cout << "Error loading pixel font" << std::endl;
+		if(!fonts_.at(i).openFromFile(path_ + names_font_.at(i) + ".ttf"))
+		{
+			if(!fonts_.at(i).openFromFile(path_ + names_font_.at(i) + ".TTF"))
+			{
+				std::cout << "Error loading " + path_ + names_font_.at(i) + " font " << std::endl;
+			}
+		}
 	}
 }

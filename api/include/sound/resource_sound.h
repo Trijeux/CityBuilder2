@@ -21,6 +21,13 @@ namespace api::sound
 		sf::SoundBuffer& sound(Sound resource_id);
 	protected:
 	private:
+		const std::array<std::string, static_cast<int>(Sound::kMax)> names_sound_
+			{
+				"music_bg"
+			};
+
+		std::string path_ = "resources/sound/";
+
 		std::array<sf::SoundBuffer, static_cast<int>(Sound::kMax)> sounds_;
 
 		sf::SoundBuffer blank_sound_;

@@ -124,27 +124,29 @@ void api::ui::UiButton::CreateButton(const sf::Vector2f pos, const std::string& 
 		// Set the font for the button text
 		have_prize_wood_text_->setString(have_prize_wood);
 		have_prize_wood_text_->setFillColor(sf::Color::Black);
-		have_prize_wood_text_->setCharacterSize(character_size - 10);
+		have_prize_wood_text_->setCharacterSize(character_size);
 		const sf::FloatRect text_prize_rect = have_prize_wood_text_->getLocalBounds();
 		have_prize_wood_text_->setOrigin(sf::Vector2f(text_prize_rect.position.x + text_prize_rect.size.x / 2.0f,
-		                                               text_prize_rect.position.y + text_prize_rect.size.y / 2.0f));
+		                                              text_prize_rect.position.y + text_prize_rect.size.y / 2.0f));
 		have_prize_wood_sprite_ = sf::Sprite(api::general::resource_manager::texture(api::graphics::ResourceSprit::Texture::kIconWood));
-		have_prize_wood_sprite_->setOrigin(sf::Vector2f(have_prize_wood_sprite_->getGlobalBounds().size.x / 2.0f, have_prize_wood_sprite_->getGlobalBounds().size.y / 2.0f));
+		have_prize_wood_sprite_->setScale({1.5, 1.5});
+		have_prize_wood_sprite_->setOrigin(sf::Vector2f(have_prize_wood_sprite_->getGlobalBounds().size.x / 2.0f,
+		                                                have_prize_wood_sprite_->getGlobalBounds().size.y / 2.0f));
 		if(have_prize_stone != "")
 		{
-			have_prize_wood_text_->setPosition(sf::Vector2f(shape_rect.position.x + shape_rect.size.x / 2.0f +15,
-			                                                 shape_rect.position.y + shape_rect.size.y / 2.0f - 60));
+			have_prize_wood_text_->setPosition(sf::Vector2f(shape_rect.position.x + shape_rect.size.x / 2.0f + 15,
+			                                                shape_rect.position.y + shape_rect.size.y / 2.0f - 60));
 
-			have_prize_wood_sprite_->setPosition(sf::Vector2f(shape_rect.position.x + shape_rect.size.x / 2.0f -15,
+			have_prize_wood_sprite_->setPosition(sf::Vector2f(shape_rect.position.x + shape_rect.size.x / 2.0f - 15,
 			                                                  shape_rect.position.y + shape_rect.size.y / 2.0f - 60));
 		}
 		else
 		{
-			have_prize_wood_text_->setPosition(sf::Vector2f(shape_rect.position.x + shape_rect.size.x / 2.0f +15,
-			                                                 shape_rect.position.y + shape_rect.size.y / 2.0f - 40));
+			have_prize_wood_text_->setPosition(sf::Vector2f(shape_rect.position.x + shape_rect.size.x / 2.0f + 15,
+			                                                shape_rect.position.y + shape_rect.size.y / 2.0f - 40));
 
-			have_prize_wood_sprite_->setPosition(sf::Vector2f(shape_rect.position.x + shape_rect.size.x / 2.0f -15,
-															  shape_rect.position.y + shape_rect.size.y / 2.0f - 40));
+			have_prize_wood_sprite_->setPosition(sf::Vector2f(shape_rect.position.x + shape_rect.size.x / 2.0f - 15,
+			                                                  shape_rect.position.y + shape_rect.size.y / 2.0f - 35));
 		}
 		have_prize_wood_ = true;
 	}
@@ -155,17 +157,19 @@ void api::ui::UiButton::CreateButton(const sf::Vector2f pos, const std::string& 
 		// Set the font for the button text
 		have_prize_stone_text_->setString(have_prize_stone);
 		have_prize_stone_text_->setFillColor(sf::Color::Black);
-		have_prize_stone_text_->setCharacterSize(character_size - 10);
+		have_prize_stone_text_->setCharacterSize(character_size);
 		const sf::FloatRect text_prize_rect = have_prize_stone_text_->getLocalBounds();
 		have_prize_stone_text_->setOrigin(sf::Vector2f(text_prize_rect.position.x + text_prize_rect.size.x / 2.0f,
 		                                               text_prize_rect.position.y + text_prize_rect.size.y / 2.0f));
 		have_prize_stone_sprite_ = sf::Sprite(api::general::resource_manager::texture(api::graphics::ResourceSprit::Texture::kIconStone));
-		have_prize_stone_sprite_->setOrigin(sf::Vector2f(have_prize_stone_sprite_->getGlobalBounds().size.x / 2.0f, have_prize_stone_sprite_->getGlobalBounds().size.y / 2.0f));
+		have_prize_stone_sprite_->setScale({1.5, 1.5});
+		have_prize_stone_sprite_->setOrigin(sf::Vector2f(have_prize_stone_sprite_->getGlobalBounds().size.x / 2.0f,
+		                                                 have_prize_stone_sprite_->getGlobalBounds().size.y / 2.0f));
 		have_prize_stone_text_->setPosition(
-			sf::Vector2f(shape_rect.position.x + shape_rect.size.x / 2.0f +15, shape_rect.position.y + shape_rect.size.y / 2.0f - 40));
+			sf::Vector2f(shape_rect.position.x + shape_rect.size.x / 2.0f + 15, shape_rect.position.y + shape_rect.size.y / 2.0f - 30));
 
-		have_prize_stone_sprite_->setPosition(sf::Vector2f(shape_rect.position.x + shape_rect.size.x / 2.0f -15,
-															  shape_rect.position.y + shape_rect.size.y / 2.0f - 40));
+		have_prize_stone_sprite_->setPosition(sf::Vector2f(shape_rect.position.x + shape_rect.size.x / 2.0f - 15,
+		                                                   shape_rect.position.y + shape_rect.size.y / 2.0f - 25));
 		have_prize_stone_ = true;
 	}
 

@@ -159,6 +159,7 @@ namespace game::main_game
 		ZoneNamedN(GameSetup, "Game Setup", true);
 		#endif
 		window.create(sf::VideoMode({1600, 800}), "Game");
+		window.setFramerateLimit(60);
 		api::general::resource_manager::Setup();
 		resource.Setup();
 		text = sf::Text(api::general::resource_manager::font(api::graphics::ResourceFont::Font::kPixel), "City Builder 2");
@@ -298,6 +299,12 @@ namespace game::main_game
 			#endif
 
 			window.display();
+
+
+			if(resource.food_amount() < 0)
+			{
+				window.close();
+			}
 
 			#if TRACY_ENABLE
 			FrameMark;

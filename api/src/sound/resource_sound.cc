@@ -30,8 +30,9 @@ void api::sound::ResourceSound::LoadAllSounds()
 	#endif
 	blank_sound_ = sf::SoundBuffer();
 
-	if(!sounds_.at(static_cast<int>(Sound::kMusicBg)).loadFromFile("resources/sound/music_bg.ogg"))
+	for(int i = 0; i < sounds_.size(); i++)
 	{
-		std::cout << "Error loading music bg sound" << std::endl;
+		if(!sounds_.at(i).loadFromFile(path_ + names_sound_.at(i) + ".ogg"))
+			std::cout << "Error loading " + path_ + names_sound_.at(i) + ".ogg sound " << std::endl;
 	}
 }

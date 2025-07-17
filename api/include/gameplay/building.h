@@ -36,7 +36,8 @@ namespace api::gameplay
 
     private:
         std::vector<sf::Vector2f> neighbors_;
-        sf::RectangleShape detection_zone_;
+        sf::RectangleShape detection_zone_debug_;
+        sf::CircleShape detection_zone_;
         Build type_ = Build::kNothing;
         std::optional<sf::Sprite> sprite_;      // Sprite representing the visual shape of the building
         sf::Vector2f position_; // Position of the building
